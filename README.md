@@ -12,4 +12,13 @@ Videos by keyword
 
 ## Server required installs
 
-* __exiftool__ : sudo apt-get install exiftool
+* __exiftool__ : sudo apt-get install exiftool / brew install exiftool
+
+
+## Installation
+
+```
+pip install -r requirements.txt
+./manage.py migrate
+./manage.py createsuperuser
+```
