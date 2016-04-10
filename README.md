@@ -13,6 +13,7 @@ Videos by keyword
 ## Server required installs
 
 * __exiftool__ : sudo apt-get install exiftool / brew install exiftool
+* __ffmpeg__ : sudo apt-get install ffmpeg / brew install ffmpeg
 
 
 ## Installation
