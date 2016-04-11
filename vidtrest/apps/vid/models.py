@@ -27,7 +27,6 @@ def _upload_video(instance, filename):
 
 
 class Vid(models.Model):
-    slug = models.SlugField(unique=True)
     name = models.CharField(max_length=255)
 
     #video = S3DirectField(dest='vids', null=True)

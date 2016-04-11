@@ -19,7 +19,6 @@ class VidForm(forms.ModelForm):
         model = Vid
         fields = (
             'name',
-            'slug',
             'video',
             'tags',
             'categories',

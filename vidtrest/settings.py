@@ -18,7 +18,7 @@ SECRET_KEY = 'swaonvcrhy4-yr6$tmfu(hht+c%14!#ut3by7m554ncw12iqo@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -42,9 +42,11 @@ HELPER_APPS = [
     'taggit',
     'storages',
     's3direct',
+    'pipeline',
     'django_rq',
-    'advanced_filters',
-    'easy_select2',
+    'djangobower',
+    #'advanced_filters',
+    #'easy_select2',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + HELPER_APPS
@@ -66,7 +68,7 @@ ROOT_URLCONF = 'vidtrest.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -130,6 +132,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+#STATIC_URL = 'http://localhost:8012/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/m/'
@@ -211,6 +214,48 @@ S3DIRECT_DESTINATIONS = {
     #     'max-age=2592000', 
     #     'attachment')
 }
+
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'djangobower.finders.BowerFinder',
+    'pipeline.finders.CachedFileFinder',
+    'pipeline.finders.PipelineFinder',
+)
+
+STATICFILES_STORAGE = 'pipeline.storage.PipelineStorage'
+
+BOWER_COMPONENTS_ROOT = BASE_DIR
+
+STATICFILES_DIRS = (
+    os.path.join(BOWER_COMPONENTS_ROOT, 'bower_components'),
+)
+
+BOWER_INSTALLED_APPS = (
+    'jquery-thumb-preview#0.0.1',
+    'jquery#1.11.0',
+)
+
+PIPELINE = {
+    'PIPELINE_ENABLED': True,
+    'CSS_COMPRESSOR': 'pipeline.compressors.yuglify.YuglifyCompressor',
+    'JS_COMPRESSOR': 'pipeline.compressors.uglifyjs.UglifyJSCompressor',
+    'COMPILERS': ('pipeline.compilers.sass.SASSCompiler',),
+    'STYLESHEETS': {
+    },
+    'JAVASCRIPT': {
+        'thumbpreview': {
+            'source_filenames': (
+                'jquery/src/jquery.js',
+                'jQuery-Thumb-Preview/jquery.thumb.preview.js',
+            ),
+            'output_filename': 'dist/thumbpreview.js',
+        }
+    }
+}
+
+
 
 #
 # Load the environment specific settings
