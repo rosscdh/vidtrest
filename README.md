@@ -22,4 +22,5 @@ Videos by keyword
 pip install -r requirements.txt
 ./manage.py migrate
 ./manage.py createsuperuser
+honcho start
 ```

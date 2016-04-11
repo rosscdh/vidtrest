@@ -43,6 +43,8 @@ HELPER_APPS = [
     'storages',
     's3direct',
     'django_rq',
+    'advanced_filters',
+    'easy_select2',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + HELPER_APPS

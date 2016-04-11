@@ -13,3 +13,4 @@ redis==2.10.5
 rq==0.5.6
 six==1.10.0
 wsgiref==0.1.2
+django-advanced-filters==1.0.4

@@ -2,6 +2,7 @@
 from django.conf import settings
 from django.contrib import admin
 from django.utils.safestring import mark_safe
+from advanced_filters.admin import AdminAdvancedFiltersMixin
 
 from .models import Vid, VideoMeta
 from .forms import VidForm
@@ -12,12 +13,20 @@ class VideoMetaInline(admin.TabularInline):
 
 
 @admin.register(Vid)
-class NativeAdAdmin(admin.ModelAdmin):
+class NativeAdAdmin(AdminAdvancedFiltersMixin,
+                    admin.ModelAdmin):
     form = VidForm
 
     list_display = ('name', 'slug', 'thumb',)
     list_filter = ('categories',)
     search_fields = ['name', 'slug', 'tags__name']
+
+    # select from these fields in the advanced filter creation form
+    advanced_filter_fields = (
+        'name',
+        # even use related fields as lookup fields
+        'tags__name',
+    )
 
     prepopulated_fields = {'slug': ('name',)}
     inlines = [VideoMetaInline,]
