@@ -8,11 +8,19 @@
   //var jQuery = django.jQuery;
   //var $ = django.jQuery;
   </script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> -->
+  <script src="{% static "jquery/dist/jquery.min.js" %}"></script>
   <script src="{% static "js/jquery.thumb.preview.js" %}"></script>
   <script>
   (function($){
+      var view_video_url = "{% url 'admin:view_video' pk=000 %}";
       $('img.slider-thumb').thumbPreview({preload: true});
+      $('a.view-video').on('click', function (event) {
+        event.preventDefault();
+        self = $(this);
+        console.log(self.data().pk)
+        console.log(view_video_url.replace('0', self.data().pk))
+      });
   })(jQuery);
   </script>
 {% endblock %}

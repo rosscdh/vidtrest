@@ -45,8 +45,8 @@ HELPER_APPS = [
     'pipeline',
     'django_rq',
     'djangobower',
-    #'advanced_filters',
-    #'easy_select2',
+    'dal',
+    'dal_select2',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + HELPER_APPS
