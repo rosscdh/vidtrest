@@ -1,0 +1,274 @@
+[
+  {
+    "model": "categories.videocat",
+    "pk": 1,
+    "fields": {
+      "slug": "3d",
+      "name": "3D"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 2,
+    "fields": {
+      "slug": "action",
+      "name": "Action"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 3,
+    "fields": {
+      "slug": "animals",
+      "name": "Animals"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 4,
+    "fields": {
+      "slug": "animation",
+      "name": "Animation"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 5,
+    "fields": {
+      "slug": "animation-life-augmented-reality",
+      "name": "Animation & Life (augmented Reality)"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 6,
+    "fields": {
+      "slug": "babies",
+      "name": "Babies"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 7,
+    "fields": {
+      "slug": "beauty-fashion-hair",
+      "name": "Beauty / Fashion / Hair"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 8,
+    "fields": {
+      "slug": "cars-automotive",
+      "name": "Cars & Automotive"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 9,
+    "fields": {
+      "slug": "celebrities",
+      "name": "Celebrities"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 10,
+    "fields": {
+      "slug": "choreography",
+      "name": "Choreography"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 11,
+    "fields": {
+      "slug": "cinema-movie",
+      "name": "Cinema / Movie"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 12,
+    "fields": {
+      "slug": "design",
+      "name": "Design"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 13,
+    "fields": {
+      "slug": "elderly",
+      "name": "Elderly"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 14,
+    "fields": {
+      "slug": "features",
+      "name": "Features"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 15,
+    "fields": {
+      "slug": "food-drinks-tabletop",
+      "name": "Food & Drinks (Tabletop)"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 16,
+    "fields": {
+      "slug": "hair",
+      "name": "Hair"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 17,
+    "fields": {
+      "slug": "historical",
+      "name": "Historical"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 18,
+    "fields": {
+      "slug": "humor",
+      "name": "Humor"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 19,
+    "fields": {
+      "slug": "kids",
+      "name": "Kids"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 20,
+    "fields": {
+      "slug": "landscape",
+      "name": "Landscape"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 21,
+    "fields": {
+      "slug": "lifestyle",
+      "name": "Lifestyle"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 22,
+    "fields": {
+      "slug": "music-video-choreography",
+      "name": "Music Video / Choreography"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 23,
+    "fields": {
+      "slug": "other",
+      "name": "Other"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 24,
+    "fields": {
+      "slug": "sfx-tricks",
+      "name": "SFX & Tricks"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 25,
+    "fields": {
+      "slug": "slowmotion",
+      "name": "Slowmotion"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 26,
+    "fields": {
+      "slug": "sports",
+      "name": "Sports"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 27,
+    "fields": {
+      "slug": "storytelling",
+      "name": "Storytelling"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 28,
+    "fields": {
+      "slug": "testimonials",
+      "name": "Testimonials"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 29,
+    "fields": {
+      "slug": "time-lapse",
+      "name": "Time lapse"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 30,
+    "fields": {
+      "slug": "transitions-form-and-scence",
+      "name": "Transitions (Form and Scence)"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 31,
+    "fields": {
+      "slug": "underwater",
+      "name": "Underwater"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 32,
+    "fields": {
+      "slug": "urban",
+      "name": "Urban"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 33,
+    "fields": {
+      "slug": "youth-teenager",
+      "name": "Youth / Teenager"
+    }
+  },
+  {
+    "model": "categories.videocat",
+    "pk": 34,
+    "fields": {
+      "slug": "vignettes",
+      "name": "Vignettes"
+    }
+  }
+]
