@@ -19,10 +19,6 @@ class VideoMetaService(object):
 
         metadata_path = '{path}/{pk}-metadata.txt'.format(path=tail, pk=self.pk)
 
-        # If it exists remove it so we can recreate it
-        if os.path.isfile(metadata_path):
-            os.remove(metadata_path)
-
         cmd = self.cmd.format(video_path=self.video.path,
                               metadata_path=metadata_path)
 
@@ -45,11 +41,17 @@ class VideoMetaService(object):
 
         self.meta_data = meta_data
 
+        # If it exists remove it so we can recreate it
+        if os.path.isfile(metadata_path):
+            os.remove(metadata_path)
+
         return meta_data
 
 
 class VideoThumbnailService(object):
-    cmd = 'ffmpeg -ss 3 -i {video_path} -vf "select=gt(scene\,0.2)" -frames:v 15 -s 128x96 -vsync vfr {output_path}/{pk}-thumb-%02d.jpg'
+    num_thumbs = 5
+    thumbs = []
+    cmd = 'ffmpeg -ss 3 -i {video_path} -vf "select=gt(scene\,0.2)" -frames:v {num_thumbs} -s 128x96 -vsync vfr {output_path}/thumbs-{pk}-%02d.jpg'
 
     def __init__(self, pk, video):
         self.pk = pk
@@ -59,7 +61,9 @@ class VideoThumbnailService(object):
         tail, head = os.path.split(self.video.path)
 
         cmd = self.cmd.format(pk=self.pk,
+                              num_thumbs=self.num_thumbs,
                               video_path=self.video.path,
                               output_path=tail)
 
         subprocess.check_output(cmd, shell=True)
+        self.thumbs = ['thumbs-%d-%02d.jpg' % (self.pk, i) for i in range(1, self.num_thumbs)]

@@ -16,16 +16,20 @@ class NativeAdAdmin(admin.ModelAdmin):
     form = VidForm
 
     list_display = ('name', 'slug', 'thumb',)
-    search_fields = ['name', 'slug', 'tags']
+    list_filter = ('categories',)
+    search_fields = ['name', 'slug', 'tags__name']
 
     prepopulated_fields = {'slug': ('name',)}
     inlines = [VideoMetaInline,]
 
     def thumb(self, obj):
+        thumbs = obj.videometa.data.get('thumbs', [])
         kwargs = {
-          'thumb': '%svideo/%d-thumb-06.jpg' % (settings.MEDIA_URL, obj.pk)
+          'thumb': '%svideo/thumbs-%d-03.jpg' % (settings.MEDIA_URL, obj.pk),
+          'url': '%svideo/' % (settings.MEDIA_URL,),
+          'thumbs': ','.join(thumbs)
         }
-        return mark_safe('<img src="{thumb}" border="0" />'.format(**kwargs))
+        return mark_safe('<img src="{thumb}" border="0" data-url="{url}"  data-thumbs="{thumbs}" />'.format(**kwargs))
     thumb.short_description = 'Thumbnail'
 
 # @admin.register(VideoMeta)

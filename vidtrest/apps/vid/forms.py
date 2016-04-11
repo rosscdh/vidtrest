@@ -22,4 +22,5 @@ class VidForm(forms.ModelForm):
             'slug',
             'video',
             'tags',
+            'categories',
         )

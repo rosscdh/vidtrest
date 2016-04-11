@@ -17,16 +17,18 @@ def do_video_meta(instance, video):
                                video=instance.video)
     service.process()
 
-    videometa.data.update(service.meta_data)
-    videometa.save()
+    videometa.data.update({'video_metadata': service.meta_data})
+    videometa.save(update_fields=['data'])
 
 
 def do_video_thumbs(instance, video):
-    #videometa, is_new = VideoMeta.objects.get_or_create(vid=instance)
+    videometa, is_new = VideoMeta.objects.get_or_create(vid=instance)
     # Thumbnails
     service = VideoThumbnailService(pk=instance.pk,
                                     video=instance.video)
     service.process()
+    videometa.data.update({'thumbs': service.thumbs})
+    videometa.save(update_fields=['data'])
 
 
 @receiver(signals.post_save,

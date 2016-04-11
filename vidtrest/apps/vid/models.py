@@ -5,7 +5,7 @@ from django.db import models
 from django.template.defaultfilters import slugify
 
 from jsonfield import JSONField
-from s3direct.fields import S3DirectField
+#from s3direct.fields import S3DirectField
 from taggit.managers import TaggableManager
 
 from vidtrest.apps.utils import managed_s3botostorage
@@ -27,12 +27,15 @@ def _upload_video(instance, filename):
 
 
 class Vid(models.Model):
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
     name = models.CharField(max_length=255)
+
     #video = S3DirectField(dest='vids', null=True)
     video = models.FileField(upload_to=_upload_video,
                              storage=managed_s3botostorage(),
                              null=True)
+
+    categories = models.ManyToManyField('categories.VideoCat')
 
     objects = models.Manager()
     tags = TaggableManager()
