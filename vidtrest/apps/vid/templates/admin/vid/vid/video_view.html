@@ -1,8 +1,7 @@
-{% extends 'admin/change_form.html' %}
+{% extends 'admin/base.html' %}
 {% load pipeline staticfiles %}
 
-{% block extrastyle %}
-  {{ block.super }}
+{% block content %}
   <link rel="stylesheet" type="text/css" href="{% static "plyr/dist/plyr.css" %}" />
   <style>
   .meta-data {
@@ -12,14 +11,21 @@
   dd { width: 300px; }
   dt, dd { float:left; }
   </style>
-{% endblock %}
 
-{% block after_field_sets %}
   {% if original.video %}
   <hr/>
-  <table>
-    <tr>
-      <td>
+
+        <div class="plyr">
+            <video poster="{{ original.videometa.thumb }}" controls>
+                <!-- Video files -->
+                <source src="{{ original.video.url }}" type="{{ original.videometa.mime_type }}">
+                <!-- Text track file -->
+                <!-- <track kind="captions" label="English captions" src="/path/to/captions.vtt" srclang="en" default> -->
+                <!-- Fallback for browsers that don't support the <video> element -->
+                <a href="{{ original.video.url }}">Download</a>
+            </video>
+        </div>
+
         <div class="meta-data">
           <h2>Meta data</h2>
           <hr/>
@@ -59,31 +65,12 @@
           </dl>
 
         </div>
-      </td>
-      <td>
-        <div class="plyr">
-            <video poster="{{ original.videometa.thumb }}" controls>
-                <!-- Video files -->
-                <source src="{{ original.video.url }}" type="{{ original.videometa.mime_type }}">
-                <!-- Text track file -->
-                <!-- <track kind="captions" label="English captions" src="/path/to/captions.vtt" srclang="en" default> -->
-                <!-- Fallback for browsers that don't support the <video> element -->
-                <a href="{{ original.video.url }}">Download</a>
-            </video>
-        </div>
-      </td>
-    </tr>
-  </table>
+
 
   <hr/>
   <p>&nbsp;</p>
   {% endif %}
-  {{ block.super }}
-{% endblock %}
 
-
-{% block footer %}
-  {{ block.super }}
   <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> -->
   <script src="{% static "jquery/dist/jquery.min.js" %}"></script>
   <script src="{% static "plyr/dist/plyr.js" %}"></script>

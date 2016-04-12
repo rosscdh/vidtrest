@@ -5,6 +5,8 @@ from django.conf.urls import url
 from django.http import HttpResponse
 from django.utils.safestring import mark_safe
 #from advanced_filters.admin import AdminAdvancedFiltersMixin
+from django.template import RequestContext
+from django.shortcuts import render_to_response
 
 from .models import Vid, VideoMeta
 from .forms import VidForm
@@ -13,8 +15,9 @@ from .forms import VidForm
 @admin.register(Vid)
 class NativeAdAdmin(admin.ModelAdmin):
     form = VidForm
+    list_per_page = 100
 
-    list_display = ('name', 'thumb',)
+    list_display = ('name',)
     list_filter = ('categories',)
     search_fields = ['name', 'tags__name']
 
@@ -29,25 +32,10 @@ class NativeAdAdmin(admin.ModelAdmin):
 
     def view_video(self, request, pk):
         vid = Vid.objects.get(pk=pk)
-        content = ''
-        return HttpResponse(content, 'text/html')
-
-    def thumb(self, obj):
-        thumbs = obj.videometa.data.get('thumbs', [])
-
-        thumb = 'https://placeholdit.imgix.net/~text?txtsize=18&txt=Generating...&w=128&h=96'
-        if thumbs:
-            thumb = '%svideo/thumbs-%d-04.jpg' % (settings.MEDIA_URL, obj.pk)
-            thumbs = ['%svideo/%s' % (settings.MEDIA_URL, t) for t in thumbs]
-
-        kwargs = {
-            'pk': obj.pk,
-            'thumb': thumb,
-            'url': '%svideo/' % (settings.MEDIA_URL,),
-            'thumbs': '["%s"]' % '","'.join(thumbs)
+        context = {
+            'is_popup': True,
+            'original': vid,
         }
-        return mark_safe('<a href="javascript:;" class="view-video" data-pk="{pk}" ><img src="{thumb}" class="slider-thumb" border="0" data-url="{url}" data-images=\'{thumbs}\' /></a>'.format(**kwargs))
-    thumb.short_description = 'Thumbnail'
-
-# @admin.register(VideoMeta)
-# class VideoMetaAdmin(admin.ModelAdmin): pass
+        return render_to_response('admin/vid/vid/video_view.html',
+                                  context,
+                                  context_instance=RequestContext(request))

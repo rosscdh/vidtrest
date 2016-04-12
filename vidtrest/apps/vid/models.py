@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.conf import settings
 from django.template.defaultfilters import slugify
 
 from jsonfield import JSONField
@@ -39,6 +40,20 @@ class Vid(models.Model):
     objects = models.Manager()
     tags = TaggableManager()
 
+    @property
+    def thumb(self):
+        thumb = 'https://placeholdit.imgix.net/~text?txtsize=18&txt=Generating...&w=128&h=96'
+        thumbs = self.videometa.data.get('thumbs', [])
+        if thumbs:
+            thumb = '%svideo/thumbs-%d-04.jpg' % (settings.MEDIA_URL, self.pk)
+        return thumb
+
+    @property
+    def thumbs(self):
+        thumbs = self.videometa.data.get('thumbs', [])
+        thumbs = ['%svideo/%s' % (settings.MEDIA_URL, t) for t in thumbs]
+        return '["%s"]' % '","'.join(thumbs)
+
 
 class VideoMeta(models.Model):
     vid = models.OneToOneField('vid.Vid')
@@ -61,3 +76,11 @@ class VideoMeta(models.Model):
     image_width = models.CharField(max_length=24, blank=True, null=True)
 
     data = JSONField(default={})
+
+    @property
+    def thumb(self):
+        thumb = 'https://placeholdit.imgix.net/~text?txtsize=18&txt=Generating...&w=128&h=96'
+        thumbs = self.data.get('thumbs', [])
+        if thumbs:
+            thumb = '%svideo/thumbs-%d-04.jpg' % (settings.MEDIA_URL, self.vid.pk)
+        return thumb

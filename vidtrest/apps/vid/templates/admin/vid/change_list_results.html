@@ -1,0 +1,21 @@
+{% load i18n admin_static %}
+{% if result_hidden_fields %}
+<div class="hiddenfields">{# DIV for HTML validation #}
+{% for item in result_hidden_fields %}{{ item }}{% endfor %}
+</div>
+{% endif %}
+{% if results %}
+<div id="result_list" class="grid">
+
+  {% for item in results %}
+  <div class="grid-item">
+    <a href="{% url 'admin:view_video' item.pk %}" class="view-video" data-pk="{{ item.pk }}" >
+      <img src="{{ item.thumb }}" class="slider-thumb" border="0" data-images='{{ item.thumbs }}' />
+    </a>
+    <br/>
+    <div style=""><a href="{% url 'admin:vid_vid_change' item.pk %}">{{ item.name }}</a></div>
+  </div>
+  {% endfor %}
+
+</div>
+{% endif %}
