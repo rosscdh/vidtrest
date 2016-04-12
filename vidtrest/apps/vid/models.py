@@ -9,7 +9,7 @@ from jsonfield import JSONField
 #from s3direct.fields import S3DirectField
 from taggit.managers import TaggableManager
 
-from vidtrest.apps.utils import managed_s3botostorage
+from vidtrest.apps.utils import managed_s3botostorage, OverwriteStorage
 
 import os
 import uuid
@@ -32,13 +32,26 @@ class Vid(models.Model):
 
     #video = S3DirectField(dest='vids', null=True)
     video = models.FileField(upload_to=_upload_video,
-                             storage=managed_s3botostorage(),
+                             storage=OverwriteStorage(),
                              null=True)
+    s3_video = models.FileField(upload_to=_upload_video,
+                                storage=managed_s3botostorage(),
+                                null=True)
 
     categories = models.ManyToManyField('categories.VideoCat')
 
     objects = models.Manager()
     tags = TaggableManager()
+
+    def get_video(self):
+        """
+        Return the s3_video if its present otherwise the normal one
+        """
+        if self.s3_video:
+            return self.s3_video
+        if self.video:
+            return self.video
+        return None
 
     @property
     def thumb(self):

@@ -1,20 +1,13 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from dal.forms import FutureModelForm
-from django.utils.safestring import mark_safe
-from taggit.forms import TagField, TagWidget
+from taggit.forms import TagField
 
 from .models import Vid
 
 
-class TagsWithKewordsWidget(TagWidget):
-    def render(self, name, value, attrs=None):
-        html = super(TagsWithKewordsWidget, self).render(name, value, attrs)
-        return mark_safe(u'List of keword categories here:<br/> %s' % html)
-
-
 class VidForm(FutureModelForm):
-    tags = TagField(widget=TagsWithKewordsWidget())
+    tags = TagField()
 
     class Meta:
         model = Vid

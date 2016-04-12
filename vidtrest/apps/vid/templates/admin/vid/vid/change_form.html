@@ -8,7 +8,8 @@
   .meta-data {
     width:100%;
   }
-  dt { width: 150px; clear:left } // clear to force it to the next line
+  dl { width:100%; }
+  dt { width: 180px; clear:left } // clear to force it to the next line
   dd { width: 300px; }
   dt, dd { float:left; }
   </style>
@@ -17,9 +18,9 @@
 {% block after_field_sets %}
   {% if original.video %}
   <hr/>
-  <table>
+  <table style="width:100%;">
     <tr>
-      <td>
+      <td style="width:25%;">
         <div class="meta-data">
           <h2>Meta data</h2>
           <hr/>
@@ -34,10 +35,12 @@
             <dd>{{ original.videometa.avg_bitrate }}</dd>
             <dt>audio_sample_rate</dt>
             <dd>{{ original.videometa.audio_sample_rate }}</dd>
-            <dt>video_frame_rate</dt>
-            <dd>{{ original.videometa.video_frame_rate }}</dd>
             <dt>audio_bits_per_sample</dt>
             <dd>{{ original.videometa.audio_bits_per_sample }}</dd>
+            <dt>audio_format</dt>
+            <dd>{{ original.videometa.audio_format }}</dd>
+            <dt>video_frame_rate</dt>
+            <dd>{{ original.videometa.video_frame_rate }}</dd>
             <dt>track_duration</dt>
             <dd>{{ original.videometa.track_duration }}</dd>
             <dt>x_resolution</dt>
@@ -52,8 +55,6 @@
             <dd>{{ original.videometa.image_width }}</dd>
             <dt>file_type</dt>
             <dd>{{ original.videometa.file_type }}</dd>
-            <dt>audio_format</dt>
-            <dd>{{ original.videometa.audio_format }}</dd>
             <dt>compressor_id</dt>
             <dd>{{ original.videometa.compressor_id }}</dd>
           </dl>
@@ -64,7 +65,7 @@
         <div class="plyr">
             <video poster="{{ original.videometa.thumb }}" controls>
                 <!-- Video files -->
-                <source src="{{ original.video.url }}" type="{{ original.videometa.mime_type }}">
+                <source src="{{ original.get_video.url }}" type="{{ original.videometa.mime_type }}">
                 <!-- Text track file -->
                 <!-- <track kind="captions" label="English captions" src="/path/to/captions.vtt" srclang="en" default> -->
                 <!-- Fallback for browsers that don't support the <video> element -->

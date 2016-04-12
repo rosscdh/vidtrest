@@ -1,12 +1,31 @@
 # -*- coding: utf-8 -*-
+from django.conf import settings
 from django.db.models import signals
 from django.dispatch import receiver
+
+from storages.backends.s3boto import S3BotoStorage
 
 from .models import VideoMeta
 from .services import VideoMetaService, VideoThumbnailService
 
 import django_rq
 queue = django_rq.get_queue('high')
+
+
+def do_upload_to_s3(instance):
+    """
+    Upload video file to s3, and then call the following events
+    """
+    if settings.AWS_STORAGE_BUCKET_NAME:
+        # storage = S3BotoStorage()
+        # storage.save(instance.video.name, instance.video.read())
+        instance.s3_video.save(instance.video.name, instance.video.read())
+        instance.save(update_fields=['s3_video'])
+
+    do_video_meta(instance=instance,
+                  video=instance.video)
+    do_video_thumbs(instance=instance,
+                    video=instance.video)
 
 
 def do_video_meta(instance, video):
@@ -56,5 +75,5 @@ def post_save_get_video_meta(sender, instance, created, **kwargs):
     Async
     """
     if instance.video:
-        queue.enqueue(do_video_meta, instance=instance, video=instance.video)
-        queue.enqueue(do_video_thumbs, instance=instance, video=instance.video)
+        queue.enqueue(do_upload_to_s3,
+                      instance=instance)
