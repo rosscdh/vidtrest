@@ -20,6 +20,8 @@ Videos by keyword
 
 ```
 pip install -r requirements.txt
+./manage.py bower_install
+./manage.py collectstatic --noinput
 ./manage.py migrate
 ./manage.py createsuperuser
 honcho start

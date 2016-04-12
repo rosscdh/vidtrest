@@ -3,13 +3,16 @@
 
 {% block extrastyle %}
   {{ block.super }}
-  <link rel="stylesheet" type="text/css" href="{% static "plyr/dist/plyr.css" %}" />
+  <style>
+  .grid-item {
+    width:150px;
+  }
+  </style>
 {% endblock %}
 
 
-
 {% block result_list %}
-    {% if action_form and actions_on_top and cl.show_admin_actions %}{% admin_actions %}{% endif %}
+    {#% if action_form and actions_on_top and cl.show_admin_actions %#}{#% admin_actions %#}{#% endif %#}
     {% vid_result_list cl %}
     {% if action_form and actions_on_bottom and cl.show_admin_actions %}{% admin_actions %}{% endif %}
 {% endblock %}
@@ -24,7 +27,7 @@
   <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> -->
   <script src="{% static "jquery/dist/jquery.min.js" %}"></script>
   <script src="{% static "js/jquery.thumb.preview.js" %}"></script>
-  <script src="{% static "masonry/dist/masonry.pkgd.min.js" %}"></script>
+  <script src="{% static "waterfall/waterfall.min.js" %}"></script>
 
   <script>
   (function($){
@@ -38,10 +41,9 @@
         showAddAnotherPopup(this);
       });
 
-      $('.grid').masonry({
-        // options...
-        itemSelector: '.grid-item',
-        columnWidth: 150
+      waterfall('.grid');
+      window.addEventListener('resize', function () {
+          waterfall('.grid');
       });
   })(jQuery);
   </script>
