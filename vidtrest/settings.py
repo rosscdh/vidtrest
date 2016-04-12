@@ -236,7 +236,6 @@ STATICFILES_DIRS = (
 BOWER_INSTALLED_APPS = (
     'jquery-thumb-preview#0.0.1',
     'jquery#1.11.0',
-    'video.js#5.9.0',
     'plyr#1.5.21',
 )
 
