@@ -24,3 +24,13 @@ pip install -r requirements.txt
 ./manage.py createsuperuser
 honcho start
 ```
+
+## Install media server
+
+* requires ansible installed
+* requires vagrant installed
+
+```
+vagrant up
+vagrant provision
+```
