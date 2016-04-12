@@ -206,12 +206,12 @@ S3DIRECT_DESTINATIONS = {
 
     # # Allow authenticated users to upload with cache-control for a month and content-disposition set to attachment
     # 'cached': (
-    #     'uploads/vids', 
-    #     lambda u: u.is_authenticated(), 
-    #     '*', 
-    #     'public-read', 
-    #     AWS_STORAGE_BUCKET_NAME, 
-    #     'max-age=2592000', 
+    #     'uploads/vids',
+    #     lambda u: u.is_authenticated(),
+    #     '*',
+    #     'public-read',
+    #     AWS_STORAGE_BUCKET_NAME,
+    #     'max-age=2592000',
     #     'attachment')
 }
 
@@ -235,6 +235,8 @@ STATICFILES_DIRS = (
 BOWER_INSTALLED_APPS = (
     'jquery-thumb-preview#0.0.1',
     'jquery#1.11.0',
+    'video.js#5.9.0',
+    'plyr#1.5.21',
 )
 
 PIPELINE = {

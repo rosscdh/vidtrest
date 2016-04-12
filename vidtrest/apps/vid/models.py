@@ -20,7 +20,7 @@ def _upload_video(instance, filename):
 
     pk = str(uuid.uuid4())
     pk = pk.split('-')[0]
-    identifier = '%s-%s' % (instance.slug, pk)
+    identifier = '%s' % (pk)
     full_file_name = '%s-%s%s' % (identifier, slugify(filename_no_ext), ext)
 
     return 'video/%s' % full_file_name
@@ -42,4 +42,22 @@ class Vid(models.Model):
 
 class VideoMeta(models.Model):
     vid = models.OneToOneField('vid.Vid')
+
+    mime_type = models.CharField(max_length=24, blank=True, null=True)
+    duration = models.CharField(max_length=24, blank=True, null=True)
+    file_size = models.CharField(max_length=24, blank=True, null=True)
+    avg_bitrate = models.CharField(max_length=24, blank=True, null=True)
+    audio_sample_rate = models.CharField(max_length=24, blank=True, null=True)
+    video_frame_rate = models.CharField(max_length=24, blank=True, null=True)
+    audio_bits_per_sample = models.CharField(max_length=24, blank=True, null=True)
+    track_duration = models.CharField(max_length=24, blank=True, null=True)
+    x_resolution = models.CharField(max_length=24, blank=True, null=True)
+    y_resolution = models.CharField(max_length=24, blank=True, null=True)
+    file_type = models.CharField(max_length=24, blank=True, null=True)
+    audio_format = models.CharField(max_length=24, blank=True, null=True)
+    compressor_id = models.CharField(max_length=24, blank=True, null=True)
+    image_size = models.CharField(max_length=24, blank=True, null=True)
+    image_height = models.CharField(max_length=24, blank=True, null=True)
+    image_width = models.CharField(max_length=24, blank=True, null=True)
+
     data = JSONField(default={})
