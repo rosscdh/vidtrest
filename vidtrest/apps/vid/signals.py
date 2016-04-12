@@ -18,12 +18,16 @@ def do_upload_to_s3(instance):
         instance.s3_video.save(instance.video.name, instance.video.read())
         instance.save(update_fields=['s3_video'])
 
+    # Extract meta-data
     do_video_meta(instance=instance,
                   video=instance.video)
+
+    # Extract thumbanils
     do_video_thumbs(instance=instance,
                     video=instance.video)
 
-    if settings.AWS_STORAGE_BUCKET_NAME and instance.s3_video.url:
+    # Delete original video if its been handed off too s3
+    if settings.AWS_STORAGE_BUCKET_NAME and instance.s3_video:
         instance.video.delete()
         instance.save(update_fields=['video'])
 
