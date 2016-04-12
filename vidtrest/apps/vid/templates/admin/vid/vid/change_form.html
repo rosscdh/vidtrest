@@ -5,31 +5,81 @@
   {{ block.super }}
   <link rel="stylesheet" type="text/css" href="{% static "plyr/dist/plyr.css" %}" />
   <style>
-  .plyr {
-    width:50%;
+  .meta-data {
+    width:100%;
   }
+  dt { width: 150px; clear:left } // clear to force it to the next line
+  dd { width: 300px; }
+  dt, dd { float:left; }
   </style>
 {% endblock %}
 
 {% block after_field_sets %}
-{% if original.video %}
-<hr/>
+  {% if original.video %}
+  <hr/>
+  <table>
+    <tr>
+      <td>
+        <div class="meta-data">
+          <h2>Meta data</h2>
+          <hr/>
+          <dl>
+            <dt>mime_type</dt>
+            <dd>{{ original.videometa.mime_type }}</dd>
+            <dt>duration</dt>
+            <dd>{{ original.videometa.duration }}</dd>
+            <dt>file_size</dt>
+            <dd>{{ original.videometa.file_size }}</dd>
+            <dt>avg_bitrate</dt>
+            <dd>{{ original.videometa.avg_bitrate }}</dd>
+            <dt>audio_sample_rate</dt>
+            <dd>{{ original.videometa.audio_sample_rate }}</dd>
+            <dt>video_frame_rate</dt>
+            <dd>{{ original.videometa.video_frame_rate }}</dd>
+            <dt>audio_bits_per_sample</dt>
+            <dd>{{ original.videometa.audio_bits_per_sample }}</dd>
+            <dt>track_duration</dt>
+            <dd>{{ original.videometa.track_duration }}</dd>
+            <dt>x_resolution</dt>
+            <dd>{{ original.videometa.x_resolution }}</dd>
+            <dt>y_resolution</dt>
+            <dd>{{ original.videometa.y_resolution }}</dd>
+            <dt>image_size</dt>
+            <dd>{{ original.videometa.image_size }}</dd>
+            <dt>image_height</dt>
+            <dd>{{ original.videometa.image_height }}</dd>
+            <dt>image_width</dt>
+            <dd>{{ original.videometa.image_width }}</dd>
+            <dt>file_type</dt>
+            <dd>{{ original.videometa.file_type }}</dd>
+            <dt>audio_format</dt>
+            <dd>{{ original.videometa.audio_format }}</dd>
+            <dt>compressor_id</dt>
+            <dd>{{ original.videometa.compressor_id }}</dd>
+          </dl>
 
-<div class="plyr">
-    <video poster="/m/video/{{ original.videometa.data.thumbs.2 }}" controls>
-        <!-- Video files -->
-        <source src="{{ original.video.url }}" type="{{ original.videometa.mime_type }}">
-        <!-- Text track file -->
-        <!-- <track kind="captions" label="English captions" src="/path/to/captions.vtt" srclang="en" default> -->
-        <!-- Fallback for browsers that don't support the <video> element -->
-        <a href="{{ original.video.url }}">Download</a>
-    </video>
-</div>
-<hr/>
-<p>&nbsp;</p>
-{% endif %}
+        </div>
+      </td>
+      <td>
+        <div class="plyr">
+            <video poster="http://192.168.50.5/media/video/{{ original.videometa.data.thumbs.2 }}" controls>
+                <!-- Video files -->
+                <source src="{{ original.video.url }}" type="{{ original.videometa.mime_type }}">
+                <!-- Text track file -->
+                <!-- <track kind="captions" label="English captions" src="/path/to/captions.vtt" srclang="en" default> -->
+                <!-- Fallback for browsers that don't support the <video> element -->
+                <a href="{{ original.video.url }}">Download</a>
+            </video>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <hr/>
+  <p>&nbsp;</p>
+  {% endif %}
+  {{ block.super }}
 {% endblock %}
-
 
 
 {% block footer %}

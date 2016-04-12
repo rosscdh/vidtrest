@@ -1,0 +1,18 @@
+---
+- hosts: all
+  gather_facts: yes
+
+  # vars:
+  #   APP_PATH: /var/apps/hiveempire-smell
+  #   NODE_VERSION: 5.6.0
+
+  tasks:
+    - name: Install Video processors
+      apt: name={{ item }} state=present update_cache=yes
+      with_items:
+        - nginx-full
+        - nginx-extras
+        - exiftool
+        #- libav-tools
+        - ffmpeg
+      sudo: yes

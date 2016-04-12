@@ -10,10 +10,6 @@ from .models import Vid, VideoMeta
 from .forms import VidForm
 
 
-class VideoMetaInline(admin.TabularInline):
-    model = VideoMeta
-
-
 @admin.register(Vid)
 class NativeAdAdmin(admin.ModelAdmin):
     form = VidForm
@@ -21,8 +17,6 @@ class NativeAdAdmin(admin.ModelAdmin):
     list_display = ('name', 'thumb',)
     list_filter = ('categories',)
     search_fields = ['name', 'tags__name']
-
-    inlines = [VideoMetaInline,]
 
     def get_urls(self):
         urls = super(NativeAdAdmin, self).get_urls()
