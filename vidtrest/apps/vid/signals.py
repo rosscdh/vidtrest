@@ -27,6 +27,10 @@ def do_upload_to_s3(instance):
     do_video_thumbs(instance=instance,
                     video=instance.video)
 
+    if settings.AWS_STORAGE_BUCKET_NAME and instance.s3_video.url:
+        instance.video.delete()
+        instance.save(update_fields=['video'])
+
 
 def do_video_meta(instance, video):
     videometa, is_new = VideoMeta.objects.get_or_create(vid=instance)
