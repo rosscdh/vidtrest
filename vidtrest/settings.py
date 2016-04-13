@@ -39,14 +39,13 @@ PROJECT_APPS = [
 
 HELPER_APPS = [
     'django_extensions',
+    'django_select2',
     'taggit',
     'storages',
     's3direct',
     'pipeline',
     'django_rq',
     'djangobower',
-    'dal',
-    'dal_select2',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + HELPER_APPS

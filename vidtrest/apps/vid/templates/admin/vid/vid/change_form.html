@@ -15,6 +15,24 @@
   </style>
 {% endblock %}
 
+{% block extrahead %}
+  <link href="{% static "autocomplete_light/vendor/select2/dist/css/select2.css" %}" type="text/css" media="all" rel="stylesheet" />
+  <link href="{% static "autocomplete_light/select2.css" %}" type="text/css" media="all" rel="stylesheet" />
+
+  <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script type="text/javascript">
+  django = django || {};
+  django.jQuery = jQuery.noConflict(false);
+  window.jQuery = jQuery;
+  </script>
+
+  <script type="text/javascript" src="{% static "autocomplete_light/jquery.init.js" %}"></script>
+  <script type="text/javascript" src="{% static "autocomplete_light/fixed.autocomplete.init.js" %}"></script>
+  <script type="text/javascript" src="{% static "autocomplete_light/vendor/select2/dist/js/select2.full.js" %}"></script>
+  <script type="text/javascript" src="{% static "autocomplete_light/select2.js" %}"></script>
+{% endblock %}
+
 {% block after_field_sets %}
   {% if original.video %}
   <hr/>
@@ -85,7 +103,6 @@
 
 {% block footer %}
   {{ block.super }}
-  <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> -->
   <script src="{% static "jquery/dist/jquery.min.js" %}"></script>
   <script src="{% static "plyr/dist/plyr.js" %}"></script>
   <script>

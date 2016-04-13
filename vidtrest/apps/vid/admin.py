@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
-from django.conf import settings
 from django.contrib import admin
 from django.conf.urls import url
-from django.http import HttpResponse
-from django.utils.safestring import mark_safe
-#from advanced_filters.admin import AdminAdvancedFiltersMixin
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 
-from .models import Vid, VideoMeta
+from .models import Vid
 from .forms import VidForm
 
 
