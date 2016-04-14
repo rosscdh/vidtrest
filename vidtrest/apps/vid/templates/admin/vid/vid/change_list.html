@@ -1,18 +1,45 @@
 {% extends 'admin/change_list.html' %}
-{% load pipeline staticfiles %}
+{% load i18n admin_urls admin_static admin_list pipeline staticfiles vid_tags %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <style>
+  .grid-item {
+    width:150px;
+  }
+  </style>
+{% endblock %}
+
+
+{% block result_list %}
+    {#% if action_form and actions_on_top and cl.show_admin_actions %#}{#% admin_actions %#}{#% endif %#}
+    {% vid_result_list cl %}
+    {% if action_form and actions_on_bottom and cl.show_admin_actions %}{% admin_actions %}{% endif %}
+{% endblock %}
+
 
 {% block footer %}
   {{ block.super }}
-  {% javascript 'thumbpreview' %}
-  <script>
-  //var jQuery = django.jQuery;
-  //var $ = django.jQuery;
-  </script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script src="{% static "jquery/dist/jquery.min.js" %}"></script>
   <script src="{% static "js/jquery.thumb.preview.js" %}"></script>
+  <script src="{% static "waterfall/waterfall.min.js" %}"></script>
+
   <script>
   (function($){
+      var view_video_url = "{% url 'admin:view_video' pk=000 %}";
+
       $('img.slider-thumb').thumbPreview({preload: true});
+
+      $('a.view-video').on('click', function (event) {
+        event.preventDefault();
+        self = $(this);
+        showAddAnotherPopup(this);
+      });
+
+      waterfall('.grid');
+      window.addEventListener('resize', function () {
+          waterfall('.grid');
+      });
   })(jQuery);
   </script>
 {% endblock %}

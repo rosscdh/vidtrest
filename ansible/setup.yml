@@ -1,0 +1,33 @@
+---
+- hosts: all
+  gather_facts: yes
+
+  # vars:
+  #   APP_PATH: /var/apps/hiveempire-smell
+  #   NODE_VERSION: 5.6.0
+
+  tasks:
+    - name: Add ffmpeg repo
+      apt_repository: repo='ppa:mc3man/trusty-media' state=present
+      sudo: yes
+
+    - name: Install Video processors
+      apt: name={{ item }} state=present update_cache=yes
+      with_items:
+        - nginx-extras
+        - exiftool
+        #- libav-tools
+        - ffmpeg
+      sudo: yes
+
+    - name: Remove default nginx
+      file: path=/etc/nginx/sites-enabled/default state=absent
+      sudo: yes
+
+    - name: Copy nginx conf
+      copy: src=./media.nginx.conf dest=/etc/nginx/sites-enabled/media.nginx.conf owner=root group=root mode=755 backup=yes
+      sudo: yes
+
+    - name: restart nginx
+      service: name=nginx state=restarted
+      sudo: yes

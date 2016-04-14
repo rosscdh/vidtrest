@@ -1,25 +1,65 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from django.utils.safestring import mark_safe
-from taggit.forms import TagField, TagWidget
+from django.core.exceptions import ValidationError
+
+from django.contrib.contenttypes.models import ContentType
+
+from django_select2.forms import HeavySelect2MultipleWidget
+from taggit.models import Tag
+from vidtrest.apps.categories.models import VideoCat
 
 from .models import Vid
+from .services import ExtractcombinedTagsCategoriesService
+
+import re
+
+CONTENT_TYPES = {
+    'cat': ContentType.objects.get_for_model(VideoCat),
+    'tag': ContentType.objects.get_for_model(Tag),
+}
+
+SELECT_2_WIDGET = HeavySelect2MultipleWidget(data_view='categories:autocomplete')
 
 
-class TagsWithKewordsWidget(TagWidget):
-    def render(self, name, value, attrs=None):
-        html = super(TagsWithKewordsWidget, self).render(name, value, attrs)
-        return mark_safe(u'List of keword categories here:<br/> %s' % html)
+class AnyChoiceMultipleChoiceField(forms.MultipleChoiceField):
+    """
+    Allows a choice of any value, for select2
+    """
+    def validate(self, value):
+        if self.required and not value:
+            raise ValidationError(self.error_messages['required'], code='required')
 
 
 class VidForm(forms.ModelForm):
-    tags = TagField(widget=TagsWithKewordsWidget())
+    combined_tags = AnyChoiceMultipleChoiceField(widget=SELECT_2_WIDGET)
 
     class Meta:
         model = Vid
         fields = (
             'name',
             'video',
-            'tags',
-            'categories',
         )
+
+    def __init__(self, *args, **kwargs):
+        super(VidForm, self).__init__(*args, **kwargs)
+
+        # Setup the initial values for the combined_tags field
+        if self.instance:
+            cats = [('%s-%s' % (CONTENT_TYPES['cat'].pk, cat.get('pk')), cat.get('name')) for cat in self.instance.categories.all().values('pk', 'name')]
+            tags = [('%s-%s' % (CONTENT_TYPES['tag'].pk, tag.get('pk')), tag.get('name')) for tag in self.instance.tags.all().values('pk', 'name')]
+
+            self.fields['combined_tags'].widget.attrs.update({'data-tags': ','.join([item[0] for item in cats + tags])})
+            self.fields['combined_tags'].initial = [item[0] for item in cats + tags]
+            self.fields['combined_tags'].choices = cats + tags
+
+
+    def save(self, **kwargs):
+        # pop the tags so we dont try save it to the model
+        combined_tags = self.cleaned_data.pop('combined_tags', '')
+
+        # start a service to perform that function of adding cats and tags
+        service = ExtractcombinedTagsCategoriesService(vid=self.instance,
+                                                       combined_tags=combined_tags)
+        self.instance = service.process()
+
+        return super(VidForm, self).save(**kwargs)

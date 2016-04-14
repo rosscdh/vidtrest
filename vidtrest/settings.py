@@ -39,14 +39,13 @@ PROJECT_APPS = [
 
 HELPER_APPS = [
     'django_extensions',
+    'django_select2',
     'taggit',
     'storages',
     's3direct',
     'pipeline',
     'django_rq',
     'djangobower',
-    #'advanced_filters',
-    #'easy_select2',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + HELPER_APPS
@@ -131,11 +130,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
-STATIC_URL = '/static/'
-#STATIC_URL = 'http://localhost:8012/'
+#STATIC_URL = '/static/'
+STATIC_URL = 'http://192.168.50.5/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-MEDIA_URL = '/m/'
+#MEDIA_URL = '/m/'
+MEDIA_URL = 'http://192.168.50.5/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 #
@@ -206,12 +206,12 @@ S3DIRECT_DESTINATIONS = {
 
     # # Allow authenticated users to upload with cache-control for a month and content-disposition set to attachment
     # 'cached': (
-    #     'uploads/vids', 
-    #     lambda u: u.is_authenticated(), 
-    #     '*', 
-    #     'public-read', 
-    #     AWS_STORAGE_BUCKET_NAME, 
-    #     'max-age=2592000', 
+    #     'uploads/vids',
+    #     lambda u: u.is_authenticated(),
+    #     '*',
+    #     'public-read',
+    #     AWS_STORAGE_BUCKET_NAME,
+    #     'max-age=2592000',
     #     'attachment')
 }
 
@@ -235,6 +235,8 @@ STATICFILES_DIRS = (
 BOWER_INSTALLED_APPS = (
     'jquery-thumb-preview#0.0.1',
     'jquery#1.11.0',
+    'plyr#1.5.21',
+    'waterfall#1.0.3',
 )
 
 PIPELINE = {

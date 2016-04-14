@@ -2,7 +2,9 @@
 from django.template.defaultfilters import slugify
 import subprocess
 
-import re
+from taggit.models import Tag
+from vidtrest.apps.categories.models import VideoCat
+#import re
 import os
 
 
@@ -67,3 +69,35 @@ class VideoThumbnailService(object):
 
         subprocess.check_output(cmd, shell=True)
         self.thumbs = ['thumbs-%d-%02d.jpg' % (self.pk, i) for i in range(1, self.num_thumbs)]
+
+
+class ExtractcombinedTagsCategoriesService(object):
+    """
+    service to extract a field that combines taggit tags and our categories
+    and set all of the data as tags, but also save the categories
+    """
+    def __init__(self, vid, combined_tags):
+        if type(combined_tags) not in [set, list, tuple]:
+            raise Exception('combined_tags must be a list')
+
+        self.vid = vid
+
+        self.combined_tags = [item.strip() for item in combined_tags]
+
+        self.posted_cats = VideoCat.objects.filter(name__in=self.combined_tags)
+        posted_cat_names = [cat.get('name') for cat in self.posted_cats.values()]
+
+        self.posted_tags = [Tag.objects.get_or_create(name=tag)[0] for tag in self.combined_tags if tag not in posted_cat_names]
+
+    def process(self):
+        # Delete existing categories
+        self.vid.categories.clear()
+        # Create the cats
+        [self.vid.categories.add(cat) for cat in self.posted_cats]
+
+        # Delete existing tags
+        self.vid.tags.clear()
+        # Create them
+        [self.vid.tags.add(tag) for tag in self.posted_tags]
+        return self.vid
+

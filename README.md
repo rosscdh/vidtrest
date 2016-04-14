@@ -20,8 +20,20 @@ Videos by keyword
 
 ```
 pip install -r requirements.txt
+./manage.py bower_install
+./manage.py collectstatic --noinput
 ./manage.py migrate
 ./manage.py createsuperuser
 redis-server
 honcho start
+```
+
+## Install media server
+
+* requires ansible installed
+* requires vagrant installed
+
+```
+vagrant up
+vagrant provision
 ```
