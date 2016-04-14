@@ -10,7 +10,13 @@ class CategoryAndTagsAutocompleteView(Select2QuerySetSequenceView):
     """
     Autocomplete view for tags/categories lookup field
     """
+    def get_result_value(self, result):
+        """Override to return the plain name and not the cid-pk"""
+        return u'%s' % (result.name)
+
     def get_queryset(self):
+        self.q = self.request.GET.get('term', None)
+
         template_cats = VideoCat.objects.all()
         tags = Tag.objects.all()
 

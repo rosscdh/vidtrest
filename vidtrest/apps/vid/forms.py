@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from django import forms
+from django.core.exceptions import ValidationError
 
 from django.contrib.contenttypes.models import ContentType
 
-from dal.forms import FutureModelForm
-from dal_select2.widgets import TagSelect2
+from django_select2.forms import HeavySelect2MultipleWidget
 from taggit.models import Tag
 from vidtrest.apps.categories.models import VideoCat
 
@@ -18,9 +18,20 @@ CONTENT_TYPES = {
     'tag': ContentType.objects.get_for_model(Tag),
 }
 
+SELECT_2_WIDGET = HeavySelect2MultipleWidget(data_view='categories:autocomplete')
 
-class VidForm(FutureModelForm):
-    combined_tags = forms.MultipleChoiceField(widget=TagSelect2('categories:autocomplete'), required=False)
+
+class AnyChoiceMultipleChoiceField(forms.MultipleChoiceField):
+    """
+    Allows a choice of any value, for select2
+    """
+    def validate(self, value):
+        if self.required and not value:
+            raise ValidationError(self.error_messages['required'], code='required')
+
+
+class VidForm(forms.ModelForm):
+    combined_tags = AnyChoiceMultipleChoiceField(widget=SELECT_2_WIDGET)
 
     class Meta:
         model = Vid
@@ -41,31 +52,10 @@ class VidForm(FutureModelForm):
             self.fields['combined_tags'].initial = [item[0] for item in cats + tags]
             self.fields['combined_tags'].choices = cats + tags
 
-    def transform_to_content_objects(self, content_type_objects):
-        response = []
-        # perform magic getting the content_type-model_pk split
-        content_type_pks, model_pks = zip(*[tuple(item.split('-')) for item in content_type_objects])
-
-        content_type_models = {}
-        for content_type in ContentType.objects.filter(pk__in=content_type_pks):
-            content_type_models[content_type.pk] = content_type.model_class()
-
-        # rezip the content_type-model_pk
-        for content_type_pk, model_pk in zip(content_type_pks, model_pks):
-            obj = content_type_models[int(content_type_pk)].objects.get(pk=model_pk)
-            response.append(obj.name)
-
-        return response
 
     def save(self, **kwargs):
         # pop the tags so we dont try save it to the model
-        combined_tags = self.cleaned_data.pop('combined_tags', '').split(',')
-
-        new_items = set([item for item in combined_tags if re.match('^(\d+)-(\d+)$', item) is None])
-        existing_items = [item for item in combined_tags if re.match('^(\d+)-(\d+)$', item) is not None]
-        existing_items = set(self.transform_to_content_objects(content_type_objects=existing_items))
-
-        combined_tags = existing_items.union(new_items)
+        combined_tags = self.cleaned_data.pop('combined_tags', '')
 
         # start a service to perform that function of adding cats and tags
         service = ExtractcombinedTagsCategoriesService(vid=self.instance,

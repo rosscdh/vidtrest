@@ -12,25 +12,29 @@
   dt { width: 180px; clear:left } // clear to force it to the next line
   dd { width: 300px; }
   dt, dd { float:left; }
+  .select2-container {
+    width:60%!important;
+  }
   </style>
 {% endblock %}
 
 {% block extrahead %}
-  <link href="{% static "autocomplete_light/vendor/select2/dist/css/select2.css" %}" type="text/css" media="all" rel="stylesheet" />
-  <link href="{% static "autocomplete_light/select2.css" %}" type="text/css" media="all" rel="stylesheet" />
-
-  <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script type="text/javascript" src="/admin/jsi18n/"></script>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" type="text/css" media="screen" rel="stylesheet" />
+  <script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
+  <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+  <script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
   <script type="text/javascript">
-  django = django || {};
-  django.jQuery = jQuery.noConflict(false);
-  window.jQuery = jQuery;
+  var $ = django.jQuery;
+  var jQuery = django.jQuery;
   </script>
-
-  <script type="text/javascript" src="{% static "autocomplete_light/jquery.init.js" %}"></script>
-  <script type="text/javascript" src="{% static "autocomplete_light/fixed.autocomplete.init.js" %}"></script>
-  <script type="text/javascript" src="{% static "autocomplete_light/vendor/select2/dist/js/select2.full.js" %}"></script>
-  <script type="text/javascript" src="{% static "autocomplete_light/select2.js" %}"></script>
+  <script type="text/javascript" src="{% static 'admin/js/admin/RelatedObjectLookups.js' %}"></script>
+  <script type="text/javascript" src="{% static 'admin/js/actions.js' %}"></script>
+  <script type="text/javascript" src="{% static 'admin/js/urlify.js' %}"></script>
+  <script type="text/javascript" src="{% static 'admin/js/prepopulate.js' %}"></script>
+  <script type="text/javascript" src="{% static 'admin/js/vendor/xregexp/xregexp.min.js' %}"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+  <script type="text/javascript" src="{% static 'django_select2/django_select2.js' %}"></script>
 {% endblock %}
 
 {% block after_field_sets %}
@@ -103,7 +107,6 @@
 
 {% block footer %}
   {{ block.super }}
-  <script src="{% static "jquery/dist/jquery.min.js" %}"></script>
   <script src="{% static "plyr/dist/plyr.js" %}"></script>
   <script>
   (function($){
