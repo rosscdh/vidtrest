@@ -26,7 +26,7 @@ def do_upload_to_s3(instance):
     do_video_thumbs(instance=instance,
                     video=instance.video)
 
-    # Delete original video if its been handed off too s3
+    # Delete original video if its been handed off to s3
     if settings.AWS_STORAGE_BUCKET_NAME and instance.s3_video:
         instance.video.delete()
         instance.save(update_fields=['video'])

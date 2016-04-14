@@ -2,21 +2,11 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from django.contrib.contenttypes.models import ContentType
-
 from django_select2.forms import HeavySelect2MultipleWidget
-from taggit.models import Tag
-from vidtrest.apps.categories.models import VideoCat
 
 from .models import Vid
 from .services import ExtractcombinedTagsCategoriesService
 
-import re
-
-CONTENT_TYPES = {
-    'cat': ContentType.objects.get_for_model(VideoCat),
-    'tag': ContentType.objects.get_for_model(Tag),
-}
 
 SELECT_2_WIDGET = HeavySelect2MultipleWidget(data_view='categories:autocomplete')
 
@@ -44,13 +34,14 @@ class VidForm(forms.ModelForm):
         super(VidForm, self).__init__(*args, **kwargs)
 
         # Setup the initial values for the combined_tags field
-        if self.instance:
-            cats = [('%s-%s' % (CONTENT_TYPES['cat'].pk, cat.get('pk')), cat.get('name')) for cat in self.instance.categories.all().values('pk', 'name')]
-            tags = [('%s-%s' % (CONTENT_TYPES['tag'].pk, tag.get('pk')), tag.get('name')) for tag in self.instance.tags.all().values('pk', 'name')]
-
-            self.fields['combined_tags'].widget.attrs.update({'data-tags': ','.join([item[0] for item in cats + tags])})
-            self.fields['combined_tags'].initial = [item[0] for item in cats + tags]
-            self.fields['combined_tags'].choices = cats + tags
+        # @TODO clean this nastiness up move into form or widget
+        if self.instance.pk:
+            cats = [(cat.get('name'), cat.get('name')) for cat in self.instance.categories.all().values('pk', 'name')]
+            tags = [(tag.get('name'), tag.get('name')) for tag in self.instance.tags.all().values('pk', 'name')]
+            combined_tags = cats + tags
+            self.fields['combined_tags'].widget.attrs.update({'data-tags': ','.join([item[0] for item in combined_tags])})
+            self.fields['combined_tags'].initial = [item[0] for item in combined_tags]
+            self.fields['combined_tags'].choices = combined_tags
 
 
     def save(self, **kwargs):
