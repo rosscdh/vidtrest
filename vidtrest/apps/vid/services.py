@@ -53,7 +53,7 @@ class VideoMetaService(object):
 class VideoThumbnailService(object):
     num_thumbs = 5
     thumbs = []
-    cmd = 'ffmpeg -ss 3 -i {video_path} -vf "select=gt(scene\,0.2)" -frames:v {num_thumbs} -s 128x96 -vsync vfr {output_path}/thumbs-{pk}-%02d.jpg'
+    cmd = 'ffmpeg -ss 3 -i {video_path} -vf "select=gt(scene\,0.2)" -frames:v {num_thumbs} -s 320x200 -vsync vfr {output_path}/thumbs-{pk}-%02d.jpg'
 
     def __init__(self, pk, video):
         self.pk = pk
