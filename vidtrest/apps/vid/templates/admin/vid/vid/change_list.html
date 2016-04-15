@@ -26,8 +26,6 @@
 
   <script>
   (function($){
-      var view_video_url = "{% url 'admin:view_video' pk=000 %}";
-
       $('img.slider-thumb').thumbPreview({preload: true});
 
       $('a.view-video').on('click', function (event) {
