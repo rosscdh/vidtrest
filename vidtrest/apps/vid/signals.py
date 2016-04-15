@@ -29,6 +29,7 @@ def do_upload_to_s3(instance):
             # Remove the video and refer only to the s3_video
             instance.video.delete()
 
+
 def do_video_meta(instance, video):
     videometa, is_new = VideoMeta.objects.get_or_create(vid=instance)
 
