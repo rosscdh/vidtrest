@@ -45,6 +45,9 @@ class VidForm(forms.ModelForm):
 
 
     def save(self, **kwargs):
+        self.instance = super(VidForm, self).save(**kwargs)
+        self.instance.save()
+
         # pop the tags so we dont try save it to the model
         combined_tags = self.cleaned_data.pop('combined_tags', '')
 
@@ -53,4 +56,4 @@ class VidForm(forms.ModelForm):
                                                        combined_tags=combined_tags)
         self.instance = service.process()
 
-        return super(VidForm, self).save(**kwargs)
+        return self.instance

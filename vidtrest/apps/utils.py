@@ -20,7 +20,8 @@ class OverwriteStorage(FileSystemStorage):
 
 
 def managed_s3botostorage():
-    if settings.PROJECT_ENVIRONMENT in ['test', 'development']:
-        return OverwriteStorage()
+    if settings.PROJECT_ENVIRONMENT not in ['test', 'development']  \
+       or settings.AWS_USE is True:
+            return S3BotoStorage()
     else:
-        return S3BotoStorage()
+        return OverwriteStorage()

@@ -15,8 +15,9 @@ def do_upload_to_s3(instance):
     Upload video file to s3, and then call the following events
     """
     if settings.AWS_STORAGE_BUCKET_NAME:
-        instance.s3_video.save(instance.video.name, instance.video.read())
-        instance.save(update_fields=['s3_video'])
+    #     instance.s3_video.save(instance.video.name, instance.video)
+    #     instance.video.seek(0)
+        instance.s3_video = instance.video
 
     # Extract meta-data
     do_video_meta(instance=instance,
@@ -29,7 +30,6 @@ def do_upload_to_s3(instance):
     # Delete original video if its been handed off to s3
     if settings.AWS_STORAGE_BUCKET_NAME and instance.s3_video:
         instance.video.delete()
-        instance.save(update_fields=['video'])
 
 
 def do_video_meta(instance, video):
@@ -63,10 +63,12 @@ def do_video_meta(instance, video):
 
 def do_video_thumbs(instance, video):
     videometa, is_new = VideoMeta.objects.get_or_create(vid=instance)
+
     # Thumbnails
     service = VideoThumbnailService(pk=instance.pk,
                                     video=instance.video)
     service.process()
+
     videometa.data.update({'thumbs': service.thumbs})
     videometa.save(update_fields=['data'])
 

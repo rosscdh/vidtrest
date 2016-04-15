@@ -42,7 +42,6 @@ HELPER_APPS = [
     'django_select2',
     'taggit',
     'storages',
-    's3direct',
     'pipeline',
     'django_rq',
     'djangobower',
@@ -130,11 +129,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
-#STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
 STATIC_URL = 'http://192.168.50.5/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-#MEDIA_URL = '/m/'
+# MEDIA_URL = '/m/'
 MEDIA_URL = 'http://192.168.50.5/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -166,54 +165,10 @@ RQ_QUEUES = {
 }
 
 # AWS keys
+AWS_USE = False
 AWS_SECRET_ACCESS_KEY = ''
 AWS_ACCESS_KEY_ID = ''
 AWS_STORAGE_BUCKET_NAME = ''
-
-# The region of your bucket, more info:
-# http://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region
-S3DIRECT_REGION = 'eu-west-1'
-
-# Destinations in the following format:
-# {destination_key: (path_or_function, auth_test, [allowed_mime_types], permissions, custom_bucket)}
-#
-# 'destination_key' is the key to use for the 'dest' attribute on your widget or model field
-S3DIRECT_DESTINATIONS = {
-    # Allow anybody to upload any MIME type
-    #'misc': ('uploads/misc',),
-
-    # Allow staff users to upload any MIME type
-    #'files': ('uploads/files', lambda u: u.is_staff,),
-
-    # Allow anybody to upload jpeg's and png's.
-    #'imgs': ('uploads/imgs', lambda u: True, ['image/jpeg', 'image/png'],),
-
-    # Allow authenticated users to upload mp4's
-    'vids': ('vids', lambda u: u.is_staff(), ['video/mp4'],),
-
-    # Allow anybody to upload any MIME type with a custom name function, eg:
-    #'custom_filename': (lambda original_filename: 'images/unique.jpg',),
-
-    # Specify a non-default bucket for PDFs
-    #'pdfs': ('/', lambda u: True, ['application/pdf'], None, 'pdf-bucket',),
-
-    # Allow logged in users to upload any type of file and give it a private acl:
-    # 'private': (
-    #     'uploads/vids',
-    #     lambda u: u.is_authenticated(),
-    #     '*',
-    #     'private')
-
-    # # Allow authenticated users to upload with cache-control for a month and content-disposition set to attachment
-    # 'cached': (
-    #     'uploads/vids',
-    #     lambda u: u.is_authenticated(),
-    #     '*',
-    #     'public-read',
-    #     AWS_STORAGE_BUCKET_NAME,
-    #     'max-age=2592000',
-    #     'attachment')
-}
 
 
 STATICFILES_FINDERS = (
@@ -257,25 +212,19 @@ PIPELINE = {
     }
 }
 
-
-
 #
 # Load the environment specific settings
 #
-try:
-    environment_settings = open(os.path.join(BASE_DIR, '../', 'config/environments/{DJANGO_ENV}/vidtrest/local_settings.py'.format(DJANGO_ENV=PROJECT_ENVIRONMENT)))
+
+
+def _load_settings(project_environment):
+    environment_settings = open(os.path.join(BASE_DIR, '../', 'config/environments/{DJANGO_ENV}/vidtrest/local_settings.py'.format(DJANGO_ENV=project_environment)))
     exec(environment_settings)
+
+try:
+    _load_settings(PROJECT_ENVIRONMENT)
 except Exception as e:
     print('An exception trying to import env specific settings occrrred: %s' % e)
-
-#
-# Load specific local_settings.py settings in case we want to override something for an env
-#
-# try:
-#     from ..local_settings import *
-# except ImportError:
-#     # no local_settings.py found
-#     print('no local_settings.py found')
 
 #
 # Check for test settings
@@ -284,5 +233,4 @@ for test_app in ['testserver', 'test', 'jenkins']:
     if test_app in sys.argv[1:2]:
         # Hardcode to test
         PROJECT_ENVIRONMENT = 'test'
-        environment_settings = open(os.path.join(BASE_DIR, '../', 'config/environments/{DJANGO_ENV}/vidtrest/local_settings.py'.format(DJANGO_ENV=PROJECT_ENVIRONMENT)))
-        exec(environment_settings)
+        _load_settings(PROJECT_ENVIRONMENT)

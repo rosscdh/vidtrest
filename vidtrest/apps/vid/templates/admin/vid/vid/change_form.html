@@ -4,6 +4,7 @@
 {% block extrastyle %}
   {{ block.super }}
   <link rel="stylesheet" type="text/css" href="{% static "plyr/dist/plyr.css" %}" />
+  <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" type="text/css" media="screen" rel="stylesheet" />
   <style>
   .meta-data {
     width:100%;
@@ -20,7 +21,6 @@
 
 {% block extrahead %}
   <script type="text/javascript" src="/admin/jsi18n/"></script>
-  <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" type="text/css" media="screen" rel="stylesheet" />
   <script type="text/javascript" src="{% static 'admin/js/core.js' %}"></script>
   <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
   <script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
