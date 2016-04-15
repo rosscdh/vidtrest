@@ -21,7 +21,8 @@ class AnyChoiceMultipleChoiceField(forms.MultipleChoiceField):
 
 
 class VidForm(forms.ModelForm):
-    combined_tags = AnyChoiceMultipleChoiceField(widget=SELECT_2_WIDGET)
+    combined_tags = AnyChoiceMultipleChoiceField(widget=SELECT_2_WIDGET,
+                                                 required=False)
 
     class Meta:
         model = Vid
@@ -35,11 +36,12 @@ class VidForm(forms.ModelForm):
 
         # Setup the initial values for the combined_tags field
         # @TODO clean this nastiness up move into form or widget
+        self.fields['combined_tags'].widget.attrs.update({'data-tags': 'true'})  # V important for taking multiple and creating new
+
         if self.instance.pk:
             cats = [(cat.get('name'), cat.get('name')) for cat in self.instance.categories.all().values('pk', 'name')]
             tags = [(tag.get('name'), tag.get('name')) for tag in self.instance.tags.all().values('pk', 'name')]
             combined_tags = cats + tags
-            self.fields['combined_tags'].widget.attrs.update({'data-tags': ','.join([item[0] for item in combined_tags])})
             self.fields['combined_tags'].initial = [item[0] for item in combined_tags]
             self.fields['combined_tags'].choices = combined_tags
 
