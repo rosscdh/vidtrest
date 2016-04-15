@@ -43,7 +43,6 @@ class VidForm(forms.ModelForm):
             self.fields['combined_tags'].initial = [item[0] for item in combined_tags]
             self.fields['combined_tags'].choices = combined_tags
 
-
     def save(self, **kwargs):
         self.instance = super(VidForm, self).save(**kwargs)
         self.instance.save()
