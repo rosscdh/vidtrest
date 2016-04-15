@@ -50,11 +50,7 @@ class Vid(models.Model):
 
     @property
     def thumb(self):
-        thumb = 'https://placeholdit.imgix.net/~text?txtsize=18&txt=Generating...&w=128&h=96'
-        thumbs = self.videometa.data.get('thumbs', [])
-        if thumbs:
-            thumb = '%svideo/thumbs-%d-04.jpg' % (settings.MEDIA_URL, self.pk)
-        return thumb
+        return self.videometa.thumb
 
     @property
     def thumbs(self):
