@@ -54,9 +54,7 @@ class Vid(models.Model):
 
     @property
     def thumbs(self):
-        thumbs = self.videometa.data.get('thumbs', [])
-        thumbs = ['%svideo/%s' % (settings.MEDIA_URL, t) for t in thumbs]
-        return '["%s"]' % '","'.join(thumbs)
+        return self.videometa.thumbs
 
 
 class VideoMeta(models.Model):
@@ -88,3 +86,9 @@ class VideoMeta(models.Model):
         if thumbs:
             thumb = '%svideo/thumbs-%d-04.jpg' % (settings.MEDIA_URL, self.vid.pk)
         return thumb
+
+    @property
+    def thumbs(self):
+        thumbs = self.data.get('thumbs', [])
+        thumbs = ['%svideo/%s' % (settings.MEDIA_URL, t) for t in thumbs]
+        return '["%s"]' % '","'.join(thumbs)
