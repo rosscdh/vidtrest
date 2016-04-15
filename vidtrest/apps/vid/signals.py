@@ -15,6 +15,9 @@ def do_upload_to_s3(instance):
     """
     Upload video file to s3, and then call the following events
     """
+    # Ensure we have the latest
+    instance.refresh_from_db()
+
     # Extract meta-data
     do_video_meta(instance=instance,
                   video=instance.video)
@@ -24,7 +27,9 @@ def do_upload_to_s3(instance):
                     video=instance.video)
 
     if settings.AWS_USE and instance.video:
-        instance.s3_video.save(instance.video.path, ContentFile(instance.video.read()))
+        instance.s3_video.save(instance.video.path,
+                               ContentFile(instance.video.read()))
+        # If we have a s3_video url
         if instance.s3_video.url:
             # Remove the video and refer only to the s3_video
             instance.video.delete()
