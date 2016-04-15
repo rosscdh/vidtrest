@@ -218,11 +218,11 @@ PIPELINE = {
 
 
 def _load_settings(project_environment):
-    environment_settings = open(os.path.join(BASE_DIR, '../', 'config/environments/{DJANGO_ENV}/vidtrest/local_settings.py'.format(DJANGO_ENV=project_environment)))
-    exec(environment_settings)
+    settings_path = os.path.join(BASE_DIR, '../', 'config/environments/{DJANGO_ENV}/vidtrest/local_settings.py'.format(DJANGO_ENV=project_environment))
+    return open(settings_path)
 
 try:
-    _load_settings(PROJECT_ENVIRONMENT)
+    exec(_load_settings(PROJECT_ENVIRONMENT))
 except Exception as e:
     print('An exception trying to import env specific settings occrrred: %s' % e)
 
@@ -233,4 +233,4 @@ for test_app in ['testserver', 'test', 'jenkins']:
     if test_app in sys.argv[1:2]:
         # Hardcode to test
         PROJECT_ENVIRONMENT = 'test'
-        _load_settings(PROJECT_ENVIRONMENT)
+        exec(_load_settings(PROJECT_ENVIRONMENT))
