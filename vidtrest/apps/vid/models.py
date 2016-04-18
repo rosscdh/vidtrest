@@ -11,7 +11,7 @@ from taggit.managers import TaggableManager
 from vidtrest.apps.utils import managed_s3botostorage, OverwriteStorage
 
 import os
-#import uuid
+import uuid
 
 
 def _upload_video(instance, filename):
@@ -20,8 +20,8 @@ def _upload_video(instance, filename):
 
     full_file_name = '%s%s' % (slugify(filename_no_ext), ext)
 
-    full_path = 'video/%s/%s' % (instance.pk, full_file_name)
-    #import pdb;pdb.set_trace()
+    full_path = 'video/%s/%s' % (str(instance.uuid), full_file_name)
+
     try:
         os.makedirs(full_path)
     except OSError as e:
@@ -33,6 +33,7 @@ def _upload_video(instance, filename):
 
 
 class Vid(models.Model):
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
 
     video = models.FileField(upload_to=_upload_video,
