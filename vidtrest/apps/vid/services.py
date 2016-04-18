@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 from django.template.defaultfilters import slugify
-import subprocess
+from django.core.files.storage import default_storage
 
 from taggit.models import Tag
 from vidtrest.apps.categories.models import VideoCat
-#import re
+from vidtrest.apps.utils import managed_s3botostorage
+
 import os
+import subprocess
 
 
 class VideoMetaService(object):
@@ -52,6 +54,7 @@ class VideoMetaService(object):
 
 class VideoThumbnailService(object):
     num_thumbs = 10
+    output_path = None
     thumbs = []
     cmd = 'ffmpeg -ss 3 -i {video_path} -vf "select=gt(scene\,0.3)" -frames:v {num_thumbs} -s 320x200 -vsync vfr {output_path}/thumbs-%02d.jpg'
 
@@ -59,17 +62,26 @@ class VideoThumbnailService(object):
         self.pk = pk
         self.video = video
 
+    def upload_thumbs(self, thumbs=[]):
+        if thumbs:
+            storage = managed_s3botostorage()
+
+            for thumb in thumbs:
+                file_path = os.path.join(self.output_path, thumb)
+                s3_file_path = '/%s' % '/'.join(file_path.split('/')[-3:])
+                storage.save(s3_file_path, default_storage.open(file_path))
+
     def process(self):
-        tail, head = os.path.split(self.video.path)
+        self.output_path, head = os.path.split(self.video.path)
 
         cmd = self.cmd.format(pk=self.pk,
                               num_thumbs=self.num_thumbs,
                               video_path=self.video.path,
-                              output_path=tail)
+                              output_path=self.output_path)
 
         subprocess.check_output(cmd, shell=True)
-        print cmd
-        self.thumbs = ['thumbs-%02d.jpg' % (i,) for i in range(1, self.num_thumbs)]
+
+        self.thumbs = self.upload_thumbs(thumbs=['thumbs-%02d.jpg' % (i,) for i in range(1, self.num_thumbs)])
 
 
 class ExtractcombinedTagsCategoriesService(object):
