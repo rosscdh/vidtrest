@@ -7,27 +7,23 @@
   .meta-data {
     width:100%;
   }
-  dl { width:100%; }
-  dt { width: 180px; clear:left } // clear to force it to the next line
-  dd { width: 300px; }
-  dt, dd { float:left; }
   </style>
 
   {% if original.get_video %}
   <hr/>
 
-        <div class="plyr">
-            <video poster="{{ original.thumb }}" controls>
-                <!-- Video files -->
-                <source src="{{ original.get_video.url }}" type="{{ original.videometa.mime_type }}">
-                <!-- Text track file -->
-                <!-- <track kind="captions" label="English captions" src="/path/to/captions.vtt" srclang="en" default> -->
-                <!-- Fallback for browsers that don't support the <video> element -->
-                <a href="{{ original.get_video.url }}">Download</a>
-            </video>
-        </div>
+  <div class="plyr">
+      <video poster="{{ original.thumb }}" controls>
+          <!-- Video files -->
+          <source src="{{ original.get_video.url }}" type="{{ original.videometa.mime_type }}">
+          <!-- Text track file -->
+          <!-- <track kind="captions" label="English captions" src="/path/to/captions.vtt" srclang="en" default> -->
+          <!-- Fallback for browsers that don't support the <video> element -->
+          <a href="{{ original.get_video.url }}">Download</a>
+      </video>
+  </div>
 
-        {% vid_metadata original %}
+  {% vid_metadata original %}
 
   <hr/>
   <p>&nbsp;</p>

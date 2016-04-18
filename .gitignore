@@ -1,6 +1,7 @@
 venv
 .vagrant
 .sonar/
+*.pem
 *.db
 *.py[cod]
 .env
