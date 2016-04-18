@@ -1,2 +1,2 @@
-[hiveempire_raspberry_sense]
-sense_1 ansible_ssh_host=192.168.2.4 ansible_ssh_user=pi
+[vidtrest_staging]
+staging_web ansible_ssh_host=52.58.70.63 ansible_ssh_user=ubuntu

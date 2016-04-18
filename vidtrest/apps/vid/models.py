@@ -11,16 +11,25 @@ from taggit.managers import TaggableManager
 from vidtrest.apps.utils import managed_s3botostorage, OverwriteStorage
 
 import os
-import uuid
+#import uuid
 
 
 def _upload_video(instance, filename):
     split_file_name = os.path.split(filename)[-1]
     filename_no_ext, ext = os.path.splitext(split_file_name)
 
-    full_file_name = '%s-%s%s' % (instance.pk, slugify(filename_no_ext), ext)
+    full_file_name = '%s%s' % (slugify(filename_no_ext), ext)
 
-    return 'video/%s' % full_file_name
+    full_path = 'video/%s/%s' % (instance.pk, full_file_name)
+    #import pdb;pdb.set_trace()
+    try:
+        os.makedirs(full_path)
+    except OSError as e:
+        if e.errno == 17:
+            # Dir already exists. No biggie.
+            pass
+
+    return full_path
 
 
 class Vid(models.Model):
@@ -84,11 +93,11 @@ class VideoMeta(models.Model):
         thumb = 'https://placeholdit.imgix.net/~text?txtsize=18&txt=Generating...&w=128&h=96'
         thumbs = self.data.get('thumbs', [])
         if thumbs:
-            thumb = '%svideo/thumbs-%d-04.jpg' % (settings.MEDIA_URL, self.vid.pk)
+            thumb = '%svideo/%s/thumbs-%d-04.jpg' % (settings.MEDIA_URL, self.vid.pk, self.vid.pk)
         return thumb
 
     @property
     def thumbs(self):
         thumbs = self.data.get('thumbs', [])
-        thumbs = ['%svideo/%s' % (settings.MEDIA_URL, t) for t in thumbs]
+        thumbs = ['%svideo/%s/%s' % (settings.MEDIA_URL, self.vid.pk, t) for t in thumbs]
         return '["%s"]' % '","'.join(thumbs)
