@@ -1,134 +1,82 @@
-<div class="container wp2">
-
-  <h1 class="section-title">Details</h1>
-
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="input-group input-group-lg">
-        <input id="video_url" class="form-control" type="text" value="{{ vid.get_video.url }}">
-        <span class="input-group-btn">
-          <button id="copytoclipboard" class="btn btn-info" type="button" data-clipboard-target="#video_url">
-            <i class="fa fa-clipboard" aria-hidden="true"></i>
-          </button>
-        </span>
-      </div>
-    </div>
-
-    <br />
-    <br />
-    <br />
-    <br />
-
-    <div class="col-lg-6 wp2 delay-05s">
-      {% for thumb in vid.videometa.thumbs_list %}
-        <div class="col-lg-6">
-          <img src="{{ MEDIA_URL }}{{ thumb }}" width="80%" style="padding: 5px;" />
-        </div>
-      {% endfor %}
-    </div>
-    <div class="col-lg-6 wp2 delay-1s">
-      <h4 class="sub-text">
-        Release Date: May 05, 2015 <br>
-        Rating: PG-13 <br>
-      </h4>
-
-      <table class="text-dark">
-        <tr>
-          <td>Mimetype</td>
-          <td style="min-width:15px;"></td>
-          <td>{{ vid.videometa.mime_type|default:"---" }}</td>
-        </tr>
-        <tr>
-          <td>Dauer</td>
-          <td style="min-width:15px;"></td>
-          <td><span class="detailed-text">{{ vid.videometa.duration|default:"---" }}</span></td>
-        </tr>
-        <tr>
-          <td>Dateigröße</td>
-          <td style="min-width:15px;"></td>
-          <td>{{ vid.videometa.file_size|default:"---" }}</td>
-        </tr>
-        <tr>
-          <td>Durchschn. Bitrate</td>
-          <td style="min-width:15px;"></td>
-          <td>{{ vid.videometa.avg_bitdate|default:"---" }}</td>
-        </tr>
-        <tr>
-          <td>Audio-Abtastrate</td>
-          <td style="min-width:15px;"></td>
-          <td>{{ vid.videometa.audio_sample_rate|default:"---" }}</td>
-        </tr>
-        <tr>
-          <td>Audiobits pro Sample</td>
-          <td style="min-width:15px;"></td>
-          <td>{{ vid.videometa.audio_bits_per_sample|default:"---" }}</td>
-        </tr>
-        <tr>
-          <td>Audioformat</td>
-          <td style="min-width:15px;"></td>
-          <td>{{ vid.videometa.audio_format|default:"---" }}</td>
-        </tr>
-        <tr>
-          <td>O-Frame Rate</td>
-          <td style="min-width:15px;"></td>
-          <td>{{ vid.videometa.o_frame_rate|default:"---" }}</td>
-        </tr>
-        <tr>
-          <td>Tdack Dauer</td>
-          <td style="min-width:15px;"></td>
-          <td>{{ vid.videometa.tdack_duration|default:"---" }}</td>
-        </tr>
-        <tr>
-          <td>X-Auflösung</td>
-          <td style="min-width:15px;"></td>
-          <td>{{ vid.videometa.x_resolution|default:"---" }}</td>
-        </tr>
-        <tr>
-          <td>Y-Auflösung</td>
-          <td style="min-width:15px;"></td>
-          <td>{{ vid.videometa.y_resolution|default:"---" }}</td>
-        </tr>
-        <tr>
-          <td>Bildgröße</td>
-          <td style="min-width:15px;"></td>
-          <td>{{ vid.videometa.image_size|default:"---" }}</td>
-        </tr>
-        <tr>
-          <td>Bildhöhe</td>
-          <td style="min-width:15px;"></td>
-          <td>{{ vid.videometa.image_height|default:"---" }}</td>
-        </tr>
-        <tr>
-          <td>Bildbreite</td>
-          <td style="min-width:15px;"></td>
-          <td>{{ vid.videometa.image_witdh|default:"---" }}</td>
-        </tr>
-        <tr>
-          <td>Dateityp</td>
-          <td style="min-width:15px;"></td>
-          <td>{{ vid.videometa.file_type|default:"---" }}</td>
-        </tr>
-        <tr>
-          <td>Kompressor</td>
-          <td style="min-width:15px;"></td>
-          <td>{{ vid.videometa.compressor_id|default:"---" }}</td>
-        </tr>
-      </table>
-
-      <br>
-
-      <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean eget dolor. Aenean massa. Natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Corper ipsum rutrum nunc. Vestibulum volutpat pretium libero ultricies nec.
-      <br>
-
-      <!-- <div class="detailed">
-        Rating:&nbsp;&nbsp;
-        <i class="fa fa-star"></i>
-        <i class="fa fa-star"></i>
-        <i class="fa fa-star"></i>
-        <i class="fa fa-star"></i>
-        <i class="fa fa-star-half-o"></i>
-        <span>IMDb &nbsp;<b>/  4.5</b></span>
-      </div> -->
-    </div>
-  </div>
-</div>
+<table class="text-dark col-md-6">
+  <tr>
+    <td>Mimetype</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.mime_type|default:"---" }}</td>
+  </tr>
+  <tr>
+    <td>Dauer</td>
+    <td style="min-width:15px;"></td>
+    <td><span class="detailed-text">{{ vid.videometa.duration|default:"---" }}</span></td>
+  </tr>
+  <tr>
+    <td>Dateigröße</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.file_size|default:"---" }}</td>
+  </tr>
+  <tr>
+    <td>Durchschn. Bitrate</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.avg_bitdate|default:"---" }}</td>
+  </tr>
+  <tr>
+    <td>Audio-Abtastrate</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.audio_sample_rate|default:"---" }}</td>
+  </tr>
+  <tr>
+    <td>Audiobits pro Sample</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.audio_bits_per_sample|default:"---" }}</td>
+  </tr>
+  <tr>
+    <td>Audioformat</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.audio_format|default:"---" }}</td>
+  </tr>
+  <tr>
+    <td>O-Frame Rate</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.o_frame_rate|default:"---" }}</td>
+  </tr>
+  <tr>
+    <td>Tdack Dauer</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.tdack_duration|default:"---" }}</td>
+  </tr>
+  <tr>
+    <td>X-Auflösung</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.x_resolution|default:"---" }}</td>
+  </tr>
+  <tr>
+    <td>Y-Auflösung</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.y_resolution|default:"---" }}</td>
+  </tr>
+  <tr>
+    <td>Bildgröße</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.image_size|default:"---" }}</td>
+  </tr>
+  <tr>
+    <td>Bildhöhe</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.image_height|default:"---" }}</td>
+  </tr>
+  <tr>
+    <td>Bildbreite</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.image_witdh|default:"---" }}</td>
+  </tr>
+  <tr>
+    <td>Dateityp</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.file_type|default:"---" }}</td>
+  </tr>
+  <tr>
+    <td>Kompressor</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.compressor_id|default:"---" }}</td>
+  </tr>
+</table>

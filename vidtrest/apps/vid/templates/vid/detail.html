@@ -3,7 +3,6 @@
 
 {% block content %}
 
-
   <!-- Intro Section -->
   <section id="intro">
     <div class="video-content">
@@ -41,7 +40,53 @@
       <a href="#about"><i class="fa fa-angle-down"></i></a>
     </div>
 
-    {% show_vid_metadata vid %}
+    <div class="container wp2">
+
+      <div class="col-lg-12" style="margin-bottom:25px;">
+        <div class="input-group input-group-lg">
+          <input id="video_url" class="form-control" type="text" value="{{ vid.get_video.url }}">
+          <span class="input-group-btn">
+            <button class="btn btn-info" type="button" data-clipboard-target="#video_url">
+              <i class="fa fa-clipboard" aria-hidden="true"></i>
+            </button>
+          </span>
+        </div>
+      </div>
+
+      <h1 class="section-title">{{ vid.name }}</h1>
+
+      <div class="row">
+
+        <div class="col-lg-6 wp2 delay-1s">
+          {% vid_thumbs vid %}
+        </div>
+
+        <div class="col-lg-6 wp2 delay-1s">
+
+          <h4 class="sub-text">
+            Release Date: May 05, 2015 <br>
+            Rating: PG-13 <br>
+          </h4>
+
+          {% vid_metadata vid %}
+
+          <br>
+
+          <p class="description">{{ vid.description|default:"..." }}</p>
+          <br>
+
+          <!-- <div class="detailed">
+            Rating:&nbsp;&nbsp;
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star-half-o"></i>
+            <span>IMDb &nbsp;<b>/  4.5</b></span>
+          </div> -->
+        </div>
+      </div>
+    </div>
 
   </section><!-- /#about -->
 
