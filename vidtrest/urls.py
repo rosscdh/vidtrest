@@ -4,6 +4,8 @@ from django.conf import settings
 from django.conf.urls import url, include
 from django.conf.urls.static import static
 
+admin.site.site_header = 'Jonas Hartung - Administration'
+
 urlpatterns = [
     url(r'^', include('vidtrest.apps.vid.urls')),
     url(r'^vids/', include('vidtrest.apps.vid.urls', namespace='vid')),
