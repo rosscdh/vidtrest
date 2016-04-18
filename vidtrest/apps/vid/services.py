@@ -19,7 +19,7 @@ class VideoMetaService(object):
     def process(self):
         tail, head = os.path.split(self.video.path)
 
-        metadata_path = '{path}/{pk}-metadata.txt'.format(path=tail, pk=self.pk)
+        metadata_path = '{path}/metadata.txt'.format(path=tail)
 
         cmd = self.cmd.format(video_path=self.video.path,
                               metadata_path=metadata_path)
@@ -44,16 +44,16 @@ class VideoMetaService(object):
         self.meta_data = meta_data
 
         # If it exists remove it so we can recreate it
-        if os.path.isfile(metadata_path):
-            os.remove(metadata_path)
+        # if os.path.isfile(metadata_path):
+        #     os.remove(metadata_path)
 
         return meta_data
 
 
 class VideoThumbnailService(object):
-    num_thumbs = 5
+    num_thumbs = 10
     thumbs = []
-    cmd = 'ffmpeg -ss 3 -i {video_path} -vf "select=gt(scene\,0.2)" -frames:v {num_thumbs} -s 320x200 -vsync vfr {output_path}/thumbs-{pk}-%02d.jpg'
+    cmd = 'ffmpeg -ss 3 -i {video_path} -vf "select=gt(scene\,0.3)" -frames:v {num_thumbs} -s 320x200 -vsync vfr {output_path}/thumbs-%02d.jpg'
 
     def __init__(self, pk, video):
         self.pk = pk
@@ -68,7 +68,8 @@ class VideoThumbnailService(object):
                               output_path=tail)
 
         subprocess.check_output(cmd, shell=True)
-        self.thumbs = ['thumbs-%d-%02d.jpg' % (self.pk, i) for i in range(1, self.num_thumbs)]
+        print cmd
+        self.thumbs = ['thumbs-%02d.jpg' % (i,) for i in range(1, self.num_thumbs)]
 
 
 class ExtractcombinedTagsCategoriesService(object):

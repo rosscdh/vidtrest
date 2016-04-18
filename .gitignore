@@ -4,9 +4,9 @@ venv
 *.db
 *.py[cod]
 .env
-/config/*
 local_settings.py
 templates/dashboard/*
+/config
 /static/*
 /media/*
 *.pyc

@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.conf import settings
+from django.utils.safestring import mark_safe
 from django.template.defaultfilters import slugify
 
 from jsonfield import JSONField
@@ -18,12 +19,15 @@ def _upload_video(instance, filename):
     split_file_name = os.path.split(filename)[-1]
     filename_no_ext, ext = os.path.splitext(split_file_name)
 
-    full_file_name = '%s-%s%s' % (instance.pk, slugify(filename_no_ext), ext)
+    full_file_name = '%s%s' % (slugify(filename_no_ext), ext)
 
-    return 'video/%s' % full_file_name
+    full_path = 'video/%s' % str(instance.uuid)
+
+    return '%s/%s' % (full_path, full_file_name)
 
 
 class Vid(models.Model):
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
 
     video = models.FileField(upload_to=_upload_video,
@@ -54,9 +58,7 @@ class Vid(models.Model):
 
     @property
     def thumbs(self):
-        thumbs = self.videometa.data.get('thumbs', [])
-        thumbs = ['%svideo/%s' % (settings.MEDIA_URL, t) for t in thumbs]
-        return '["%s"]' % '","'.join(thumbs)
+        return self.videometa.thumbs
 
 
 class VideoMeta(models.Model):
@@ -86,5 +88,11 @@ class VideoMeta(models.Model):
         thumb = 'https://placeholdit.imgix.net/~text?txtsize=18&txt=Generating...&w=128&h=96'
         thumbs = self.data.get('thumbs', [])
         if thumbs:
-            thumb = '%svideo/thumbs-%d-04.jpg' % (settings.MEDIA_URL, self.vid.pk)
+            thumb = '%svideo/%s/thumbs-04.jpg' % (settings.MEDIA_URL, str(self.vid.uuid))
         return thumb
+
+    @property
+    def thumbs(self):
+        thumbs = self.data.get('thumbs', [])
+        thumbs = ['%svideo/%s/%s' % (settings.MEDIA_URL, str(self.vid.uuid), t) for t in thumbs]
+        return mark_safe('["%s"]' % '","'.join(thumbs))

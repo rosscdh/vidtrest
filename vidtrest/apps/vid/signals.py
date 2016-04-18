@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
-from django.db.models import signals
 from django.dispatch import receiver
+from django.db.models import signals
+from django.core.files.base import ContentFile
 
 from .models import VideoMeta
 from .services import VideoMetaService, VideoThumbnailService
@@ -14,10 +15,8 @@ def do_upload_to_s3(instance):
     """
     Upload video file to s3, and then call the following events
     """
-    if settings.AWS_STORAGE_BUCKET_NAME:
-    #     instance.s3_video.save(instance.video.name, instance.video)
-    #     instance.video.seek(0)
-        instance.s3_video = instance.video
+    # Ensure we have the latest
+    instance.refresh_from_db()
 
     # Extract meta-data
     do_video_meta(instance=instance,
@@ -27,9 +26,13 @@ def do_upload_to_s3(instance):
     do_video_thumbs(instance=instance,
                     video=instance.video)
 
-    # Delete original video if its been handed off to s3
-    if settings.AWS_STORAGE_BUCKET_NAME and instance.s3_video:
-        instance.video.delete()
+    if settings.AWS_USE and instance.video:
+        instance.s3_video.save(instance.video.path,
+                               ContentFile(instance.video.read()))
+        # If we have a s3_video url
+        if instance.s3_video.url:
+            # Remove the video and refer only to the s3_video
+            instance.video.delete()
 
 
 def do_video_meta(instance, video):
@@ -71,7 +74,6 @@ def do_video_thumbs(instance, video):
 
     videometa.data.update({'thumbs': service.thumbs})
     videometa.save(update_fields=['data'])
-
 
 @receiver(signals.post_save,
           sender='vid.Vid',
