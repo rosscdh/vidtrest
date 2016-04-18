@@ -3,7 +3,6 @@
 
 {% block content %}
 
-
   <!-- Intro Section -->
   <section id="intro">
     <div class="video-content">
@@ -41,7 +40,38 @@
       <a href="#about"><i class="fa fa-angle-down"></i></a>
     </div>
 
-    {% show_vid_metadata vid %}
+    <div class="container wp2">
+      <h1 class="section-title">About the film</h1>
+      <div class="row">
+
+        {% vid_thumbs vid %}
+
+        <div class="col-lg-6 wp2 delay-1s">
+          <h2>{{ vid.name }}</h2>
+          <h4 class="sub-text">
+            Release Date: May 05, 2015 <br>
+            Rating: PG-13 <br>
+          </h4>
+
+          {% vid_metadata vid %}
+
+          <br>
+
+          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean eget dolor. Aenean massa. Natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Corper ipsum rutrum nunc. Vestibulum volutpat pretium libero ultricies nec.
+          <br>
+
+          <!-- <div class="detailed">
+            Rating:&nbsp;&nbsp;
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star-half-o"></i>
+            <span>IMDb &nbsp;<b>/  4.5</b></span>
+          </div> -->
+        </div>
+      </div>
+    </div>
 
   </section><!-- /#about -->
 

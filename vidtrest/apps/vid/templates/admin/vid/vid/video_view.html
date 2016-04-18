@@ -1,5 +1,5 @@
 {% extends 'admin/base.html' %}
-{% load pipeline staticfiles %}
+{% load pipeline staticfiles vid_metadata %}
 
 {% block content %}
   <link rel="stylesheet" type="text/css" href="{% static "plyr/dist/plyr.css" %}" />
@@ -27,46 +27,7 @@
             </video>
         </div>
 
-        <div class="meta-data">
-          <h2>Meta data</h2>
-          <hr/>
-          <dl>
-            <dt>mime_type</dt>
-            <dd>{{ original.videometa.mime_type }}</dd>
-            <dt>duration</dt>
-            <dd>{{ original.videometa.duration }}</dd>
-            <dt>file_size</dt>
-            <dd>{{ original.videometa.file_size }}</dd>
-            <dt>avg_bitrate</dt>
-            <dd>{{ original.videometa.avg_bitrate }}</dd>
-            <dt>audio_sample_rate</dt>
-            <dd>{{ original.videometa.audio_sample_rate }}</dd>
-            <dt>audio_bits_per_sample</dt>
-            <dd>{{ original.videometa.audio_bits_per_sample }}</dd>
-            <dt>audio_format</dt>
-            <dd>{{ original.videometa.audio_format }}</dd>
-            <dt>video_frame_rate</dt>
-            <dd>{{ original.videometa.video_frame_rate }}</dd>
-            <dt>track_duration</dt>
-            <dd>{{ original.videometa.track_duration }}</dd>
-            <dt>x_resolution</dt>
-            <dd>{{ original.videometa.x_resolution }}</dd>
-            <dt>y_resolution</dt>
-            <dd>{{ original.videometa.y_resolution }}</dd>
-            <dt>image_size</dt>
-            <dd>{{ original.videometa.image_size }}</dd>
-            <dt>image_height</dt>
-            <dd>{{ original.videometa.image_height }}</dd>
-            <dt>image_width</dt>
-            <dd>{{ original.videometa.image_width }}</dd>
-            <dt>file_type</dt>
-            <dd>{{ original.videometa.file_type }}</dd>
-            <dt>compressor_id</dt>
-            <dd>{{ original.videometa.compressor_id }}</dd>
-          </dl>
-
-        </div>
-
+        {% vid_metadata original %}
 
   <hr/>
   <p>&nbsp;</p>

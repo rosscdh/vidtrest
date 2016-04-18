@@ -1,0 +1,11 @@
+<div class="container wp2">
+  <div class="row">
+    <div class="col-lg-6 wp2 delay-05s">
+      {% for thumb in vid.videometa.thumbs_list %}
+        <div class="col-lg-6">
+          <img src="{{ MEDIA_URL }}{{ thumb }}" width="80%" style="padding: 5px;" />
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
