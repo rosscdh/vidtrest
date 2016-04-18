@@ -5,6 +5,8 @@ from django.conf.urls import url, include
 from django.conf.urls.static import static
 
 urlpatterns = [
+    url(r'^', include('vidtrest.apps.vid.urls')),
+    url(r'^vids/', include('vidtrest.apps.vid.urls', namespace='vid')),
     url(r'^admin/', admin.site.urls),
     url(r'^rq/', include('django_rq.urls')),
     url(r'^cat/', include('vidtrest.apps.categories.urls', namespace='categories')),

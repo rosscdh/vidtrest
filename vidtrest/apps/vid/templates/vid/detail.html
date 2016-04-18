@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load vid_metadata staticfiles %}
+
+{% block content %}
+
+
+  <!-- Intro Section -->
+  <section id="intro">
+    <div class="video-content">
+      <div class="video-image wp1 delay-1s">
+        <img src="{{ vid.videometa.thumb }}" alt="{{ vid.name }}" width="100%">
+      </div>
+
+      <div class="overlay">
+        <div class="container-wrapper">
+          <div class="container">
+            <div class="col-md-12 wp1 delay-05s">
+              <div class="intro-info-wrapper">
+                <h1 class="text-center">{{ vid.name }}</h1>
+              </div>
+            </div>
+          </div><!-- /.intro-info-wrapper -->
+          <div class="media-btns buttons page-scroll">
+            <div class="btn btn-default play-btn" id="play-button">Video starten<i class="fa fa-play animated"></i></div>
+            <div class="btn btn-default pause-btn" id="pause-button">Video stoppen<i class="fa fa-pause animated"></i></div>
+            <a class="btn btn-default about-btn" href="#about">Details<i class="fa fa-chevron-right"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="video-container">
+        <video id="player" poster="{{ vid.videometa.thumb }}" width="100%">
+          <source src="{{ vid.get_video.url }}" type="{{ vid.videometa.mime_type }}">
+        </video>
+      </div>
+    </div>
+  </section><!-- /#intro -->
+
+  <!-- About Section -->
+  <section id="about">
+    <div class="more page-scroll" id="more">
+      <a href="#about"><i class="fa fa-angle-down"></i></a>
+    </div>
+
+    {% show_vid_metadata vid %}
+
+  </section><!-- /#about -->
+
+{% endblock %}

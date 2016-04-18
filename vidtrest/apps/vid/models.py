@@ -5,6 +5,7 @@ from django.db import models
 from django.conf import settings
 from django.utils.safestring import mark_safe
 from django.template.defaultfilters import slugify
+from django.core.urlresolvers import reverse
 
 from jsonfield import JSONField
 from taggit.managers import TaggableManager
@@ -42,6 +43,14 @@ class Vid(models.Model):
     objects = models.Manager()
     tags = TaggableManager()
 
+    @property
+    def thumb(self):
+        return self.videometa.thumb
+
+    @property
+    def thumbs(self):
+        return self.videometa.thumbs
+
     def get_video(self):
         """
         Return the s3_video if its present otherwise the normal one
@@ -52,13 +61,8 @@ class Vid(models.Model):
             return self.video
         return None
 
-    @property
-    def thumb(self):
-        return self.videometa.thumb
-
-    @property
-    def thumbs(self):
-        return self.videometa.thumbs
+    def get_absolute_url(self):
+        return reverse("vid:detail", kwargs={'pk': self.pk})
 
 
 class VideoMeta(models.Model):
@@ -93,6 +97,8 @@ class VideoMeta(models.Model):
 
     @property
     def thumbs(self):
+        return mark_safe('["%s"]' % '","'.join(self.thumbs_list()))
+
+    def thumbs_list(self):
         thumbs = self.data.get('thumbs', [])
-        thumbs = ['%svideo/%s/%s' % (settings.MEDIA_URL, str(self.vid.uuid), t) for t in thumbs]
-        return mark_safe('["%s"]' % '","'.join(thumbs))
+        return ['%svideo/%s/%s' % (settings.MEDIA_URL, str(self.vid.uuid), t) for t in thumbs]
