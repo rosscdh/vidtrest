@@ -31,7 +31,11 @@ class Vid(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4,
                             editable=False,
                             db_index=True)
+
     name = models.CharField(max_length=255)
+    description = models.CharField(max_length=255,
+                                   null=True,
+                                   blank=True)
 
     video = models.FileField(upload_to=_upload_video,
                              storage=OverwriteStorage(),
