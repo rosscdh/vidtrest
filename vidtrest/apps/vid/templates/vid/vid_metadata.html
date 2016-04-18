@@ -7,7 +7,7 @@
       <div class="input-group input-group-lg">
         <input id="video_url" class="form-control" type="text" value="{{ vid.get_video.url }}">
         <span class="input-group-btn">
-          <button class="btn btn-info" type="button" data-clipboard-target="#video_url">
+          <button id="copytoclipboard" class="btn btn-info" type="button" data-clipboard-target="#video_url">
             <i class="fa fa-clipboard" aria-hidden="true"></i>
           </button>
         </span>
@@ -36,17 +36,17 @@
         <tr>
           <td>Mimetype</td>
           <td style="min-width:15px;"></td>
-          <td>{{ vid.videometa.mime_type }}</td>
+          <td>{{ vid.videometa.mime_type|default:"---" }}</td>
         </tr>
         <tr>
           <td>Dauer</td>
           <td style="min-width:15px;"></td>
-          <td><span class="detailed-text">{{ vid.videometa.duration }}</span></td>
+          <td><span class="detailed-text">{{ vid.videometa.duration|default:"---" }}</span></td>
         </tr>
         <tr>
           <td>Dateigröße</td>
           <td style="min-width:15px;"></td>
-          <td>{{ vid.videometa.file_size }}</td>
+          <td>{{ vid.videometa.file_size|default:"---" }}</td>
         </tr>
         <tr>
           <td>Durchschn. Bitrate</td>
@@ -56,62 +56,62 @@
         <tr>
           <td>Audio-Abtastrate</td>
           <td style="min-width:15px;"></td>
-          <td>{{ vid.videometa.audio_sample_rate }}</td>
+          <td>{{ vid.videometa.audio_sample_rate|default:"---" }}</td>
         </tr>
         <tr>
           <td>Audiobits pro Sample</td>
           <td style="min-width:15px;"></td>
-          <td>{{ vid.videometa.audio_bits_per_sample }}</td>
+          <td>{{ vid.videometa.audio_bits_per_sample|default:"---" }}</td>
         </tr>
         <tr>
           <td>Audioformat</td>
           <td style="min-width:15px;"></td>
-          <td>{{ vid.videometa.audio_format }}</td>
+          <td>{{ vid.videometa.audio_format|default:"---" }}</td>
         </tr>
         <tr>
           <td>O-Frame Rate</td>
           <td style="min-width:15px;"></td>
-          <td>{{ vid.videometa.o_frame_rate }}</td>
+          <td>{{ vid.videometa.o_frame_rate|default:"---" }}</td>
         </tr>
         <tr>
           <td>Tdack Dauer</td>
           <td style="min-width:15px;"></td>
-          <td>{{ vid.videometa.tdack_duration }}</td>
+          <td>{{ vid.videometa.tdack_duration|default:"---" }}</td>
         </tr>
         <tr>
           <td>X-Auflösung</td>
           <td style="min-width:15px;"></td>
-          <td>{{ vid.videometa.x_resolution }}</td>
+          <td>{{ vid.videometa.x_resolution|default:"---" }}</td>
         </tr>
         <tr>
           <td>Y-Auflösung</td>
           <td style="min-width:15px;"></td>
-          <td>{{ vid.videometa.y_resolution }}</td>
+          <td>{{ vid.videometa.y_resolution|default:"---" }}</td>
         </tr>
         <tr>
           <td>Bildgröße</td>
           <td style="min-width:15px;"></td>
-          <td>{{ vid.videometa.image_size }}</td>
+          <td>{{ vid.videometa.image_size|default:"---" }}</td>
         </tr>
         <tr>
           <td>Bildhöhe</td>
           <td style="min-width:15px;"></td>
-          <td>{{ vid.videometa.image_height }}</td>
+          <td>{{ vid.videometa.image_height|default:"---" }}</td>
         </tr>
         <tr>
           <td>Bildbreite</td>
           <td style="min-width:15px;"></td>
-          <td>{{ vid.videometa.image_witdh }}</td>
+          <td>{{ vid.videometa.image_witdh|default:"---" }}</td>
         </tr>
         <tr>
           <td>Dateityp</td>
           <td style="min-width:15px;"></td>
-          <td>{{ vid.videometa.file_type }}</td>
+          <td>{{ vid.videometa.file_type|default:"---" }}</td>
         </tr>
         <tr>
           <td>Kompressor</td>
           <td style="min-width:15px;"></td>
-          <td>{{ vid.videometa.compressor_id }}</td>
+          <td>{{ vid.videometa.compressor_id|default:"---" }}</td>
         </tr>
       </table>
 
