@@ -1,6 +1,24 @@
 <div class="container wp2">
-  <h1 class="section-title">About the film</h1>
+
+  <h1 class="section-title">Details</h1>
+
   <div class="row">
+    <div class="col-lg-12">
+      <div class="input-group input-group-lg">
+        <input id="video_url" class="form-control" type="text" value="{{ vid.get_video.url }}">
+        <span class="input-group-btn">
+          <button class="btn btn-info" type="button" data-clipboard-target="#video_url">
+            <i class="fa fa-clipboard" aria-hidden="true"></i>
+          </button>
+        </span>
+      </div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+    <br />
+
     <div class="col-lg-6 wp2 delay-05s">
       {% for thumb in vid.videometa.thumbs_list %}
         <div class="col-lg-6">
@@ -9,7 +27,6 @@
       {% endfor %}
     </div>
     <div class="col-lg-6 wp2 delay-1s">
-      <h2>{{ vid.name }}</h2>
       <h4 class="sub-text">
         Release Date: May 05, 2015 <br>
         Rating: PG-13 <br>
