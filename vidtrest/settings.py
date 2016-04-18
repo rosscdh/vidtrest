@@ -192,6 +192,7 @@ BOWER_INSTALLED_APPS = (
     'jquery#1.11.0',
     'plyr#1.5.21',
     'waterfall#1.0.3',
+    'clipboard#1.5.10',
 )
 
 PIPELINE = {
