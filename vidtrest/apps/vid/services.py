@@ -53,7 +53,7 @@ class VideoMetaService(object):
 class VideoThumbnailService(object):
     num_thumbs = 10
     thumbs = []
-    cmd = 'ffmpeg -ss 3 -i {video_path} -vf "select=gt(scene\,0.8)" -frames:v {num_thumbs} -s 320x200 -vsync vfr {output_path}/{pk}/thumbs-{pk}-%02d.jpg'
+    cmd = 'ffmpeg -ss 3 -i {video_path} -vf "select=gt(scene\,0.3)" -frames:v {num_thumbs} -s 320x200 -vsync vfr {output_path}/thumbs-%02d.jpg'
 
     def __init__(self, pk, video):
         self.pk = pk
@@ -68,7 +68,8 @@ class VideoThumbnailService(object):
                               output_path=tail)
 
         subprocess.check_output(cmd, shell=True)
-        self.thumbs = ['thumbs-%d-%02d.jpg' % (self.pk, i) for i in range(1, self.num_thumbs)]
+        print cmd
+        self.thumbs = ['thumbs-%02d.jpg' % (i,) for i in range(1, self.num_thumbs)]
 
 
 class ExtractcombinedTagsCategoriesService(object):

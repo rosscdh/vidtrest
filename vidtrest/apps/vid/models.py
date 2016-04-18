@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.conf import settings
+from django.utils.safestring import mark_safe
 from django.template.defaultfilters import slugify
 
 from jsonfield import JSONField
@@ -20,16 +21,9 @@ def _upload_video(instance, filename):
 
     full_file_name = '%s%s' % (slugify(filename_no_ext), ext)
 
-    full_path = 'video/%s/%s' % (str(instance.uuid), full_file_name)
+    full_path = 'video/%s' % str(instance.uuid)
 
-    try:
-        os.makedirs(full_path)
-    except OSError as e:
-        if e.errno == 17:
-            # Dir already exists. No biggie.
-            pass
-
-    return full_path
+    return '%s/%s' % (full_path, full_file_name)
 
 
 class Vid(models.Model):
@@ -94,11 +88,11 @@ class VideoMeta(models.Model):
         thumb = 'https://placeholdit.imgix.net/~text?txtsize=18&txt=Generating...&w=128&h=96'
         thumbs = self.data.get('thumbs', [])
         if thumbs:
-            thumb = '%svideo/%s/thumbs-%d-04.jpg' % (settings.MEDIA_URL, self.vid.pk, self.vid.pk)
+            thumb = '%svideo/%s/thumbs-04.jpg' % (settings.MEDIA_URL, str(self.vid.uuid))
         return thumb
 
     @property
     def thumbs(self):
         thumbs = self.data.get('thumbs', [])
-        thumbs = ['%svideo/%s/%s' % (settings.MEDIA_URL, self.vid.pk, t) for t in thumbs]
-        return '["%s"]' % '","'.join(thumbs)
+        thumbs = ['%svideo/%s/%s' % (settings.MEDIA_URL, str(self.vid.uuid), t) for t in thumbs]
+        return mark_safe('["%s"]' % '","'.join(thumbs))
