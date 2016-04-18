@@ -226,6 +226,16 @@ try:
 except Exception as e:
     print('An exception trying to import env specific settings occrrred: %s' % e)
 
+
+#
+# Load specific local_settings.py settings in case we want to override something for an env
+#
+try:
+    from .local_settings import *
+except ImportError:
+    # no local_settings.py found
+    pass
+
 #
 # Check for test settings
 #
