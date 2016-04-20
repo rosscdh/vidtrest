@@ -56,7 +56,7 @@ class VideoThumbnailService(object):
     num_thumbs = 10
     output_path = None
     thumbs = []
-    cmd = 'ffmpeg -ss 3 -i {video_path} -vf "select=gt(scene\,0.3)" -frames:v {num_thumbs} -s 320x200 -vsync vfr {output_path}/thumbs-%02d.jpg'
+    cmd = 'ffmpeg -ss 3 -i {video_path} -vf "select=gt(scene\,0.3)" -frames:v {num_thumbs} -s 480x320 -vsync vfr {output_path}/thumbs-%02d.jpg'
 
     def __init__(self, pk, video):
         self.pk = pk
