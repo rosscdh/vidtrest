@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.conf import settings
 from django.utils.safestring import mark_safe
+from django.core.exceptions import ValidationError
 from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse
 
@@ -27,6 +28,12 @@ def _upload_video(instance, filename):
     return '%s/%s' % (full_path, full_file_name)
 
 
+def _validate_file_extension(value):
+    valid_types = ['video/mp4']
+    if value.file.content_type not in valid_types:
+        raise ValidationError(u'Please upload a file of type: %s' % ','.join(valid_types))
+
+
 class Vid(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4,
                             editable=False,
@@ -39,7 +46,8 @@ class Vid(models.Model):
 
     video = models.FileField(upload_to=_upload_video,
                              storage=OverwriteStorage(),
-                             null=True)
+                             null=True,
+                             validators=[_validate_file_extension])
     s3_video = models.FileField(upload_to=_upload_video,
                                 storage=managed_s3botostorage(),
                                 null=True)

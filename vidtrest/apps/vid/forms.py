@@ -23,11 +23,13 @@ class AnyChoiceMultipleChoiceField(forms.MultipleChoiceField):
 class VidForm(forms.ModelForm):
     combined_tags = AnyChoiceMultipleChoiceField(widget=SELECT_2_WIDGET,
                                                  required=False)
+    description = forms.CharField(widget=forms.Textarea)
 
     class Meta:
         model = Vid
         fields = (
             'name',
+            'description',
             'video',
         )
 
