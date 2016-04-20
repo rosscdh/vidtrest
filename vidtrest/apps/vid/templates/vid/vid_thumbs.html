@@ -1,5 +1,7 @@
+<div class="col-sm-12">
 {% for thumb in vid.videometa.thumbs_list %}
-  <div class="col-lg-6">
+  <div class="col-sm-6">
     <img src="{{ MEDIA_URL }}{{ thumb }}" width="80%" style="padding: 5px;" />
   </div>
 {% endfor %}
+</div>

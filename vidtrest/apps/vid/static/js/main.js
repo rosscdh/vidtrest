@@ -106,13 +106,13 @@ $(document).ready(function() {
 /* 12 - Waypoints (Parallax)
 -----------------------------------------------------------*/
 
-    $('.wp1').waypoint(function() {
-        $('.wp1').addClass('animated fadeInDown');
-    }, {
-        offset: '75%'
-    });
-    $('.wp2').waypoint(function() {
-        $('.wp2').addClass('animated fadeInUp');
-    }, {
-        offset: '75%'
-    });
+$('.wp1').waypoint(function() {
+$('.wp1').addClass('animated fadeInDown');
+}, {
+offset:'75%'
+});
+$('.wp2').waypoint(function() {
+$('.wp2').addClass('animated fadeInUp');
+}, {
+offset:'75%'
+});

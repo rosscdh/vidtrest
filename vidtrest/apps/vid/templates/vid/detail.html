@@ -56,12 +56,32 @@
       <h1 class="section-title">{{ vid.name }}</h1>
 
       <div class="row">
+        <div class="col-sm-6">
+          <h4 class="sub-text">Categories</h4>
+          {% for cat in vid.categories.all %}
+          {{ cat }}&nbsp;
+          {% empty %}
+            No categories assigned
+          {% endfor %}
+        </div>
 
-        <div class="col-lg-6 wp2 delay-1s">
+        <div class="col-sm-6">
+          <h4 class="sub-text">Tags</h4>
+          {% for tag in vid.tags.all %}
+            {{ tag }}&nbsp;
+          {% empty %}
+            No tags assigned
+          {% endfor %}
+        </div>
+      </div>
+      <hr/>
+      <div class="row">
+
+        <div class="col-sm-6 wp2 delay-1s">
           {% vid_thumbs vid %}
         </div>
 
-        <div class="col-lg-6 wp2 delay-1s">
+        <div class="col-sm-6 wp2 delay-1s">
 
           <h4 class="sub-text">
             Release Date: May 05, 2015 <br>
