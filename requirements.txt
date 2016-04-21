@@ -1,5 +1,7 @@
 Django==1.9.5
 Django-Select2==5.8.4
+Fabric==1.11.1
+GitPython==1.0.2
 Twisted==16.1.1
 Werkzeug==0.11.5
 asgiref==0.11.2
@@ -8,6 +10,7 @@ boto==2.39.0
 channels==0.11.0
 click==6.6
 daphne==0.10.3
+django-advanced-filters==1.0.4
 django-appconf==1.0.1
 django-autocomplete-light==3.1.5
 django-bower==5.1.0
@@ -20,12 +23,20 @@ django-querysetsequence==0.5
 django-rq==0.9.0
 django-storages==1.4.1
 django-taggit==0.18.1
+ecdsa==0.13
+gitdb==0.6.4
 honcho==0.6.6
+paramiko==1.16.0
 psycopg2==2.6.1
+pycrypto==2.6.1
 redis==2.10.5
+requests==2.9.1
+rollbar==0.12.1
 rq==0.5.6
 simplejson==3.6.5
 six==1.10.0
+smmap==0.9.0
+termcolor==1.1.0
 txaio==2.3.1
 wsgiref==0.1.2
 zope.interface==4.1.3
