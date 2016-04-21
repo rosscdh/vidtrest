@@ -47,10 +47,12 @@ class Vid(models.Model):
     video = models.FileField(upload_to=_upload_video,
                              storage=OverwriteStorage(),
                              null=True,
+                             blank=True,
                              validators=[_validate_file_extension])
     s3_video = models.FileField(upload_to=_upload_video,
                                 storage=managed_s3botostorage(),
-                                null=True)
+                                null=True,
+                                blank=True)
 
     categories = models.ManyToManyField('categories.VideoCat')
 
