@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 
 from django_select2.forms import HeavySelect2MultipleWidget
 
+from vidtrest.apps.categories.models import VideoCat
 from .models import Vid
 from .services import ExtractcombinedTagsCategoriesService
 
@@ -23,6 +24,8 @@ class AnyChoiceMultipleChoiceField(forms.MultipleChoiceField):
 class VidForm(forms.ModelForm):
     combined_tags = AnyChoiceMultipleChoiceField(widget=SELECT_2_WIDGET,
                                                  required=False)
+    categories = forms.ModelMultipleChoiceField(queryset=VideoCat.objects.all(),
+                                                widget=forms.CheckboxSelectMultiple())
     description = forms.CharField(widget=forms.Textarea)
 
     class Meta:
@@ -30,6 +33,7 @@ class VidForm(forms.ModelForm):
         fields = (
             'name',
             'description',
+            'categories',
             'video',
         )
 
