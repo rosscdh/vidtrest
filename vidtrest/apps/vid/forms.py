@@ -25,14 +25,15 @@ class VidForm(forms.ModelForm):
     combined_tags = AnyChoiceMultipleChoiceField(widget=SELECT_2_WIDGET,
                                                  required=False)
     categories = forms.ModelMultipleChoiceField(queryset=VideoCat.objects.all(),
-                                                widget=forms.CheckboxSelectMultiple())
-    description = forms.CharField(widget=forms.Textarea)
+                                                widget=forms.CheckboxSelectMultiple(),
+                                                required=False)
+    #description = forms.CharField(widget=forms.Textarea)
 
     class Meta:
         model = Vid
         fields = (
             'name',
-            'description',
+            #'description',
             'categories',
             'video',
         )
