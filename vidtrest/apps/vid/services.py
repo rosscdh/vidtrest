@@ -56,7 +56,7 @@ class VideoThumbnailService(object):
     num_thumbs = 10
     output_path = None
     thumbs = []
-    cmd = 'ffmpeg -ss 3 -i {video_path} -vf "select=gt(scene\,0.3)" -frames:v {num_thumbs} -s 480x320 -vsync vfr {output_path}/thumbs-%02d.jpg'
+    cmd = 'ffmpeg -ss 3 -i {video_path} -vf "select=gt(scene\,0.3)" -frames:v {num_thumbs} -s 320x200 -vsync vfr {output_path}/thumbs-%02d.jpg'
 
     def __init__(self, pk, video):
         self.pk = pk
@@ -68,8 +68,9 @@ class VideoThumbnailService(object):
 
             for thumb in thumbs:
                 file_path = os.path.join(self.output_path, thumb)
-                s3_file_path = '/%s' % '/'.join(file_path.split('/')[-3:])
-                storage.save(s3_file_path, default_storage.open(file_path))
+                if os.path.exists(file_path):
+                    s3_file_path = '/%s' % '/'.join(file_path.split('/')[-3:])
+                    storage.save(s3_file_path, default_storage.open(file_path))
 
     def process(self):
         self.output_path, head = os.path.split(self.video.path)
