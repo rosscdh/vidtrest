@@ -11,7 +11,6 @@ import subprocess
 
 
 class VideoMetaService(object):
-    #cmd = 'ffmpeg -i {video_path} -f ffmetadata'
     cmd = 'exiftool {video_path} > {metadata_path}'
 
     def __init__(self, pk, video):
@@ -69,8 +68,9 @@ class VideoThumbnailService(object):
             for thumb in thumbs:
                 file_path = os.path.join(self.output_path, thumb)
                 if os.path.exists(file_path):
-                    s3_file_path = '/%s' % '/'.join(file_path.split('/')[-3:])
+                    s3_file_path = '%s' % '/'.join(file_path.split('/')[-3:])
                     storage.save(s3_file_path, default_storage.open(file_path))
+        return thumbs
 
     def process(self):
         self.output_path, head = os.path.split(self.video.path)
@@ -80,7 +80,9 @@ class VideoThumbnailService(object):
                               video_path=self.video.path,
                               output_path=self.output_path)
 
-        subprocess.check_output(cmd, shell=True)
+        with open(os.devnull, 'w') as devnull:
+            #print cmd
+            subprocess.check_output(cmd, shell=True, stderr=devnull)
 
         self.thumbs = self.upload_thumbs(thumbs=['thumbs-%02d.jpg' % (i,) for i in range(1, self.num_thumbs)])
 

@@ -30,9 +30,9 @@ def do_upload_to_s3(instance):
         instance.s3_video.save(instance.video.path,
                                ContentFile(instance.video.read()))
         # If we have a s3_video url
-        #if instance.s3_video.url:
+        if instance.s3_video.url:
             # Remove the video and refer only to the s3_video
-            #instance.video.delete()
+            instance.video.delete()
 
 
 def do_video_meta(instance, video):
@@ -83,5 +83,6 @@ def post_save_get_video_meta(sender, instance, created, **kwargs):
     Async
     """
     if instance.video:
+        # do_upload_to_s3(instance=instance)
         queue.enqueue(do_upload_to_s3,
                       instance=instance)
