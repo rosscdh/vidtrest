@@ -1,7 +1,8 @@
 <div class="col-sm-12">
-{% for thumb in vid.videometa.thumbs_list %}
+{% for thumb, timestamp in vid.videometa.timestamp_thumbs %}
   <div class="col-sm-6">
-    <img src="{{ MEDIA_URL }}{{ thumb }}" width="80%" style="padding: 5px;" />
+    <a href="javascript:;" class="jump-to-timestamp" data-timestamp="{{ timestamp }}"><img src="{{ MEDIA_URL }}{{ thumb }}" width="80%" style="padding: 5px;" /></a>
+    {{ timestamp }}
   </div>
 {% endfor %}
 </div>

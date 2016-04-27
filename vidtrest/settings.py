@@ -134,7 +134,7 @@ USE_TZ = True
 STATIC_URL = 'http://192.168.50.5/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-# MEDIA_URL = '/m/'
+#MEDIA_URL = '/m/'
 MEDIA_URL = 'http://192.168.50.5/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 

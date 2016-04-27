@@ -59,18 +59,18 @@
         <div class="col-sm-6">
           <h4 class="sub-text">Categories</h4>
           {% for cat in vid.categories.all %}
-          {{ cat }}&nbsp;
+          <small>{{ cat }}</small>,&nbsp;
           {% empty %}
-            No categories assigned
+            <small>No categories assigned</small>
           {% endfor %}
         </div>
 
         <div class="col-sm-6">
           <h4 class="sub-text">Tags</h4>
           {% for tag in vid.tags.all %}
-            {{ tag }}&nbsp;
+            <small>{{ tag }}</small>,&nbsp;
           {% empty %}
-            No tags assigned
+            <small>No tags assigned</small>
           {% endfor %}
         </div>
       </div>

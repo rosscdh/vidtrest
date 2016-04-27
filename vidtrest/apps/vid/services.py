@@ -56,7 +56,10 @@ class VideoThumbnailService(object):
     num_thumbs = 10
     output_path = None
     thumbs = []
-    cmd = 'ffmpeg -ss 3 -i {video_path} -vf "select=gt(scene\,0.3)" -s 320x200 -vsync vfr {output_path}/thumbs-%02d.jpg'
+    thumbs_timestamp = {}
+
+    #cmd = 'ffmpeg -ss 3 -i {video_path} -vf "select=gt(scene\,0.3)" -s 320x200 -vsync vfr {output_path}/thumbs-%02d.jpg'
+    cmd = "ffmpeg -i {video_path} -s 320x200 -vsync passthrough -an -vf select='gt(scene\,0.3)',showinfo {output_path}/thumbs-%02d.jpg -f null - 2>&1 | grep 'pts_time' | awk -F'pts_time:' '{{print $2}}' | awk -F'pos:' '{{print $1}}' > {output_path}/thumbs_timestamp.txt"
 
     def __init__(self, pk, video):
         self.pk = pk
@@ -85,6 +88,15 @@ class VideoThumbnailService(object):
             #print cmd
             subprocess.check_output(cmd, shell=True, stderr=devnull)
 
+        #
+        # Timestamps range
+        #
+        timerange_path = '%s/thumbs_timestamp.txt' % self.output_path
+        thumbs_timestamp = [line.strip() for line in open(timerange_path, 'r')]
+        self.thumbs_timestamp = thumbs_timestamp
+        #
+        # Thumbnails
+        #
         list_thumbs = glob.glob('{output_path}/*.jpg'.format(output_path=self.output_path))
         list_thumbs = [os.path.split(t)[1] for t in list_thumbs]
         self.thumbs = self.upload_thumbs(thumbs=list_thumbs)

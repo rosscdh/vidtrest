@@ -112,6 +112,12 @@ class VideoMeta(models.Model):
     data = JSONField(default={})
 
     @property
+    def timestamp_thumbs(self):
+        thumbs_list = self.thumbs_list()
+        return zip(thumbs_list,
+                   self.data.get('thumbs_timestamp', [i for i in range(1, len(thumbs_list))]))
+
+    @property
     def thumb(self):
         thumb = 'https://placeholdit.imgix.net/~text?txtsize=18&txt=Generating...&w=128&h=96'
         thumbs = self.data.get('thumbs', [])
