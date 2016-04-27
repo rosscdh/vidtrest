@@ -192,7 +192,7 @@ BOWER_INSTALLED_APPS = (
     'jquery-thumb-preview#0.0.1',
     'jquery#1.11.0',
     'plyr#1.5.21',
-    'waterfall#1.0.3',
+    'freewall#1.0.6',
     'clipboard#1.5.10',
 )
 

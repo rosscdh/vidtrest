@@ -4,9 +4,22 @@
 {% block extrastyle %}
   {{ block.super }}
   <style>
-  .grid {
-    width:80%;
-  }
+    #result_list {
+      width: 80%;
+    }
+    .item {
+      width: 150px;
+      height: 150px;
+      padding: 5px;
+    }
+    .item.solid, .item ul.actions {
+      background-color:#f3f3f3;
+      border:solid #e3e3e3 1px;
+    }
+    .item ul.actions li {
+      display: inline;
+      margin-left:5px;
+    }
   </style>
 {% endblock %}
 
@@ -22,7 +35,7 @@
   {{ block.super }}
   <script src="{% static "jquery/dist/jquery.min.js" %}"></script>
   <script src="{% static "js/jquery.thumb.preview.js" %}"></script>
-  <script src="{% static "waterfall/waterfall.min.js" %}"></script>
+  <script src="{% static "freewall/freewall.js" %}"></script>
 
   <script>
   (function($){
@@ -34,10 +47,12 @@
         showAddAnotherPopup(this);
       });
 
-      waterfall('.grid');
+      var wall = new Freewall("#result_list");
+      wall.fitWidth();
       window.addEventListener('resize', function () {
-          waterfall('.grid');
+          wall.fitWidth();
       });
+
   })(jQuery);
   </script>
 {% endblock %}
