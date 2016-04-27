@@ -34,7 +34,7 @@ def _upload_video(instance, filename):
 
 def _validate_file_extension(value):
     valid_types = ['video/mp4']
-    if value.file.content_type not in valid_types:
+    if hasattr(value.file, 'content_type') and value.file.content_type not in valid_types:
         raise ValidationError(u'Please upload a file of type: %s' % ','.join(valid_types))
 
 
