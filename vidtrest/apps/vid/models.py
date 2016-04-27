@@ -67,6 +67,10 @@ class Vid(models.Model):
     def thumbs(self):
         return self.videometa.thumbs
 
+    @property
+    def preview_thumbs(self):
+        return self.videometa.preview_thumbs
+
     def get_video(self):
         """
         Return the s3_video if its present otherwise the normal one
@@ -114,6 +118,16 @@ class VideoMeta(models.Model):
     @property
     def thumbs(self):
         return mark_safe('["%s"]' % '","'.join(self.thumbs_list()))
+
+    @property
+    def preview_thumbs(self):
+        """
+        capture every n thumbnail from the complete list
+        """
+        nth = 3
+        limit = 5
+        thumbs_list = [t for index, t in enumerate(self.thumbs_list()) if index % nth]
+        return mark_safe('["%s"]' % '","'.join(thumbs_list[:limit]))
 
     def thumbs_list(self):
         thumbs = self.data.get('thumbs', [])
