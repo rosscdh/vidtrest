@@ -6,9 +6,6 @@
   <!-- Intro Section -->
   <section id="intro">
     <div class="video-content">
-      <div class="video-image wp1 delay-1s">
-        <img src="{{ vid.videometa.thumb }}" alt="{{ vid.name }}" width="100%">
-      </div>
 
       <div class="overlay">
         <div class="container-wrapper">
@@ -27,7 +24,7 @@
         </div>
       </div>
       <div class="video-container">
-        <video id="player" poster="{{ vid.videometa.thumb }}" width="100%">
+        <video id="player" poster="{{ vid.thumb }}" width="100%">
           <source src="{{ vid.get_video.url }}" type="{{ vid.videometa.mime_type }}">
         </video>
       </div>

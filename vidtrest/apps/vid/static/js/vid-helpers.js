@@ -72,7 +72,9 @@ var video_player = document.getElementById('player');
 
 $("a.jump-to-timestamp").on('click', function() {
     var self = $(this);
-    var timestamp = self.data().timestamp
+    var poster = self.data().poster;
+    var timestamp = self.data().timestamp;
+    video_player.poster = poster;
     video_player.currentTime = timestamp;
     video_player.pause();
 });
