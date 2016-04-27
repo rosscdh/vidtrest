@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^rq/', include('django_rq.urls')),
     url(r'^cat/', include('vidtrest.apps.categories.urls', namespace='categories')),
+    url(r'^search/', include('haystack.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

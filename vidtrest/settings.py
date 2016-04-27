@@ -43,6 +43,7 @@ HELPER_APPS = [
     'taggit',
     'storages',
     'pipeline',
+    'haystack',
     'django_rq',
     'djangobower',
 ]
@@ -212,6 +213,13 @@ PIPELINE = {
             'output_filename': 'dist/thumbpreview.js',
         }
     }
+}
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+    },
 }
 
 #
