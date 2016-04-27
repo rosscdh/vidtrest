@@ -73,6 +73,7 @@ def do_video_thumbs(instance, video):
     service.process()
 
     videometa.data.update({
+        'thumbs': service.thumbs,
         'thumbs_timestamp': service.thumbs_timestamp,
     })
     videometa.save(update_fields=['data'])
