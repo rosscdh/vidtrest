@@ -4,7 +4,7 @@ from django.conf.urls import url
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 
-from .models import Vid, VideoMeta
+from .models import Vid  #, VideoMeta
 from .forms import VidForm
 
 
@@ -37,4 +37,4 @@ class NativeAdAdmin(admin.ModelAdmin):
                                   context_instance=RequestContext(request))
 
 
-admin.site.register([VideoMeta])
+#admin.site.register([VideoMeta])
