@@ -7,6 +7,7 @@ from vidtrest.apps.categories.models import VideoCat
 from vidtrest.apps.utils import managed_s3botostorage
 
 import os
+import glob
 import subprocess
 
 
@@ -55,7 +56,7 @@ class VideoThumbnailService(object):
     num_thumbs = 10
     output_path = None
     thumbs = []
-    cmd = 'ffmpeg -ss 3 -i {video_path} -vf "select=gt(scene\,0.3)" -frames:v {num_thumbs} -s 320x200 -vsync vfr {output_path}/thumbs-%02d.jpg'
+    cmd = 'ffmpeg -ss 3 -i {video_path} -vf "select=gt(scene\,0.3)" -s 320x200 -vsync vfr {output_path}/thumbs-%02d.jpg'
 
     def __init__(self, pk, video):
         self.pk = pk
@@ -84,7 +85,9 @@ class VideoThumbnailService(object):
             #print cmd
             subprocess.check_output(cmd, shell=True, stderr=devnull)
 
-        self.thumbs = self.upload_thumbs(thumbs=['thumbs-%02d.jpg' % (i,) for i in range(1, self.num_thumbs)])
+        list_thumbs = glob.glob('{output_path}/*.jpg'.format(output_path=self.output_path))
+        list_thumbs = [os.path.split(t)[1] for t in list_thumbs]
+        self.thumbs = self.upload_thumbs(thumbs=list_thumbs)
 
 
 class ExtractcombinedTagsCategoriesService(object):

@@ -10,7 +10,7 @@
   {% for item in results %}
   <div class="grid-item">
     <a href="{% url 'admin:view_video' item.pk %}" class="view-video" data-pk="{{ item.pk }}" >
-      <img src="{{ item.thumb }}" class="slider-thumb" border="0" style="width:128px;" data-images='{{ item.thumbs }}' />
+      <img src="{{ item.thumb }}" class="slider-thumb" border="0" style="width:128px;" data-images='{{ item.preview_thumbs }}' />
     </a>
     <br/>
     <div style=""><a href="{% url 'admin:vid_vid_change' item.pk %}">{{ item.name }}</a></div>
