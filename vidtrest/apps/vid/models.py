@@ -112,7 +112,7 @@ class VideoMeta(models.Model):
         thumb = 'https://placeholdit.imgix.net/~text?txtsize=18&txt=Generating...&w=128&h=96'
         thumbs = self.data.get('thumbs', [])
         if thumbs:
-            thumb = '%svideo/%s/thumbs-04.jpg' % (settings.MEDIA_URL, str(self.vid.uuid))
+            thumb = '%svideo/%s/thumbs-01.jpg' % (settings.MEDIA_URL, str(self.vid.uuid))
         return thumb
 
     @property
@@ -124,10 +124,17 @@ class VideoMeta(models.Model):
         """
         capture every n thumbnail from the complete list
         """
-        nth = 3
         limit = 5
-        thumbs_list = [t for index, t in enumerate(self.thumbs_list()) if index % nth]
-        return mark_safe('["%s"]' % '","'.join(thumbs_list[:limit]))
+        thumbs_list = self.thumbs_list()
+        length_thumbs = len(thumbs_list)
+
+        if length_thumbs <= limit or (length_thumbs / limit) <= limit:
+            nth = 1
+        else:
+            nth = length_thumbs / limit
+            thumbs_list = thumbs_list[::nth]
+
+        return mark_safe('["%s"]' % '","'.join(thumbs_list))
 
     def thumbs_list(self):
         thumbs = self.data.get('thumbs', [])
