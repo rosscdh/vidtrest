@@ -63,6 +63,10 @@ class Vid(models.Model):
     objects = models.Manager()
     tags = TaggableManager()
 
+    class Meta:
+        verbose_name = "video"
+        verbose_name_plural = "videos"
+
     @property
     def thumb(self):
         return self.videometa.thumb
@@ -110,6 +114,10 @@ class VideoMeta(models.Model):
     image_width = models.CharField(max_length=24, blank=True, null=True)
 
     data = JSONField(default={})
+
+    class Meta:
+        verbose_name = "video metadata"
+        verbose_name_plural = "video metadata"
 
     @property
     def timestamp_thumbs(self):
