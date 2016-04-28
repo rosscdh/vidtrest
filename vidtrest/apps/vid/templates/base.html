@@ -62,8 +62,6 @@
 
 
   {% block compressedjs %}{% javascript 'pages' %}{% endblock %}
-  {% block footer_js %}
-  {% endblock %}
 
   <!-- Core JavaScript Files -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
@@ -82,6 +80,8 @@
   <script>
     window.overlay_img_path = "{% static 'img/overlay-pat.png' %}";
   </script>
+
+  {% block footer_js %}{% endblock %}
 
 </body>
 </html>
