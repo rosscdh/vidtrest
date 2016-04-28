@@ -4,17 +4,26 @@
 {% block extrastyle %}
   {{ block.super }}
   <link rel="stylesheet" type="text/css" href="{% static "plyr/dist/plyr.css" %}" />
+  <link rel="stylesheet" type="text/css" href="{% static "owl.carousel/dist/assets/owl.carousel.min.css" %}" />
+  <link rel="stylesheet" type="text/css" href="{% static "owl.carousel/dist/assets/owl.theme.default.min.css" %}" />
   <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" type="text/css" media="screen" rel="stylesheet" />
   <style>
   .meta-data {
     width:100%;
   }
-  dl { width:100%; }
-  dt { width: 180px; clear:left } // clear to force it to the next line
-  dd { width: 300px; }
-  dt, dd { float:left; }
   .select2-container {
-    width:60%!important;
+    width:70%!important;
+  }
+  .owl-prev, .owl-next {
+    font-size:1.8em;
+    margin:10px;
+  }
+  .owl-prev {
+    float:left;
+    clear:both;
+  }
+  .owl-next {
+    float:right;
   }
   </style>
 {% endblock %}
@@ -40,15 +49,31 @@
 {% block after_field_sets %}
   {% if original.get_video %}
   <hr/>
-  <table style="width:100%;">
+  <table>
     <tr>
-      <td style="width:25%;">
+      <td colspan="2">
+        <h2>Scene thumbs</h2>
+        <div id="thumbnail-carousel" class="owl-carousel owl-theme" style="width:640px;">
+          {% for thumb, timestamp in original.videometa.timestamp_thumbs %}
+            <div>
+              <img class="owl-lazy" data-src="{{ thumb }}" style="width:320px;" border="0" />
+            </div>
+          {% endfor %}
+        </div>
+      </td>
+    </tr>
+  </table>
+  <table id="extra-content">
+    <tr>
+      <td width="40%">
         <div class="meta-data">
           <h2>Meta data</h2>
           <hr/>
-          <div style="margin:20px"><b>Share URL:</b><br/><a href="{{ original.get_video.url }}" target="_NEW">{{ original.get_video.url }}</a></div>
+          <div style="margin:20px 5px"><b>Public URL:</b><br/><a href="{{ original.get_absolute_url }}" target="_NEW">{{ original.get_absolute_url }}</a></div>
           <hr/>
-          <div style="margin:20px 0px;"><b>UUID:</b><br/>{{ original.uuid }}</div>
+          <div style="margin:20px 5px"><b>Share URL:</b><br/><a href="{{ original.get_video.url }}" target="_NEW">{{ original.get_video.url }}</a></div>
+          <hr/>
+          <div style="margin:20px 5px;"><b>UUID:</b><br/>{{ original.uuid }}</div>
           <hr/>
           {% vid_metadata original %}
         </div>
@@ -78,9 +103,19 @@
 {% block footer %}
   {{ block.super }}
   <script src="{% static "plyr/dist/plyr.js" %}"></script>
+  <script src="{% static "owl.carousel/dist/owl.carousel.js" %}"></script>
   <script>
   (function($){
     var player = plyr.setup('.plyr')[0];
+
+    $('#thumbnail-carousel').width( $('#extra-content').width() );
+    $('#thumbnail-carousel').owlCarousel({
+      loop: false,
+      nav: true,
+      lazyLoad: true,
+      autoWidth: true,
+      margin: 5,
+    });
 
     (function(d, p){
         var a = new XMLHttpRequest(),

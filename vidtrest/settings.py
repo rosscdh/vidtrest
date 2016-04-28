@@ -194,6 +194,7 @@ BOWER_INSTALLED_APPS = (
     'plyr#1.5.21',
     'freewall#1.0.6',
     'clipboard#1.5.10',
+    'owl.carousel#2.1.1',
 )
 
 PIPELINE = {
