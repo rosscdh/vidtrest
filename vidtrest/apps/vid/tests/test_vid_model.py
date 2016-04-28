@@ -27,6 +27,9 @@ class VidModelTest(BaseTestCase):
         self.vid.save()
         self.vid.videometa.refresh_from_db()
 
+    def test_get_absolute_url(self):
+        self.assertEqual(self.vid.get_absolute_url(), '/vids/1/')
+
     def test_video_upload(self):
         self.assertEqual(self.vid.video.url, '/media/video/%s/ikea_little_dog.mp4' % self.vid.uuid)
 
@@ -45,5 +48,6 @@ class VidModelTest(BaseTestCase):
         self.assertEqual(len(self.vid.videometa.timestamp_thumbs), 8)
         self.assertTrue(len(self.vid.videometa.timestamp_thumbs[0]), 2)
 
+        self.assertEqual(type(self.vid.videometa.timestamp_thumbs[0]), tuple)
         self.assertEqual(self.vid.videometa.timestamp_thumbs[0], (u'/media/video/{uuid}/thumbs-01.jpg'.format(uuid=self.vid.uuid), u'2.04'))
         self.assertEqual(self.vid.videometa.timestamp_thumbs[1], (u'/media/video/{uuid}/thumbs-02.jpg'.format(uuid=self.vid.uuid), u'3.56'))

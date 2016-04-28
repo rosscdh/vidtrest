@@ -28,6 +28,10 @@ class VidModelHelpersTest(BaseTestCase):
 
     def test_validate_file_extension(self):
         class TestObj(object):
+            """
+            simple placeholder object to contain the file object thats
+            referenced in tested method
+            """
             file = None
 
         #
