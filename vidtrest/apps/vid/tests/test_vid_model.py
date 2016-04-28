@@ -28,7 +28,7 @@ class VidModelTest(BaseTestCase):
         self.vid.videometa.refresh_from_db()
 
     def test_get_absolute_url(self):
-        self.assertEqual(self.vid.get_absolute_url(), '/vids/1/')
+        self.assertEqual(self.vid.get_absolute_url(), '/vids/{uuid}/'.format(uuid=self.vid.uuid))
 
     def test_video_upload(self):
         self.assertEqual(self.vid.video.url, '/media/video/%s/ikea_little_dog.mp4' % self.vid.uuid)
