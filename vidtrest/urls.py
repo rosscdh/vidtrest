@@ -7,7 +7,6 @@ from django.conf.urls.static import static
 admin.site.site_header = 'Jonas Hartung - Administration'
 
 urlpatterns = [
-    url(r'^', include('vidtrest.apps.vid.urls')),
     url(r'^vids/', include('vidtrest.apps.vid.urls', namespace='vid')),
     url(r'^admin/', admin.site.urls),
     url(r'^rq/', include('django_rq.urls')),

@@ -86,7 +86,7 @@ class Vid(models.Model):
         return None
 
     def get_absolute_url(self):
-        return reverse("vid:detail", kwargs={'uuid': self.uuid})
+        return reverse("vid:detail", kwargs={'uuid': str(self.uuid)})
 
 
 class VideoMeta(models.Model):
