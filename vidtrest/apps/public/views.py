@@ -2,10 +2,15 @@
 from django.views import generic
 
 from taggit.models import Tag
+
 from queryset_sequence import QuerySetSequence
 from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
 
+from haystack.inputs import AutoQuery
+from haystack.query import SearchQuerySet
+
 from vidtrest.apps.categories.models import VideoCat
+from vidtrest.apps.vid.models import Vid
 
 from .forms import SearchForm
 
@@ -35,13 +40,23 @@ class SearchAutocompleteView(Select2QuerySetSequenceView):
         template_cats = VideoCat.objects.all()
         tags = Tag.objects.all()
 
-        if self.q:
+        if not self.q:
+
+            qs = QuerySetSequence().none()
+
+        else:
             template_cats = template_cats.filter(name__icontains=self.q)
             tags = tags.filter(name__icontains=self.q)
 
-        # Aggregate querysets
-        qs = QuerySetSequence(template_cats, tags)
-        # qs = QuerySetSequence(tags)
+            #
+            # Get Haystack search results and convert to pks for local
+            #
+            content = SearchQuerySet().filter(content=AutoQuery(self.q))
+            content_pks = [i.pk for i in content]
+            content = Vid.objects.filter(pk__in=content_pks)
+
+            # Aggregate querysets
+            qs = QuerySetSequence(content, template_cats, tags)
 
         if self.q:
             # This would apply the filter on all the querysets

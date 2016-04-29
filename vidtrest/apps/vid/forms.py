@@ -27,13 +27,11 @@ class VidForm(forms.ModelForm):
     categories = forms.ModelMultipleChoiceField(queryset=VideoCat.objects.all(),
                                                 widget=forms.CheckboxSelectMultiple(),
                                                 required=False)
-    #description = forms.CharField(widget=forms.Textarea)
 
     class Meta:
         model = Vid
         fields = (
             'name',
-            #'description',
             'categories',
             'video',
         )

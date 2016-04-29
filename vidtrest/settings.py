@@ -35,6 +35,7 @@ DJANGO_APPS = [
 PROJECT_APPS = [
     'vidtrest.apps.categories',
     'vidtrest.apps.vid',
+    'vidtrest.apps.public',
 ]
 
 HELPER_APPS = [
