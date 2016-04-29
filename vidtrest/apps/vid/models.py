@@ -79,6 +79,9 @@ class Vid(models.Model):
     def preview_thumbs(self):
         return self.videometa.preview_thumbs
 
+    def __unicode__(self):
+        return self.name
+
     def get_video(self):
         """
         Return the s3_video if its present otherwise the normal one
