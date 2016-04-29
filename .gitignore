@@ -1,4 +1,5 @@
 venv
+whoosh_index
 .vagrant
 .sonar/
 *.pem

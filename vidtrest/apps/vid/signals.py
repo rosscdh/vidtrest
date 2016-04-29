@@ -72,7 +72,11 @@ def do_video_thumbs(instance, video):
                                     video=instance.video)
     service.process()
 
-    videometa.data.update({'thumbs': service.thumbs})
+    videometa.data.update({
+        'thumbs': service.thumbs,
+        'thumbs_timestamp': service.thumbs_timestamp,
+    })
+
     videometa.save(update_fields=['data'])
 
 @receiver(signals.post_save,
@@ -83,6 +87,9 @@ def post_save_get_video_meta(sender, instance, created, **kwargs):
     Async
     """
     if instance.video:
-        # do_upload_to_s3(instance=instance)
-        queue.enqueue(do_upload_to_s3,
-                      instance=instance)
+
+        if settings.PROJECT_ENVIRONMENT in ['test']:
+            do_upload_to_s3(instance=instance)
+        else:
+            queue.enqueue(do_upload_to_s3,
+                          instance=instance)

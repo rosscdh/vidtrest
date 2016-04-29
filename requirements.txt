@@ -19,7 +19,7 @@ django-braces==1.4.0
 django-crispy-forms==1.6.0
 django-easy-select2==1.2.5
 django-extensions==1.6.1
-django-haystack==2.4.1
+-e git+https://github.com/django-haystack/django-haystack.git@cd7380e35c0950861d5fd07142d4c3c2aa442005#egg=django_haystack-master
 django-jsonfield==0.9.19
 django-pipeline==1.6.8
 django-querysetsequence==0.5
@@ -29,6 +29,7 @@ django-taggit==0.18.1
 ecdsa==0.13
 gitdb==0.6.4
 honcho==0.6.6
+model-mommy==1.2.6
 paramiko==1.16.0
 psycopg2==2.6.1
 pycrypto==2.6.1

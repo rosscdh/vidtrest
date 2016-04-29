@@ -7,6 +7,7 @@ from .models import Vid
 class VidIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
     name = indexes.CharField(model_attr='name')
+    uuid = indexes.CharField(model_attr='uuid')
     mime_type = indexes.CharField(model_attr='videometa__mime_type')
     duration = indexes.CharField(model_attr='videometa__duration')
     file_size = indexes.CharField(model_attr='videometa__file_size')

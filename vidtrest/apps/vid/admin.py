@@ -37,5 +37,4 @@ class NativeAdAdmin(admin.ModelAdmin):
                                   context_instance=RequestContext(request))
 
 
-
-#admin.site.register([VideoMeta])
+admin.site.register([VideoMeta])

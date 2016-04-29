@@ -16,7 +16,7 @@ SELECT_2_WIDGET = HeavySelect2MultipleWidget(data_view='public:search_autocomple
 class SearchForm(forms.Form):
     query = AnyChoiceMultipleChoiceField(widget=SELECT_2_WIDGET,
                                          label='',
-                                         required=False)
+                                         required=True)
     @property
     def helper(self):
         helper = FormHelper(self)

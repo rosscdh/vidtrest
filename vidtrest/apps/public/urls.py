@@ -10,5 +10,5 @@ urlpatterns = [
         name='search_autocomplete'),
 
     url(r'^$', PublicHomeView.as_view(),
-        name='home'),
+        name='home')
 ]

@@ -33,9 +33,9 @@ DJANGO_APPS = [
 ]
 
 PROJECT_APPS = [
+    'vidtrest.apps.public',
     'vidtrest.apps.categories',
     'vidtrest.apps.vid',
-    'vidtrest.apps.public',
 ]
 
 HELPER_APPS = [
@@ -119,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'de'
 
 TIME_ZONE = 'UTC'
 
@@ -137,7 +137,7 @@ USE_TZ = True
 STATIC_URL = 'http://192.168.50.5/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-# MEDIA_URL = '/m/'
+#MEDIA_URL = '/m/'
 MEDIA_URL = 'http://192.168.50.5/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -196,8 +196,9 @@ BOWER_INSTALLED_APPS = (
     'jquery-thumb-preview#0.0.1',
     'jquery#1.11.0',
     'plyr#1.5.21',
-    'waterfall#1.0.3',
+    'freewall#1.0.6',
     'clipboard#1.5.10',
+    'owl.carousel#2.1.1',
 )
 
 PIPELINE = {

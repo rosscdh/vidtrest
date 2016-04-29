@@ -24,6 +24,7 @@ class AnyChoiceMultipleChoiceField(forms.MultipleChoiceField):
 class VidForm(forms.ModelForm):
     combined_tags = AnyChoiceMultipleChoiceField(widget=SELECT_2_WIDGET,
                                                  required=False)
+
     categories = forms.ModelMultipleChoiceField(queryset=VideoCat.objects.all(),
                                                 widget=forms.CheckboxSelectMultiple(),
                                                 required=False)

@@ -1,16 +1,24 @@
 {% extends 'base.html' %}{% load crispy_forms_tags %}
 
+{% block head %}
+<style>
+#search-form {
+  margin-top:20%;
+}
+</style>
+{% endblock %}
 
 {% block content %}
 <section id="intro">
   <div class="video-content">
 
-  <div class="col-sm-8 col-sm-offset-2">
+  <div id="search-form" class="col-sm-8 col-sm-offset-2">
   {% crispy form %}
   </div>
 
   </div>
 </section>
+
 {% endblock %}
 
 

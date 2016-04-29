@@ -49,7 +49,7 @@
 }
 
 .font-similar {
-    font-family: 'JournalRegular', Arial, sans-serif;
+    font-family: 'JournalRegular', 'Open Sans', sans-serif;
     color:#bebebe;
     font-size: 42px;
     line-height: 56px;
@@ -61,7 +61,7 @@ body {
     font-family: 'Open Sans',  Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     color: #fff;
-    background-color: #fff;
+    background-color: #000;
 }
 
 html {

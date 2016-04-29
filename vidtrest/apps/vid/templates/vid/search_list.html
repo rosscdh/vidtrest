@@ -18,10 +18,10 @@
       {% for item in object_list %}
       <div class="grid-item">
         <a href="{% url 'vid:detail' uuid=item.uuid %}" class="view-video" data-pk="{{ item.pk }}" >
-          <img src="{{ item.thumb }}" class="slider-thumb" border="0" style="width:128px;" data-images='{{ item.thumbs }}' />
+          <img src="{{ item.object.thumb }}" class="slider-thumb" border="0" style="width:128px;" data-images='{{ item.object.thumbs }}' />
         </a>
         <br/>
-        <div style=""><a href="{% url 'admin:vid_vid_change' item.pk %}">{{ item.name }}</a></div>
+        <div style=""><a href="{% url 'vid:detail' uuid=item.uuid %}">{{ item.name }}</a></div>
       </div>
       {% endfor %}
 

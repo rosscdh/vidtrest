@@ -1,20 +1,29 @@
 {% extends 'admin/change_form.html' %}
-{% load pipeline staticfiles %}
+{% load pipeline staticfiles vid_metadata %}
 
 {% block extrastyle %}
   {{ block.super }}
   <link rel="stylesheet" type="text/css" href="{% static "plyr/dist/plyr.css" %}" />
+  <link rel="stylesheet" type="text/css" href="{% static "owl.carousel/dist/assets/owl.carousel.min.css" %}" />
+  <link rel="stylesheet" type="text/css" href="{% static "owl.carousel/dist/assets/owl.theme.default.min.css" %}" />
   <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" type="text/css" media="screen" rel="stylesheet" />
   <style>
   .meta-data {
     width:100%;
   }
-  dl { width:100%; }
-  dt { width: 180px; clear:left } // clear to force it to the next line
-  dd { width: 300px; }
-  dt, dd { float:left; }
   .select2-container {
-    width:60%!important;
+    width:70%!important;
+  }
+  .owl-prev, .owl-next {
+    font-size:1.8em;
+    margin:10px;
+  }
+  .owl-prev {
+    float:left;
+    clear:both;
+  }
+  .owl-next {
+    float:right;
   }
   </style>
 {% endblock %}
@@ -40,49 +49,33 @@
 {% block after_field_sets %}
   {% if original.get_video %}
   <hr/>
-  <table style="width:100%;">
+  <table>
     <tr>
-      <td style="width:25%;">
+      <td colspan="2">
+        <h2>Scene thumbs</h2>
+        <div id="thumbnail-carousel" class="owl-carousel owl-theme" style="width:640px;">
+          {% for thumb, timestamp in original.videometa.timestamp_thumbs %}
+            <div>
+              <a href="javascript:;" class="jump-to-timestamp" data-poster="{{ thumb }}" data-timestamp="{{ timestamp }}">
+                <img class="owl-lazy" data-src="{{ thumb }}" style="width:320px;" border="0" />
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      </td>
+    </tr>
+  </table>
+  <table id="extra-content">
+    <tr>
+      <td width="40%">
         <div class="meta-data">
           <h2>Meta data</h2>
           <hr/>
-          <dl>
-            <dt>Uploaded Url</dt>
-            <dd><a href="{{ original.get_video.url }}" target="_NEW">{{ original.get_video.url }}</a></dd>
-            <dt>mime_type</dt>
-            <dd>{{ original.videometa.mime_type }}</dd>
-            <dt>duration</dt>
-            <dd>{{ original.videometa.duration }}</dd>
-            <dt>file_size</dt>
-            <dd>{{ original.videometa.file_size }}</dd>
-            <dt>avg_bitrate</dt>
-            <dd>{{ original.videometa.avg_bitrate }}</dd>
-            <dt>audio_sample_rate</dt>
-            <dd>{{ original.videometa.audio_sample_rate }}</dd>
-            <dt>audio_bits_per_sample</dt>
-            <dd>{{ original.videometa.audio_bits_per_sample }}</dd>
-            <dt>audio_format</dt>
-            <dd>{{ original.videometa.audio_format }}</dd>
-            <dt>video_frame_rate</dt>
-            <dd>{{ original.videometa.video_frame_rate }}</dd>
-            <dt>track_duration</dt>
-            <dd>{{ original.videometa.track_duration }}</dd>
-            <dt>x_resolution</dt>
-            <dd>{{ original.videometa.x_resolution }}</dd>
-            <dt>y_resolution</dt>
-            <dd>{{ original.videometa.y_resolution }}</dd>
-            <dt>image_size</dt>
-            <dd>{{ original.videometa.image_size }}</dd>
-            <dt>image_height</dt>
-            <dd>{{ original.videometa.image_height }}</dd>
-            <dt>image_width</dt>
-            <dd>{{ original.videometa.image_width }}</dd>
-            <dt>file_type</dt>
-            <dd>{{ original.videometa.file_type }}</dd>
-            <dt>compressor_id</dt>
-            <dd>{{ original.videometa.compressor_id }}</dd>
-          </dl>
-
+          <div style="margin:20px 5px"><b>Public URL:</b><br/><a href="{{ original.get_absolute_url }}" target="_NEW">{{ original.get_absolute_url }}</a></div>
+          <hr/>
+          <div style="margin:20px 5px"><b>Share URL:</b><br/><a href="{{ original.get_video.url }}" target="_NEW">{{ original.get_video.url }}</a></div>
+          <hr/>
+          {% vid_metadata original %}
         </div>
       </td>
       <td>
@@ -110,9 +103,29 @@
 {% block footer %}
   {{ block.super }}
   <script src="{% static "plyr/dist/plyr.js" %}"></script>
+  <script src="{% static "owl.carousel/dist/owl.carousel.js" %}"></script>
   <script>
   (function($){
-    var player = plyr.setup('.plyr')[0];
+    var player = plyr.setup('.plyr');
+
+    $('#thumbnail-carousel').width( $('#extra-content').width() );
+    $('#thumbnail-carousel').owlCarousel({
+      loop: false,
+      nav: true,
+      lazyLoad: true,
+      autoWidth: true,
+      margin: 5,
+    });
+
+    $("a.jump-to-timestamp").on('click', function() {
+        var self = $(this);
+        //var poster = self.data().poster;
+        var timestamp = self.data().timestamp;
+        //player.play();
+        //player.pause();
+        //player.poster = poster;
+        //player.currentTime = timestamp;
+    });
 
     (function(d, p){
         var a = new XMLHttpRequest(),

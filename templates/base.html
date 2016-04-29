@@ -34,7 +34,7 @@
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
           <i class="fa fa-bars"></i>
         </button>
-        <a class="navbar-brand" href="#page-top">
+        <a class="navbar-brand" href="/">
           <i class="fa fa-video-camera"></i> Vid<span class="font-light">trest</span>
         </a>
       </div>
@@ -65,19 +65,19 @@
 
   {% javascript 'pages' %}
 
-  <!-- Core JavaScript Files -->
+  <!-- JavaScript -->
   <script src="{% static 'js/jquery.min.js' %}"></script>
   <script src="{% static 'js/bootstrap.min.js' %}"></script>
   <script src="{% static 'js/jquery.easing.min.js' %}"></script>
   <script src="{% static 'js/jquery.appear.min.js' %}"></script>
 
-  <!-- JavaScript -->
   <script src="{% static 'magnific-popup/jquery.magnific-popup.min.js' %}"></script>
   <script src="{% static 'js/waypoints.min.js' %}"></script>
-  <script src="{% static 'clipboard/dist/clipboard.min.js' %}"></script>
+  <script src="{% static 'js/video-generic.js' %}"></script>
+  <script src="{% static 'js/clipboard-interface.js' %}"></script>
 
-  <!-- Custom Theme JavaScript -->
   <script src="{% static 'js/vid-helpers.js' %}"></script>
+
 
   <script>
     window.overlay_img_path = "{% static 'img/overlay-pat.png' %}";
