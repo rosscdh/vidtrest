@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from django_select2.forms import HeavySelect2MultipleWidget
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Fieldset, ButtonHolder, Field, Submit
+from crispy_forms.layout import Layout, ButtonHolder, Field, Submit
 
 from vidtrest.apps.vid.forms import AnyChoiceMultipleChoiceField
 
@@ -17,6 +17,14 @@ class SearchForm(forms.Form):
     query = AnyChoiceMultipleChoiceField(widget=SELECT_2_WIDGET,
                                          label='',
                                          required=True)
+
+    def __init__(self, *args, **kwargs):
+        super(SearchForm, self).__init__(*args, **kwargs)
+
+        # Setup the initial values for the combined_tags field
+        # @TODO clean this nastiness up move into form or widget
+        self.fields['query'].widget.attrs.update({'data-tags': 'true'})  # V important for taking multiple and creating new
+
     @property
     def helper(self):
         helper = FormHelper(self)

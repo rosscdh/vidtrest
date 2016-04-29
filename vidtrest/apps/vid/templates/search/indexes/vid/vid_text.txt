@@ -16,8 +16,8 @@
 {{ object.image_height }}
 {{ object.image_width }}
 {% for tag in object.tags.all %}
-{{ tag }}
+{{ tag.name }}
 {% endfor %}
 {% for cat in object.categories.all %}
-{{ cat }}
+{{ cat.name }}
 {% endfor %}

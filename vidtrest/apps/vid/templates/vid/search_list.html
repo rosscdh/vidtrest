@@ -1,54 +1,92 @@
-{% extends 'base.html' %}{% load crispy_forms_tags %}
+{% extends 'base.html' %}{% load spurl crispy_forms_tags staticfiles %}
+
+{% block head %}
+{{ block.super }}
+<style>
+#search-form {
+  margin-top:20%;
+}
+a.name {
+  font-size:1.5em;
+}
+</style>
+{% endblock %}
+
 
 {% block content %}
-<section id="intro">
-  <div class="video-content">
 
-  <div class="col-sm-8 col-sm-offset-2">
+<section id="results" class="container-fluid">
 
-  </div>
+    <div class="col-sm-12">
+      <div class="text-center">
 
-  </div>
-</section>
+        <div class="pagination">
+            <span class="step-links">
 
-<section id="results">
+                {% if page_obj.has_previous %}
+                    <a class="btn btn-info" href="{% spurl base="{\% url 'vid:search' %\}" add_query="page={{ page_obj.previous_page_number }}" %}">previous</a>
+                {% endif %}
 
-    <div id="result_list" class="grid">
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a class="btn btn-info" href="{% spurl base="{\% url 'vid:search' %\}" add_query="page={{ page_obj.next_page_number }}" %}">next</a>
+                {% endif %}
+            </span>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="result_list" class="grid col-sm-12">
 
       {% for item in object_list %}
-      <div class="grid-item">
-        <a href="{% url 'vid:detail' uuid=item.uuid %}" class="view-video" data-pk="{{ item.pk }}" >
-          <img src="{{ item.object.thumb }}" class="slider-thumb" border="0" style="width:128px;" data-images='{{ item.object.thumbs }}' />
-        </a>
-        <br/>
-        <div style=""><a href="{% url 'vid:detail' uuid=item.uuid %}">{{ item.name }}</a></div>
+      <div class="grid-item col-sm-2">
+
+        <div class="text-center col-sm-12">
+          <a class="name" href="{% url 'vid:detail' uuid=item.uuid %}">{{ item.name }}</a>
+          <a href="{% url 'vid:detail' uuid=item.uuid %}" class="view-video" data-pk="{{ item.pk }}" >
+            <img src="{{ item.object.thumb }}" class="slider-thumb img img-responsive" border="0" data-images='{{ item.object.preview_thumbs }}' />
+          </a>
+        </div>
+        <div class="meta-data">
+          <dt>
+          <dd><em>mime_type</em>: {{ item.mime_type }}</dd>
+          <dd><em>duration</em>: {{ item.duration }}</dd>
+          <dd><em>file_size</em>: {{ item.file_size }}</dd>
+          <dd><em>image_size</em>: {{ item.image_size }}</dd>
+          </dt>
+        </div>
       </div>
       {% endfor %}
 
     </div>
 
-    {% if query %}
-        <h3>Results</h3>
+    <div class="col-sm-12">
+      <div class="text-center">
 
-        {% for result in page.object_list %}
-            <p>
-                <a href="{{ result.object.get_absolute_url }}">{{ result.object.title }}</a>
-            </p>
-        {% empty %}
-            <p>No results found.</p>
-        {% endfor %}
-
-        {% if page.has_previous or page.has_next %}
-            <div>
-                {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
-                |
-                {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
-            </div>
-        {% endif %}
-    {% else %}
-        {# Show some example queries to run, maybe query syntax, something else? #}
-    {% endif %}
+      </div>
+    </div>
 
 </section>
 
+{% endblock %}
+
+{% block javascript_footer %}
+{{ block.super }}
+<script src="{% static "js/jquery.thumb.preview.js" %}"></script>
+<script>
+$(document).ready(function(){
+  $('img.slider-thumb').thumbPreview({preload: true});
+
+  $('.meta-data').tooltip({
+    animation: true,
+    delay: { "show": 200, "hide": 200 },
+    trigger: 'hover',
+    placement: 'bottom'
+  });
+});
+</script>
 {% endblock %}

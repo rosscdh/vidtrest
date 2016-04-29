@@ -130,15 +130,6 @@
           {% if vid.description %}<p class="description">{{ vid.description }}</p>{% endif %}
           <br>
 
-          <!-- <div class="detailed">
-            Rating:&nbsp;&nbsp;
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star-half-o"></i>
-            <span>IMDb &nbsp;<b>/  4.5</b></span>
-          </div> -->
         </div>
       </div>
     </div>
@@ -151,6 +142,8 @@
   {{ block.super }}
   <!-- JavaScript -->
   <script src="{% static 'clipboard/dist/clipboard.min.js' %}"></script>
+  <script src="{% static 'js/clipboard-interface.js' %}"></script>
+
   <script src="{% static 'js/vid-helpers.js' %}"></script>
   <script src="{% static "owl.carousel/dist/owl.carousel.js" %}"></script>
   <script>
@@ -159,7 +152,7 @@
     $('#thumbnail-carousel').owlCarousel({
       loop: false,
       nav: true,
-      // autoWidth: true,
+      autoWidth: true,
       margin: 5,
     });
 

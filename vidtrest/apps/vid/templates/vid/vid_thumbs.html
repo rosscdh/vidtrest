@@ -2,7 +2,7 @@
 {% for thumb, timestamp in vid.videometa.timestamp_thumbs %}
   <div>
     <a href="javascript:;" class="jump-to-timestamp" data-poster="{{ thumb }}" data-timestamp="{{ timestamp }}">
-      <img src="{{ thumb }}" border="0" />
+      <img src="{{ thumb }}" border="0" style="width:210px;" />
     </a>
   </div>
 {% endfor %}

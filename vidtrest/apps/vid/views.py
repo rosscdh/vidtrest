@@ -16,6 +16,8 @@ class DetailView(generic.DetailView):
 
 class VidSearchView(generic.ListView):
     template_name = 'vid/search_list.html'
+    paginate_by = 15
 
     def get_queryset(self):
-        return SearchQuerySet().filter(content=AutoQuery(self.request.GET.get('query')))
+        qs = SearchQuerySet().filter(content=AutoQuery(self.request.GET.get('query', '')))
+        return qs

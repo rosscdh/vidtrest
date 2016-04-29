@@ -47,6 +47,7 @@ HELPER_APPS = [
     'pipeline',
     'haystack',
     'django_rq',
+    'spurl',
     'djangobower',
 ]
 
