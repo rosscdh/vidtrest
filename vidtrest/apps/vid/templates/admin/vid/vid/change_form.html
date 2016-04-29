@@ -56,7 +56,9 @@
         <div id="thumbnail-carousel" class="owl-carousel owl-theme" style="width:640px;">
           {% for thumb, timestamp in original.videometa.timestamp_thumbs %}
             <div>
-              <img class="owl-lazy" data-src="{{ thumb }}" style="width:320px;" border="0" />
+              <a href="javascript:;" class="jump-to-timestamp" data-poster="{{ thumb }}" data-timestamp="{{ timestamp }}">
+                <img class="owl-lazy" data-src="{{ thumb }}" style="width:320px;" border="0" />
+              </a>
             </div>
           {% endfor %}
         </div>
@@ -72,8 +74,6 @@
           <div style="margin:20px 5px"><b>Public URL:</b><br/><a href="{{ original.get_absolute_url }}" target="_NEW">{{ original.get_absolute_url }}</a></div>
           <hr/>
           <div style="margin:20px 5px"><b>Share URL:</b><br/><a href="{{ original.get_video.url }}" target="_NEW">{{ original.get_video.url }}</a></div>
-          <hr/>
-          <div style="margin:20px 5px;"><b>UUID:</b><br/>{{ original.uuid }}</div>
           <hr/>
           {% vid_metadata original %}
         </div>
@@ -106,7 +106,7 @@
   <script src="{% static "owl.carousel/dist/owl.carousel.js" %}"></script>
   <script>
   (function($){
-    var player = plyr.setup('.plyr')[0];
+    var player = plyr.setup('.plyr');
 
     $('#thumbnail-carousel').width( $('#extra-content').width() );
     $('#thumbnail-carousel').owlCarousel({
@@ -115,6 +115,16 @@
       lazyLoad: true,
       autoWidth: true,
       margin: 5,
+    });
+
+    $("a.jump-to-timestamp").on('click', function() {
+        var self = $(this);
+        //var poster = self.data().poster;
+        var timestamp = self.data().timestamp;
+        //player.play();
+        //player.pause();
+        //player.poster = poster;
+        //player.currentTime = timestamp;
     });
 
     (function(d, p){

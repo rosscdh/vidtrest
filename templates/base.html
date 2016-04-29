@@ -8,16 +8,13 @@
 
   {% block head %}
   <!-- inject:css -->
-  {% block compressedcss %}{% stylesheet 'pages' %}{% endblock %}
+  {% stylesheet 'pages' %}
   <!-- endinject -->
   {% endblock %}
 
   <!-- Bootstrap Core CSS -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-
-  <!-- Fonts -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
+  <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
   <!-- Custom Theme CSS -->
   <link href="{% static 'css/style.css' %}" rel="stylesheet">
@@ -29,6 +26,7 @@
 </head>
 
 <body id="page-top" data-spy="scroll" data-target=".navbar-custom">
+
   <!-- Navigation -->
   <nav class="navbar navbar-custom navbar-fixed-top wp1" role="navigation">
     <div class="container">
@@ -41,35 +39,39 @@
         </a>
       </div>
 
+      {% block navigation %}
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
         <ul class="nav navbar-nav">
           <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
-          <li class="page-scroll">
-            <a href="#about">Details</a>
+          <li class="">
+            <a href="">About</a>
           </li>
-          <li class="page-scroll">
-            <a href="#intro">Video</a>
+          <li class="">
+            <a href="">Login</a>
+          </li>
+          <li class="">
+            <a href="">Signup</a>
           </li>
         </ul>
       </div>
       <!-- /.navbar-collapse -->
-    </div>
-    <!-- /.container -->
+      {% endblock %}
+
+    </div><!-- /.container -->
   </nav>
 
   {% block content %}{% endblock %}
 
-
-  {% block compressedjs %}{% javascript 'pages' %}{% endblock %}
+  {% javascript 'pages' %}
 
   <!-- Core JavaScript Files -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.appear/0.3.3/jquery.appear.min.js"></script>
 
   <!-- JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.appear/0.3.3/jquery.appear.min.js"></script>
   <script src="{% static 'magnific-popup/jquery.magnific-popup.min.js' %}"></script>
   <script src="{% static 'js/waypoints.min.js' %}"></script>
   <script src="{% static 'clipboard/dist/clipboard.min.js' %}"></script>
@@ -81,7 +83,7 @@
     window.overlay_img_path = "{% static 'img/overlay-pat.png' %}";
   </script>
 
-  {% block footer_js %}{% endblock %}
+  {% block javascript_footer %}{% endblock %}
 
 </body>
 </html>

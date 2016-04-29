@@ -20,8 +20,23 @@
   </style>
 {% endblock %}
 
-{% block content %}
+{% block navigation %}
+<!-- Collect the nav links, forms, and other content for toggling -->
+<div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+  <ul class="nav navbar-nav">
+    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+    <li class="page-scroll">
+      <a href="#about">Details</a>
+    </li>
+    <li class="page-scroll">
+      <a href="#intro">Video</a>
+    </li>
+  </ul>
+</div>
+<!-- /.navbar-collapse -->
+{% endblock %}
 
+{% block content %}
   <!-- Intro Section -->
   <section id="intro">
     <div class="video-content">
@@ -132,7 +147,7 @@
 
 {% endblock %}
 
-{% block footer_js %}
+{% block javascript_footer %}
   {{ block.super }}
   <script src="{% static "owl.carousel/dist/owl.carousel.js" %}"></script>
   <script>

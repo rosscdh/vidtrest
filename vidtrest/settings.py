@@ -33,6 +33,7 @@ DJANGO_APPS = [
 ]
 
 PROJECT_APPS = [
+    'vidtrest.apps.public',
     'vidtrest.apps.categories',
     'vidtrest.apps.vid',
 ]
