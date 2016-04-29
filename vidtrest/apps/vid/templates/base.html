@@ -13,11 +13,16 @@
   {% endblock %}
 
   <!-- Bootstrap Core CSS -->
+<<<<<<< Updated upstream:vidtrest/apps/vid/templates/base.html
   <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 
   <!-- Fonts -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+=======
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+>>>>>>> Stashed changes:templates/base.html
 
   <!-- Custom Theme CSS -->
   <link href="{% static 'css/style.css' %}" rel="stylesheet">
@@ -36,7 +41,7 @@
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
           <i class="fa fa-bars"></i>
         </button>
-        <a class="navbar-brand" href="#page-top">
+        <a class="navbar-brand" href="/">
           <i class="fa fa-video-camera"></i> Vid<span class="font-light">trest</span>
         </a>
       </div>
@@ -66,6 +71,7 @@
   {% endblock %}
 
   <!-- Core JavaScript Files -->
+<<<<<<< Updated upstream:vidtrest/apps/vid/templates/base.html
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
@@ -78,6 +84,17 @@
 
   <!-- Custom Theme JavaScript -->
   <script src="{% static 'js/main.js' %}"></script>
+=======
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/jquery.easing.min.js' %}"></script>
+  <script src="{% static 'js/jquery.appear.min.js' %}"></script>
+
+  <script src="{% static 'magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+  <script src="{% static 'js/waypoints.min.js' %}"></script>
+  <script src="{% static 'js/video-generic.js' %}"></script>
+  <script src="{% static 'js/clipboard-interface.js' %}"></script>
+>>>>>>> Stashed changes:templates/base.html
 
   <script>
     window.overlay_img_path = "{% static 'img/overlay-pat.png' %}";

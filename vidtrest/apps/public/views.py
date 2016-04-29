@@ -1,14 +1,29 @@
 # -*- coding: utf-8 -*-
-from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
-from queryset_sequence import QuerySetSequence
+from django.views import generic
 
 from taggit.models import Tag
-from .models import VideoCat
+from queryset_sequence import QuerySetSequence
+from dal_select2_queryset_sequence.views import Select2QuerySetSequenceView
+
+from vidtrest.apps.categories.models import VideoCat
+
+from .forms import SearchForm
 
 
-class CategoryAndTagsAutocompleteView(Select2QuerySetSequenceView):
+class PublicHomeView(generic.TemplateView):
+    template_name = 'public/home.html'
+
+    def get_context_data(self):
+        context = super(PublicHomeView, self).get_context_data()
+        context.update({
+            'form': SearchForm(initial={'query': self.request.GET.get('query', None)}),
+        })
+        return context
+
+
+class SearchAutocompleteView(Select2QuerySetSequenceView):
     """
-    Autocomplete view for tags/categories lookup field
+    Autocomplete view for search
     """
     def get_result_value(self, result):
         """Override to return the plain name and not the cid-pk"""

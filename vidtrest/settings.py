@@ -38,6 +38,7 @@ PROJECT_APPS = [
 ]
 
 HELPER_APPS = [
+    'crispy_forms',
     'django_extensions',
     'django_select2',
     'taggit',
@@ -172,6 +173,7 @@ AWS_SECRET_ACCESS_KEY = ''
 AWS_ACCESS_KEY_ID = ''
 AWS_STORAGE_BUCKET_NAME = ''
 
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
