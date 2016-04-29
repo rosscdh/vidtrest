@@ -22,6 +22,7 @@ class SearchForm(forms.Form):
         helper = FormHelper(self)
 
         helper.form_action = reverse('vid:search')
+        helper.form_method = 'GET'
         helper.form_show_errors = True
         helper.render_unmentioned_fields = True
 

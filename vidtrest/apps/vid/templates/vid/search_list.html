@@ -1,8 +1,32 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %}{% load crispy_forms_tags %}
 
 {% block content %}
-    <h2>Search</h2>
-    {{page}}
+<section id="intro">
+  <div class="video-content">
+
+  <div class="col-sm-8 col-sm-offset-2">
+
+  </div>
+
+  </div>
+</section>
+
+<section id="results">
+
+    <div id="result_list" class="grid">
+
+      {% for item in object_list %}
+      <div class="grid-item">
+        <a href="{% url 'vid:detail' uuid=item.uuid %}" class="view-video" data-pk="{{ item.pk }}" >
+          <img src="{{ item.thumb }}" class="slider-thumb" border="0" style="width:128px;" data-images='{{ item.thumbs }}' />
+        </a>
+        <br/>
+        <div style=""><a href="{% url 'admin:vid_vid_change' item.pk %}">{{ item.name }}</a></div>
+      </div>
+      {% endfor %}
+
+    </div>
+
     {% if query %}
         <h3>Results</h3>
 
@@ -24,4 +48,7 @@
     {% else %}
         {# Show some example queries to run, maybe query syntax, something else? #}
     {% endif %}
+
+</section>
+
 {% endblock %}

@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.views import generic
-from haystack.generic_views import SearchView
+
+from haystack.inputs import AutoQuery
+from haystack.query import SearchQuerySet
+
 from .models import Vid
 
 
@@ -9,5 +12,8 @@ class DetailView(generic.DetailView):
     template_name = 'vid/detail.html'
 
 
-class VidSearchView(SearchView):
+class VidSearchView(generic.ListView):
     template_name = 'vid/search_list.html'
+
+    def get_queryset(self):
+        return SearchQuerySet().filter(content=AutoQuery(self.request.GET.get('query')))
