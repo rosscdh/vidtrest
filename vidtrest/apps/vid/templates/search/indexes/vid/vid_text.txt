@@ -18,3 +18,6 @@
 {% for tag in object.tags.all %}
 {{ tag }}
 {% endfor %}
+{% for cat in object.categories.all %}
+{{ cat }}
+{% endfor %}
