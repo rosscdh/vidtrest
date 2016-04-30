@@ -44,21 +44,23 @@ class Vid(models.Model):
                             db_index=True)
 
     name = models.CharField(max_length=255)
-    description = models.CharField(max_length=255,
-                                   null=True,
-                                   blank=True)
 
     video = models.FileField(upload_to=_upload_video,
                              storage=OverwriteStorage(),
+                             max_length=500,
                              null=True,
                              blank=True,
                              validators=[_validate_file_extension])
     s3_video = models.FileField(upload_to=_upload_video,
                                 storage=managed_s3botostorage(),
+                                max_length=500,
                                 null=True,
                                 blank=True)
 
     categories = models.ManyToManyField('categories.VideoCat')
+
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
     objects = models.Manager()
     tags = TaggableManager()

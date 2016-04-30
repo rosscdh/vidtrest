@@ -228,6 +228,11 @@ HAYSTACK_CONNECTIONS = {
 }
 
 #
+# Cant use this due to model postsave dependency. Maybe switch to using the meta as the observed model?
+#
+#HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+#
 # Load the environment specific settings
 #
 
