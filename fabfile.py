@@ -1,7 +1,7 @@
 from __future__ import with_statement
 from fabric.api import *
 from fabric.contrib import files
-#from fab_deploy import crontab
+from fab_deploy import crontab
 
 from git import *
 
@@ -616,6 +616,14 @@ def paths():
     run('ln -s %sversions/tmp %s/current' % (env.remote_project_path, env.remote_project_path))
     run('mkvirtualenv vidtrest-%s' % env.environment)
     # pass
+
+@task
+@runs_once
+@roles('cron-actor')
+def crontabs():
+    put(local_path='./config/environments/{environment}/crontab'.format(environment=env.environment_class), remote_path='/etc/cron.d/vidtrest-{env}'.format(env=env.environment), use_glob=False, use_sudo=True, mode=0644)
+    sudo('chown root:root /etc/cron.d/vidtrest-{env}'.format(env=env.environment))
+
 #-------
 
 @task

@@ -20,6 +20,7 @@ django-braces==1.4.0
 django-crispy-forms==1.6.0
 django-easy-select2==1.2.5
 django-extensions==1.6.1
+django-fab-deploy==0.7.5
 -e git+https://github.com/django-haystack/django-haystack.git@cd7380e35c0950861d5fd07142d4c3c2aa442005#egg=django_haystack-master
 django-jsonfield==0.9.19
 django-pipeline==1.6.8
