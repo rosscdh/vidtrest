@@ -59,7 +59,7 @@ class VideoThumbnailService(object):
     thumbs_timestamp = {}
 
     #cmd = 'ffmpeg -ss 3 -i {video_path} -vf "select=gt(scene\,0.3)" -s 320x200 -vsync vfr {output_path}/thumbs-%02d.jpg'
-    cmd = "ffmpeg -i {video_path} -s 320x200 -vsync passthrough -an -vf select='gt(scene\,0.3)',showinfo {output_path}/thumbs-%02d.jpg -f null - 2>&1 | grep 'pts_time' | awk -F'pts_time:' '{{print $2}}' | awk -F'pos:' '{{print $1}}' > {output_path}/thumbs_timestamp.txt"
+    cmd = "ffmpeg -i {video_path} -s 320x200 -vsync passthrough -an -vf select='gt(scene\,0.4)',showinfo {output_path}/thumbs-%02d.jpg -f null - 2>&1 | grep 'pts_time' | awk -F'pts_time:' '{{print $2}}' | awk -F'pos:' '{{print $1}}' > {output_path}/thumbs_timestamp.txt"
 
     def __init__(self, pk, video):
         self.pk = pk
