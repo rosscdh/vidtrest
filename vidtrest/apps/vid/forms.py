@@ -32,9 +32,9 @@ class VidForm(forms.ModelForm):
     class Meta:
         model = Vid
         fields = (
+            'video',
             'name',
             'categories',
-            'video',
         )
 
     def __init__(self, *args, **kwargs):
@@ -53,6 +53,10 @@ class VidForm(forms.ModelForm):
 
     def save(self, **kwargs):
         self.instance = super(VidForm, self).save(**kwargs)
+
+        if self.current_user and self.instance.pk is None or self.instance.uploaded_by is None:
+            self.instance.uploaded_by = self.current_user
+
         self.instance.save()
 
         # pop the tags so we dont try save it to the model

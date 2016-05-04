@@ -26,6 +26,11 @@ class NativeAdAdmin(admin.ModelAdmin):
         ]
         return my_urls + urls
 
+    def get_form(self, *args, **kwargs):
+        form = super(NativeAdAdmin, self).get_form(*args, **kwargs)
+        form.current_user = args[0].user
+        return form
+
     def view_video(self, request, pk):
         vid = Vid.objects.get(pk=pk)
         context = {

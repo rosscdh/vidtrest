@@ -59,6 +59,8 @@ class Vid(models.Model):
 
     categories = models.ManyToManyField('categories.VideoCat')
 
+    uploaded_by = models.ForeignKey('auth.User')
+
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
