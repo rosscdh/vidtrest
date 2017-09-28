@@ -45,13 +45,11 @@ services:
     image: library/nginx:1.13.5-alpine
     ports:
       - "8080:80"
-    links:
-      - vidtrest
     volumes:
       - ./config/production/nginx:/etc/nginx/conf.d
       - ./static:/static
       - ./media:/media
-    depends_on:
+    links:
       - vidtrest
 
 volumes:

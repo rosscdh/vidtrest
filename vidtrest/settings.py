@@ -209,7 +209,7 @@ BOWER_INSTALLED_APPS = (
 )
 
 PIPELINE = {
-    'PIPELINE_ENABLED': True,
+    'PIPELINE_ENABLED': False,
     'CSS_COMPRESSOR': 'pipeline.compressors.yuglify.YuglifyCompressor',
     'JS_COMPRESSOR': 'pipeline.compressors.uglifyjs.UglifyJSCompressor',
     'COMPILERS': ('pipeline.compilers.sass.SASSCompiler',),
