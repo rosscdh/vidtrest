@@ -25,6 +25,8 @@ services:
 
   postgres:
     image: postgres
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
 
   redis:
     image: library/redis:4.0-alpine
