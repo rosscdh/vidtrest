@@ -1,10 +1,18 @@
 FROM python:3
 
-ENV PYTHONUNBUFFERED 1
-ENV POSTGRES_PASSWORD=password
+WORKDIR /
 
-RUN mkdir /vidtrest
-WORKDIR /vidtrest
+ADD ./vidtrest /vidtrest
+ADD ./config /config
+ADD ./manage.py /manage.py
+ADD ./requirements.txt /
+ADD ./Procfile /
 
-RUN pip install -r /vidtrest/requirements.txt
-CMD gunicorn -b :8000 --workers=3 vidtrest.wsgi:application --reload
+RUN pip install -r /requirements.txt
+
+#RUN python manage.py migrate
+#RUN python manage.py create_superuser
+#RUN python manage.py collectstatic --no-input
+#RUN python manage.py loaddata
+
+CMD ["honcho", "start"]

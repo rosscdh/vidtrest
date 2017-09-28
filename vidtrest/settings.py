@@ -5,7 +5,7 @@ import os
 import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = '/'
 
 PROJECT_ENVIRONMENT = DJANGO_ENV = os.getenv('DJANGO_ENV', 'development')
 
@@ -99,11 +99,11 @@ WSGI_APPLICATION = 'vidtrest.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'vidtrest_development',
-        'HOST': '192.168.0.103',
+        'NAME': 'vidtrest',
+        'HOST': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'twjRbhYbgn',
         'PORT': '5432',
-        'USER': 'rosscdh',
-        'PASSWORD': '',
     },
 }
 
@@ -144,13 +144,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
-# STATIC_URL = '/static/'
-STATIC_URL = 'http://192.168.50.5/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join('/', 'static')
 
 #MEDIA_URL = '/m/'
-MEDIA_URL = 'http://192.168.50.5/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join('/', 'media')
 
 #
 # App Settings
@@ -160,22 +159,19 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Queue Settings
 RQ_QUEUES = {
     'default': {
-        'HOST': 'localhost',
+        'HOST': 'redis',
         'PORT': 6379,
         'DB': 0,
-        'DEFAULT_TIMEOUT': 360,
     },
     'high': {
-        'HOST': 'localhost',
+        'HOST': 'redis',
         'PORT': 6379,
         'DB': 0,
-        'DEFAULT_TIMEOUT': 360,
     },
     'low': {
-        'HOST': 'localhost',
+        'HOST': 'redis',
         'PORT': 6379,
         'DB': 0,
-        'DEFAULT_TIMEOUT': 360,
     }
 }
 
@@ -248,23 +244,11 @@ HAYSTACK_CONNECTIONS = {
 
 
 def _load_settings(project_environment):
-    settings_path = os.path.join(BASE_DIR, '../', 'config/environments/{DJANGO_ENV}/vidtrest/local_settings.py'.format(DJANGO_ENV=project_environment))
-    return open(settings_path)
+    settings_path = os.getenv('DJANGO_LOCAL_SETTINGS', os.path.join('/config', os.getenv('DJANGO_ENV', 'development') ,'local_settings.py'))
+    return open(settings_path).read()
 
-try:
-    exec(_load_settings(PROJECT_ENVIRONMENT))
-except Exception as e:
-    print('An exception trying to import env specific settings occrrred: %s' % e)
+exec(_load_settings(PROJECT_ENVIRONMENT))
 
-
-#
-# Load specific local_settings.py settings in case we want to override something for an env
-#
-try:
-    from .local_settings import *
-except ImportError:
-    # no local_settings.py found
-    pass
 
 #
 # Check for test settings

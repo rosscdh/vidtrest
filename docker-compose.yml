@@ -4,10 +4,10 @@ services:
   vidtrest:
     build: .
     environment:
-      - DJANGO_ENV=development
+      - DJANGO_ENV=production
       - PYTHONUNBUFFERED=1
-      - POSTGRES_PASSWORD=password
-      - DJANGO_LOCAL_SETTINGS=/config/production/vidtrest/local_settings.py
+      - DJANGO_LOCAL_SETTINGS=/config/production/local_settings.py
+    command: sh /config/startup.sh
     volumes:
       - ./vidtrest:/vidtrest
       - ./templates:/templates
@@ -19,24 +19,36 @@ services:
       - ./ansible:/ansible
     ports:
       - "8000:8000"
+    links:
+      - postgres
+      - redis
     depends_on:
       - postgres
       - redis
 
   postgres:
-    image: postgres
+    image: library/postgres:9.6.5-alpine
+    environment:
+      - POSTGRES_PASSWORD=twjRbhYbgn
+      - POSTGRES_DB=vidtrest
+    ports:
+      - "5432:5432"
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
 
   redis:
     image: library/redis:4.0-alpine
+    ports:
+      - "6379:6379"
 
   nginx:
-    image: nginx
+    image: library/nginx:1.13.5-alpine
     ports:
       - "8080:80"
+    links:
+      - vidtrest
     volumes:
-      - ./config/environments/production/vidtrest-nginx-production:/config:/etc/nginx/conf.d/vidtrest-nginx-production
+      - ./config/production/nginx:/etc/nginx/conf.d
       - ./static:/static
       - ./media:/media
     depends_on:

@@ -1,2 +1,2 @@
-web: python manage.py runserver_plus 0.0.0.0:$PORT --threaded
+web: gunicorn -b :8000 --workers=3 vidtrest.wsgi:application --reload
 worker: python manage.py rqworker high default low
