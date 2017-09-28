@@ -14,4 +14,4 @@ RUN npm i uglify -g
 RUN pip install -r /requirements.txt
 
 
-CMD ["honcho", "start"]
+#CMD ["honcho", "start"]

@@ -210,9 +210,10 @@ BOWER_INSTALLED_APPS = (
 
 PIPELINE = {
     'PIPELINE_ENABLED': False,
-    'CSS_COMPRESSOR': 'pipeline.compressors.yuglify.YuglifyCompressor',
-    'JS_COMPRESSOR': 'pipeline.compressors.uglifyjs.UglifyJSCompressor',
-    'COMPILERS': ('pipeline.compilers.sass.SASSCompiler',),
+    # 'CSS_COMPRESSOR': 'pipeline.compressors.yuglify.YuglifyCompressor',
+    # 'JS_COMPRESSOR': 'pipeline.compressors.uglifyjs.UglifyJSCompressor',
+    # 'UGLIFYJS_BINARY': '/usr/local/bin/uglify',
+    # 'COMPILERS': ('pipeline.compilers.sass.SASSCompiler',),
     'STYLESHEETS': {
     },
     'JAVASCRIPT': {

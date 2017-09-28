@@ -29,12 +29,14 @@ services:
   postgres:
     image: library/postgres:9.6.5-alpine
     environment:
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=twjRbhYbgn
       - POSTGRES_DB=vidtrest
     ports:
       - "5432:5432"
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
+      - ./config/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
 
   redis:
     image: library/redis:4.0-alpine
@@ -44,7 +46,7 @@ services:
   nginx:
     image: library/nginx:1.13.5-alpine
     ports:
-      - "8080:80"
+      - "80:80"
     volumes:
       - ./config/production/nginx:/etc/nginx/conf.d
       - ./static:/static
