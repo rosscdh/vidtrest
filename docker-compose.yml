@@ -1,0 +1,59 @@
+version: '3.2'
+
+services:
+  vidtrest:
+    build: .
+    environment:
+      - DJANGO_ENV=development
+      - PYTHONUNBUFFERED=1
+      - POSTGRES_PASSWORD=password
+      - DJANGO_LOCAL_SETTINGS=/config/production/vidtrest/local_settings.py
+    volumes:
+      - ./vidtrest:/vidtrest
+      - ./templates:/templates
+      - ./static:/static
+      - ./media:/media
+      - ./whoosh_index:/whoosh_index
+      - ./config:/config
+      - ./bower_components:/bower_components
+      - ./ansible:/ansible
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+      - redis
+
+  postgres:
+    image: postgres
+
+  redis:
+    image: library/redis:4.0-alpine
+
+  nginx:
+    image: nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./config/environments/production/vidtrest-nginx-production:/config:/etc/nginx/conf.d/vidtrest-nginx-production
+      - ./static:/static
+      - ./media:/media
+    depends_on:
+      - vidtrest
+
+volumes:
+  vidtrest:
+    driver: local
+  templates:
+    driver: local
+  static:
+    driver: local
+  media:
+    driver: local
+  whoosh_index:
+    driver: local
+  config:
+    driver: local
+  bower_components:
+    driver: local
+  ansible:
+    driver: local
