@@ -7,36 +7,43 @@ services:
       - DJANGO_ENV=production
       - PYTHONUNBUFFERED=1
       - DJANGO_LOCAL_SETTINGS=/config/production/local_settings.py
+      - DATABASE_HOST=db
+      - DATABASE_NAME=postgres
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=postgres
+      - SENDGRID_USER=''
+      - SENDGRID_PASSWORD=''
+
     command: sh /config/startup.sh
     volumes:
-      - ./vidtrest:/vidtrest
-      - ./templates:/templates
-      - ./static:/static
-      - ./media:/media
-      - ./whoosh_index:/whoosh_index
-      - ./config:/config
-      - ./bower_components:/bower_components
-      - ./ansible:/ansible
+      - ./vidtrest:/vidtrest:consistent
+      - ./templates:/templates:consistent
+      - ./static:/static:consistent
+      - ./media:/media:consistent
+      - ./whoosh_index:/whoosh_index:consistent
+      - ./config:/config:consistent
+      - ./bower_components:/bower_components:consistent
+      - ./ansible:/ansible:consistent
     ports:
       - "8000:8000"
     links:
-      - postgres
+      - db
       - redis
     depends_on:
-      - postgres
+      - db
       - redis
 
-  postgres:
+  db:
     image: library/postgres:9.6.5-alpine
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=twjRbhYbgn
-      - POSTGRES_DB=vidtrest
+      - POSTGRES_USER='postgres'
+      - POSTGRES_PASSWORD='postgres'
+      - POSTGRES_DB='postgres'
     ports:
       - "5432:5432"
     volumes:
-      - ./postgres-data:/var/lib/postgresql/data
-      - ./config/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ./postgres-data:/var/lib/postgresql/data:consistent
+      - ./config/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:consistent
 
   redis:
     image: library/redis:4.0-alpine
@@ -48,9 +55,9 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./config/production/nginx:/etc/nginx/conf.d
-      - ./static:/static
-      - ./media:/media
+      - ./config/production/nginx:/etc/nginx/conf.d:consistent
+      - ./static:/static:consistent
+      - ./media:/media:consistent
     links:
       - vidtrest
 

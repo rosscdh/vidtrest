@@ -10,7 +10,6 @@ postgres-data
 whoosh_index
 local_settings.py
 templates/dashboard/*
-/config
 /static/*
 /media/*
 *.pyc
