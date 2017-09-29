@@ -79,6 +79,7 @@ def do_video_thumbs(instance, video):
 
     videometa.save(update_fields=['data'])
 
+
 @receiver(signals.post_save,
           sender='vid.Vid',
           dispatch_uid='post_save.get_video_meta')
@@ -88,8 +89,8 @@ def post_save_get_video_meta(sender, instance, created, **kwargs):
     """
     if instance.video:
 
-        if settings.PROJECT_ENVIRONMENT in ['test']:
-            do_upload_to_s3(instance=instance)
-        else:
-            queue.enqueue(do_upload_to_s3,
-                          instance=instance)
+        #if settings.PROJECT_ENVIRONMENT in ['test']:
+        do_upload_to_s3(instance=instance)
+        #else:
+        #    queue.enqueue(do_upload_to_s3,
+        #                  instance=instance)

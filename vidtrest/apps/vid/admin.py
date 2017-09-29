@@ -38,8 +38,7 @@ class NativeAdAdmin(admin.ModelAdmin):
             'original': vid,
         }
         return render_to_response('admin/vid/vid/video_view.html',
-                                  context,
-                                  context_instance=RequestContext(request))
+                                  context)
 
 
 admin.site.register([VideoMeta])
