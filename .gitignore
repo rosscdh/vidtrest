@@ -1,5 +1,4 @@
 venv
-whoosh_index
 postgres-data
 .vagrant
 .sonar/
@@ -8,8 +7,6 @@ postgres-data
 *.py[cod]
 .env
 whoosh_index
-local_settings.py
-templates/dashboard/*
 /static/*
 /media/*
 *.pyc
@@ -41,11 +38,5 @@ pip-log.txt
 nosetests.xml
 # Translations
 *.mo
-# Komodo
-*.komodoproject
-*.kpf
 # OSX
 .DS_Store
-core/media_root/*
-core/collected_static/*
-.idea
