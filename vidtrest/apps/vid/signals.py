@@ -89,8 +89,8 @@ def post_save_get_video_meta(sender, instance, created, **kwargs):
     """
     if instance.video:
 
-        #if settings.PROJECT_ENVIRONMENT in ['test']:
-        do_upload_to_s3(instance=instance)
-        #else:
-        #    queue.enqueue(do_upload_to_s3,
-        #                  instance=instance)
+        if settings.PROJECT_ENVIRONMENT in ['test']:
+            do_upload_to_s3(instance=instance)
+        else:
+            queue.enqueue(do_upload_to_s3,
+                          instance=instance)

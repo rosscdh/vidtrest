@@ -10,7 +10,7 @@ ADD ./Procfile /
 
 RUN apt-get update
 RUN apt-get install -y exiftool libav-tools nodejs npm
-RUN npm i uglify -g
+RUN npm i bower uglify -g
 RUN pip install -r /requirements.txt
 
 CMD ["honcho", "start"]
