@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3.6.2-stretch
 
 WORKDIR /
 
@@ -9,8 +9,7 @@ ADD ./requirements.txt /
 ADD ./Procfile /
 
 RUN apt-get update
-RUN apt-get install -y exiftool libav-tools nodejs npm
-RUN npm i bower uglify -g
+RUN apt-get install -y exiftool ffmpeg
 RUN pip install -r /requirements.txt
 
-CMD ["honcho", "start"]
+#CMD ["honcho", "start"]

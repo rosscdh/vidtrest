@@ -1,8 +1,9 @@
 version: '3.2'
 
 services:
-  vidtrest:
+  web:
     build: .
+    command: honcho start web
     environment:
       - DJANGO_ENV=production
       - PYTHONUNBUFFERED=1
@@ -30,6 +31,39 @@ services:
     depends_on:
       - db
       - redis
+    stdin_open: true
+    tty: true
+
+  worker:
+    build: .
+    command: honcho start worker
+    environment:
+      - DJANGO_ENV=production
+      - PYTHONUNBUFFERED=1
+      - DJANGO_LOCAL_SETTINGS=/config/production/local_settings.py
+      - DATABASE_HOST=db
+      - DATABASE_NAME=vidtrest
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=postgres
+      - SENDGRID_USER=
+      - SENDGRID_PASSWORD=
+    volumes:
+      - ./vidtrest:/vidtrest:consistent
+      - ./templates:/templates:consistent
+      - ./static:/static:consistent
+      - ./media:/media:consistent
+      - ./whoosh_index:/whoosh_index:consistent
+      - ./config:/config:consistent
+      - ./bower_components:/bower_components:consistent
+      - ./ansible:/ansible:consistent
+    links:
+      - db
+      - redis
+    depends_on:
+      - db
+      - redis
+    stdin_open: true
+    tty: true
 
   db:
     image: library/postgres:9.6.5-alpine
@@ -57,7 +91,7 @@ services:
       - ./static:/static:consistent
       - ./media:/media:consistent
     links:
-      - vidtrest
+      - web
     # depends_on:
     #   - vidtrest
 

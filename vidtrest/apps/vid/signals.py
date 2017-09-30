@@ -7,10 +7,11 @@ from django.core.files.base import ContentFile
 from .models import VideoMeta
 from .services import VideoMetaService, VideoThumbnailService
 
-import django_rq
-queue = django_rq.get_queue('high')
+from django_rq import job, get_queue
+queue = get_queue('high')
 
 
+@job
 def do_upload_to_s3(instance):
     """
     Upload video file to s3, and then call the following events
@@ -68,6 +69,7 @@ def do_video_thumbs(instance, video):
     videometa, is_new = VideoMeta.objects.get_or_create(vid=instance)
 
     # Thumbnails
+    print ("start video_thumbs")
     service = VideoThumbnailService(pk=instance.pk,
                                     video=instance.video)
     service.process()
