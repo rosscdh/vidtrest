@@ -19,21 +19,25 @@ Videos by keyword
 ## Installation
 
 ```
-pip install -r requirements.txt
-./manage.py bower_install
-./manage.py collectstatic --noinput
-./manage.py migrate
-./manage.py createsuperuser
-redis-server
-honcho start
+docker-compose up db  # create db stuff
+docker-compose run vidtrest sh /config/startup.sh
+docker-compose up
 ```
 
 ## Install media server
 
-* requires ansible installed
-* requires vagrant installed
+* requires docker
 
 ```
-vagrant up
-vagrant provision
+docker-compose up
+docker-compose run vidtrest sh /config/startup.sh
+```
+
+### Resetting
+
+```
+docker-compose stop
+docker-compose rm
+make db.clear
+make reset
 ```

@@ -35,5 +35,21 @@ coverage:
 	coverage html
 	open htmlcov/index.html
 
+reset:
+	rm -Rf static;mkdir static
+	docker volume rm vidtrest_ansible
+	docker volume rm vidtrest_bower_components
+	docker volume rm vidtrest_config
+	docker volume rm vidtrest_media
+	docker volume rm vidtrest_static
+	docker volume rm vidtrest_templates
+	docker volume rm vidtrest_vidtrest
+	docker volume rm vidtrest_whoosh_index
+
+db.clear:
+	# warnign will delete data
+	rm -Rf postgres-data;mkdir postgres-data
+	docker volume rm vidtrest_postgres-data
+
 docs:
 	@echo "Not implemented"

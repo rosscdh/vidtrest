@@ -8,13 +8,11 @@ services:
       - PYTHONUNBUFFERED=1
       - DJANGO_LOCAL_SETTINGS=/config/production/local_settings.py
       - DATABASE_HOST=db
-      - DATABASE_NAME=postgres
+      - DATABASE_NAME=vidtrest
       - DATABASE_USER=postgres
       - DATABASE_PASSWORD=postgres
-      - SENDGRID_USER=''
-      - SENDGRID_PASSWORD=''
-
-    command: sh /config/startup.sh
+      - SENDGRID_USER=
+      - SENDGRID_PASSWORD=
     volumes:
       - ./vidtrest:/vidtrest:consistent
       - ./templates:/templates:consistent
@@ -36,14 +34,14 @@ services:
   db:
     image: library/postgres:9.6.5-alpine
     environment:
-      - POSTGRES_USER='postgres'
-      - POSTGRES_PASSWORD='postgres'
-      - POSTGRES_DB='postgres'
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=vidtrest
     ports:
       - "5432:5432"
     volumes:
       - ./postgres-data:/var/lib/postgresql/data:consistent
-      - ./config/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:consistent
+      #- ./config/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:consistent # not necessary
 
   redis:
     image: library/redis:4.0-alpine
@@ -60,9 +58,13 @@ services:
       - ./media:/media:consistent
     links:
       - vidtrest
+    # depends_on:
+    #   - vidtrest
 
 volumes:
   vidtrest:
+    driver: local
+  postgres-data:
     driver: local
   templates:
     driver: local
