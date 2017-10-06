@@ -15,14 +15,14 @@ services:
       - SENDGRID_USER=
       - SENDGRID_PASSWORD=
     volumes:
-      - ./vidtrest:/vidtrest:consistent
-      - ./templates:/templates:consistent
-      - ./static:/static:consistent
-      - ./media:/media:consistent
-      - ./whoosh_index:/whoosh_index:consistent
-      - ./config:/config:consistent
-      - ./bower_components:/bower_components:consistent
-      - ./ansible:/ansible:consistent
+      - ./vidtrest:/vidtrest
+      - ./templates:/templates
+      - ./static:/static
+      - ./media:/media
+      - ./whoosh_index:/whoosh_index
+      - ./config:/config
+      - ./bower_components:/bower_components
+      - ./ansible:/ansible
     ports:
       - "8000:8000"
     links:
@@ -48,14 +48,14 @@ services:
       - SENDGRID_USER=
       - SENDGRID_PASSWORD=
     volumes:
-      - ./vidtrest:/vidtrest:consistent
-      - ./templates:/templates:consistent
-      - ./static:/static:consistent
-      - ./media:/media:consistent
-      - ./whoosh_index:/whoosh_index:consistent
-      - ./config:/config:consistent
-      - ./bower_components:/bower_components:consistent
-      - ./ansible:/ansible:consistent
+      - ./vidtrest:/vidtrest
+      - ./templates:/templates
+      - ./static:/static
+      - ./media:/media
+      - ./whoosh_index:/whoosh_index
+      - ./config:/config
+      - ./bower_components:/bower_components
+      - ./ansible:/ansible
     links:
       - db
       - redis
@@ -74,8 +74,8 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./postgres-data:/var/lib/postgresql/data:consistent
-      #- ./config/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:consistent # not necessary
+      - ./postgres-data:/var/lib/postgresql/data
+      #- ./config/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d # not necessary
 
   redis:
     image: library/redis:4.0-alpine
@@ -87,9 +87,9 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./config/production/nginx:/etc/nginx/conf.d:consistent
-      - ./static:/static:consistent
-      - ./media:/media:consistent
+      - ./config/production/nginx:/etc/nginx/conf.d
+      - ./static:/static
+      - ./media:/media
     links:
       - web
     # depends_on:
