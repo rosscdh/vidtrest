@@ -20,7 +20,7 @@ Videos by keyword
 
 ```
 docker-compose up db  # create db stuff
-docker-compose run vidtrest sh /config/startup.sh
+docker-compose run web sh /config/startup.sh
 docker-compose up
 ```
 
@@ -30,7 +30,7 @@ docker-compose up
 
 ```
 docker-compose up
-docker-compose run vidtrest sh /config/startup.sh
+docker-compose run web sh /config/startup.sh
 ```
 
 ### Resetting

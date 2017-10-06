@@ -1,2 +1,2 @@
-[vidtrest_staging]
-staging_web ansible_ssh_host=52.58.70.63 ansible_ssh_user=ubuntu
+[vidtrest_prod]
+vidtrest_nas_jonas ansible_ssh_host=million-moods.synology.me ansible_ssh_user=rosscdh
