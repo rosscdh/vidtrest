@@ -15,14 +15,14 @@ services:
       - SENDGRID_USER=
       - SENDGRID_PASSWORD=
     volumes:
-      - ./vidtrest:/vidtrest
-      - ./templates:/templates
-      - ./static:/static
-      - ./media:/media
-      - ./whoosh_index:/whoosh_index
-      - ./config:/config
-      - ./bower_components:/bower_components
-      - ./ansible:/ansible
+      - ./vidtrest:/vidtrest:consistent
+      - ./templates:/templates:consistent
+      - ./static:/static:consistent
+      - ./media:/media:consistent
+      - ./whoosh_index:/whoosh_index:consistent
+      - ./config:/config:consistent
+      - ./bower_components:/bower_components:consistent
+      - ./ansible:/ansible:consistent
     ports:
       - "8000:8000"
     links:
@@ -48,14 +48,14 @@ services:
       - SENDGRID_USER=
       - SENDGRID_PASSWORD=
     volumes:
-      - ./vidtrest:/vidtrest
-      - ./templates:/templates
-      - ./static:/static
-      - ./media:/media
-      - ./whoosh_index:/whoosh_index
-      - ./config:/config
-      - ./bower_components:/bower_components
-      - ./ansible:/ansible
+      - ./vidtrest:/vidtrest:consistent
+      - ./templates:/templates:consistent
+      - ./static:/static:consistent
+      - ./media:/media:consistent
+      - ./whoosh_index:/whoosh_index:consistent
+      - ./config:/config:consistent
+      - ./bower_components:/bower_components:consistent
+      - ./ansible:/ansible:consistent
     links:
       - db
       - redis
@@ -72,7 +72,7 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=vidtrest
     volumes:
-      - ./postgres-data:/var/lib/postgresql/data
+      - ./postgres-data:/var/lib/postgresql/data:consistent
       #- ./config/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d # not necessary
 
   redis:
@@ -85,9 +85,9 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./config/production/nginx:/etc/nginx/conf.d
-      - ./static:/static
-      - ./media:/media
+      - ./config/production/nginx:/etc/nginx/conf.d:consistent
+      - ./static:/static:consistent
+      - ./media:/media:consistent
     links:
       - web
     # depends_on:
