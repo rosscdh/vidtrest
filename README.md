@@ -41,3 +41,16 @@ docker-compose rm
 make db.clear
 make reset
 ```
+
+### Crons
+
+```
+5 8 * * Sun /usr/local/bin/docker-compose run worker python manage.py dumpdata > /var/services/homes/rosscdh/backup-data/vidtrest.json > /dev/null 2>&1
+```
+
+### Cloud backup
+
+```
+/var/services/homes/rosscdh/backup-data/vidtrest.json
+/var/services/homes/rosscdh/vidtrest/media
+```
