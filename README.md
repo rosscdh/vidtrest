@@ -54,3 +54,11 @@ make reset
 /var/services/homes/rosscdh/backup-data/vidtrest.json
 /var/services/homes/rosscdh/vidtrest/media
 ```
+
+
+### Tasks
+
+```
+# reprocess a video by its id
+python /var/services/homes/rosscdh/vidtrest/manage.py process_video :video_id
+```
