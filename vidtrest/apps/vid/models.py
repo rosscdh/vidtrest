@@ -15,6 +15,7 @@ from vidtrest.apps.utils import managed_s3botostorage, OverwriteStorage
 
 import os
 import uuid
+import math
 
 
 def _thumb_url(uuid, thumb):
@@ -159,7 +160,7 @@ class VideoMeta(models.Model):
             nth = length_thumbs / limit
             thumbs_list = thumbs_list[::nth]
 
-        limit = len(thumbs_list) / limit
+        limit = math.ceil(len(thumbs_list) / limit)
         if limit > 0:
             thumbs_list = thumbs_list[::limit]
 
