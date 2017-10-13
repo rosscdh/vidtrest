@@ -51,9 +51,14 @@ class NativeAdAdmin(admin.ModelAdmin):
 
     def view_reprocess_video(self, request, pk):
         vid = Vid.objects.get(pk=pk)
+
         queue.enqueue(do_upload_to_s3,
                       instance=vid)
-        redirect(reverse("admin:vid_change", pk))
+
+        url = "admin:%s_%s_change" % (vid._meta.app_label,
+                                      vid._meta.model_name)
+
+        return redirect(url, pk)
 
 
 admin.site.register([VideoMeta])

@@ -4,7 +4,7 @@ LOCAL_SETTINGS = True
 
 PROJECT_ENVIRONMENT = 'production'
 
-DEBUG = False
+DEBUG = True
 
 DATABASES = {
     'default': {

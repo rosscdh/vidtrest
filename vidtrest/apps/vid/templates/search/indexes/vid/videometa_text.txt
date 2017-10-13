@@ -15,9 +15,9 @@
 {{ object.image_size }}
 {{ object.image_height }}
 {{ object.image_width }}
-{% for tag in object.tags.all %}
+{% for tag in object.vid.tags.all %}
 {{ tag.name }}
 {% endfor %}
-{% for cat in object.categories.all %}
+{% for cat in object.vid.categories.all %}
 {{ cat.name }}
 {% endfor %}
