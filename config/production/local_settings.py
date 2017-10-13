@@ -63,17 +63,17 @@ LOGGING = {
     'loggers': {
         # root logger
         '': {
-            'handlers': ['console', 'syslog'],
+            'handlers': ['console'],
             'level': 'INFO',
             'disabled': False
         },
         'django': {
-            'handlers': ['console', 'syslog'],
+            'handlers': ['console'],
             'level': 'DEBUG',
             'propagate': False,
         },
         'django.request': {
-            'handlers': ['console', 'syslog'],
+            'handlers': ['console'],
             'level': 'DEBUG',
             'propagate': False,
         },

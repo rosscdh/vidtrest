@@ -96,16 +96,6 @@ WSGI_APPLICATION = 'vidtrest.wsgi.application'
 #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'vidtrest',
-        'HOST': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'twjRbhYbgn',
-        'PORT': '5432',
-    },
-}
 
 
 # Password validation
@@ -162,16 +152,19 @@ RQ_QUEUES = {
         'HOST': 'redis',
         'PORT': 6379,
         'DB': 0,
+        'DEFAULT_TIMEOUT': 1800,
     },
     'high': {
         'HOST': 'redis',
         'PORT': 6379,
         'DB': 0,
+        'DEFAULT_TIMEOUT': 1800,
     },
     'low': {
         'HOST': 'redis',
         'PORT': 6379,
         'DB': 0,
+        'DEFAULT_TIMEOUT': 1800,
     }
 }
 
@@ -231,16 +224,21 @@ PIPELINE = {
 }
 
 HAYSTACK_CONNECTIONS = {
+    # 'default': {
+    #     'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+    #     'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+    # },
     'default': {
-        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'URL': 'http://elasticsearch:9200/',
+        'INDEX_NAME': 'vidtrest',
     },
 }
 
 #
 # Cant use this due to model postsave dependency. Maybe switch to using the meta as the observed model?
 #
-#HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 #
 # Load the environment specific settings

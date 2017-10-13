@@ -15,6 +15,9 @@ services:
       - SENDGRID_USER=
       - SENDGRID_PASSWORD=
     volumes:
+      - "./Procfile:/Procfile"
+      - "./manage.py:/manage.py"
+      - "./requirements.py:/requirements.py"
       - ./vidtrest:/vidtrest
       - ./templates:/templates
       - ./static:/static
@@ -28,9 +31,11 @@ services:
     links:
       - db
       - redis
+      - elasticsearch
     depends_on:
       - db
       - redis
+      - elasticsearch
     stdin_open: true
     tty: true
 
@@ -52,6 +57,7 @@ services:
     links:
       - db
       - redis
+      - elasticsearch
     depends_on:
       - db
       - redis
@@ -66,25 +72,25 @@ services:
       - POSTGRES_DB=vidtrest
     volumes:
       - ./postgres-data:/var/lib/postgresql/data:rw
-      #- ./config/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d # not necessary
 
   redis:
     image: library/redis:4.0-alpine
 
+  elasticsearch:
+    image: library/elasticsearch:2-alpine  # must be 2 not 5 as haystack is building upgradepath
+    volumes:
+      - ./search-data:/usr/share/elasticsearch/data:rw
+
   nginx:
     image: library/nginx:stable-alpine
     ports:
-      - "80:80"
-    volumes_from:
-      - web:ro
+      - "8001:80"
     volumes:
       - ./config/production/nginx:/etc/nginx/conf.d:ro
+      - ./static:/static
+      - ./media:/media
     links:
       - web
-    tty: true
-    stdin_open: true
-    # depends_on:
-    #   - web
 
 volumes:
   vidtrest:

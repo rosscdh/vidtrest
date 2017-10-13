@@ -16,7 +16,10 @@ django-crispy-forms
 django-easy-select2
 django-extensions
 django-fab-deploy
+
 django-haystack
+elasticsearch
+
 django-jsonfield
 django-pipeline
 django-querysetsequence
