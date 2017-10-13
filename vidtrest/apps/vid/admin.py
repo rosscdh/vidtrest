@@ -1,11 +1,17 @@
 # -*- coding: utf-8 -*-
+import django_rq
+
 from django.contrib import admin
 from django.conf.urls import url
-from django.template import RequestContext
-from django.shortcuts import render_to_response
+from django.core.urlresolvers import reverse
+from django.shortcuts import render_to_response, redirect
+
+from vidtrest.apps.vid.signals import do_upload_to_s3
 
 from .models import Vid, VideoMeta
 from .forms import VidForm
+
+queue = django_rq.get_queue('high')
 
 
 @admin.register(Vid)
@@ -23,6 +29,9 @@ class NativeAdAdmin(admin.ModelAdmin):
             url(r'^(?P<pk>.*)/video/$',
                 self.admin_site.admin_view(self.view_video),
                 name='view_video'),
+            url(r'^(?P<pk>.*)/re-process/$',
+                self.admin_site.admin_view(self.view_reprocess_video),
+                name='reprocess_video'),
         ]
         return my_urls + urls
 
@@ -39,6 +48,12 @@ class NativeAdAdmin(admin.ModelAdmin):
         }
         return render_to_response('admin/vid/vid/video_view.html',
                                   context)
+
+    def view_reprocess_video(self, request, pk):
+        vid = Vid.objects.get(pk=pk)
+        queue.enqueue(do_upload_to_s3,
+                      instance=vid)
+        redirect(reverse("admin:vid_change", pk))
 
 
 admin.site.register([VideoMeta])

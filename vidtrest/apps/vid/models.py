@@ -157,7 +157,7 @@ class VideoMeta(models.Model):
         if length_thumbs <= limit or (length_thumbs / limit) <= limit:
             nth = 1
         else:
-            nth = length_thumbs / limit
+            nth = math.ceil(length_thumbs / limit)
             thumbs_list = thumbs_list[::nth]
 
         limit = math.ceil(len(thumbs_list) / limit)
