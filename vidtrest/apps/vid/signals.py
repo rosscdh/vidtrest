@@ -11,7 +11,7 @@ from django_rq import job, get_queue
 queue = get_queue('high')
 
 
-@job
+@job("default", timeout=1800)
 def do_upload_to_s3(instance):
     """
     Upload video file to s3, and then call the following events

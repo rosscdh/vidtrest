@@ -17,7 +17,7 @@ services:
     volumes:
       - "./Procfile:/Procfile"
       - "./manage.py:/manage.py"
-      - "./requirements.py:/requirements.py"
+      - "./requirements.txt:/requirements.txt"
       - ./vidtrest:/vidtrest
       - ./templates:/templates
       - ./static:/static
