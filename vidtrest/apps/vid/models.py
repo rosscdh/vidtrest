@@ -87,6 +87,9 @@ class Vid(models.Model):
     def __unicode__(self):
         return self.name
 
+    def __str__(self):
+        return self.name
+
     def get_video(self):
         """
         Return the s3_video if its present otherwise the normal one

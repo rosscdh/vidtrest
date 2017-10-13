@@ -3,7 +3,9 @@ import django_rq
 
 from django.contrib import admin
 from django.conf.urls import url
+from django.contrib import messages
 from django.core.urlresolvers import reverse
+from django.utils.safestring import mark_safe
 from django.shortcuts import render_to_response, redirect
 
 from vidtrest.apps.vid.signals import do_upload_to_s3
@@ -54,6 +56,8 @@ class NativeAdAdmin(admin.ModelAdmin):
 
         queue.enqueue(do_upload_to_s3,
                       instance=vid)
+
+        messages.info(request, mark_safe('Video has been enqueued for processing: <a href="%s">Track it here</a>' % reverse('rq_home')))
 
         url = "admin:%s_%s_change" % (vid._meta.app_label,
                                       vid._meta.model_name)
