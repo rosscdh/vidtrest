@@ -75,6 +75,9 @@
           <hr/>
           <div style="margin:20px 5px"><b>Share URL:</b><br/><a href="{{ original.get_video.url }}" target="_NEW">{{ original.get_video.url }}</a></div>
           <hr/>
+          
+          <div style="margin:20px 5px"><b>Reprocess Video:</b><br/><a href="{% url 'admin:reprocess_video' original.pk %}" data-pk="{{ original.pk }}">{% trans 'Go' %}</a></div>
+          <hr/>
           {% vid_metadata original %}
         </div>
       </td>
