@@ -411,13 +411,13 @@ line-height: 1.33;
 
 ::-moz-selection {
     text-shadow: none;
-    background: #fcfcfc;
+    background: #000;
     background: rgba(255,255,255,.2);
 }
 
 ::selection {
     text-shadow: none;
-    background: #fcfcfc;
+    background: #000;
     background: rgba(255,255,255,.2);
 }
 
@@ -2229,6 +2229,10 @@ h1.section-title:after{
         color: #fff;
 }
 
+.select2-selection__choice,
+.select2-search__field {
+    color:#333;
+}
 
 /* Sidebar Categories */
 
