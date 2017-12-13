@@ -135,11 +135,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join('/', 'static')
+STATIC_ROOT = os.path.join('./', 'static')
 
 #MEDIA_URL = '/m/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join('/', 'media')
+MEDIA_ROOT = os.path.join('./', 'media')
 
 #
 # App Settings
@@ -173,6 +173,8 @@ AWS_USE = False
 AWS_SECRET_ACCESS_KEY = ''
 AWS_ACCESS_KEY_ID = ''
 AWS_STORAGE_BUCKET_NAME = ''
+
+PERFORM_JOBS_SYNCHRONOUSLY = False
 
 FILE_UPLOAD_PERMISSIONS = 0o755
 FILE_UPLOAD_DIRECTORY_PERMISSIONS = 0o755
@@ -231,6 +233,7 @@ HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
         'URL': 'http://elasticsearch:9200/',
+        #'URL': 'http://localhost:9200/',
         'INDEX_NAME': 'vidtrest',
     },
 }
@@ -243,8 +246,6 @@ HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 #
 # Load the environment specific settings
 #
-
-
 def _load_settings(project_environment):
     settings_path = os.getenv('DJANGO_LOCAL_SETTINGS', os.path.join('/config', os.getenv('DJANGO_ENV', 'development') ,'local_settings.py'))
     return open(settings_path).read()

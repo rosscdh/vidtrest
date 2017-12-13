@@ -11,29 +11,30 @@ from django_rq import job, get_queue
 queue = get_queue('high')
 
 
-@job("default", timeout=1800)
+@job("default", timeout=72000)
 def do_upload_to_s3(instance):
     """
     Upload video file to s3, and then call the following events
     """
     # Ensure we have the latest
-    instance.refresh_from_db()
+    #instance.refresh_from_db()
 
     # Extract meta-data
-    do_video_meta(instance=instance,
-                  video=instance.video)
+    videometa = do_video_meta(instance=instance,
+                              video=instance.video)
 
-    # Extract thumbanils
-    do_video_thumbs(instance=instance,
-                    video=instance.video)
+    if videometa:
+        # Extract thumbanils
+        do_video_thumbs(instance=instance,
+                        video=instance.video)
 
-    if settings.AWS_USE and instance.video:
-        instance.s3_video.save(instance.video.path,
-                               ContentFile(instance.video.read()))
-        # If we have a s3_video url
-        if instance.s3_video.url:
-            # Remove the video and refer only to the s3_video
-            instance.video.delete()
+        if settings.AWS_USE and instance.video:
+            instance.s3_video.save(instance.video.path,
+                                   ContentFile(instance.video.read()))
+            # If we have a s3_video url
+            if instance.s3_video.url:
+                # Remove the video and refer only to the s3_video
+                instance.video.delete()
 
 
 def do_video_meta(instance, video):
@@ -62,7 +63,7 @@ def do_video_meta(instance, video):
     videometa.image_height = service.meta_data.get('image-height')
     videometa.image_width = service.meta_data.get('image-width')
 
-    videometa.save()
+    return videometa.save()
 
 
 def do_video_thumbs(instance, video):
@@ -91,7 +92,7 @@ def post_save_get_video_meta(sender, instance, created, **kwargs):
     """
     if instance.video:
 
-        if settings.PROJECT_ENVIRONMENT in ['test']:
+        if settings.PERFORM_JOBS_SYNCHRONOUSLY is True or settings.PROJECT_ENVIRONMENT in ['test']:
             do_upload_to_s3(instance=instance)
         else:
             queue.enqueue(do_upload_to_s3,

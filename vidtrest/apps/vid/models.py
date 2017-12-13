@@ -82,7 +82,7 @@ class Vid(models.Model):
 
     @property
     def preview_thumbs(self):
-        return self.videometa.preview_thumbs
+        return self.videometa.preview_thumbs or '[""]'
 
     def __unicode__(self):
         return self.name
@@ -131,6 +131,10 @@ class VideoMeta(models.Model):
         verbose_name_plural = "video metadata"
 
     @property
+    def image_witdh(self):
+        return None
+
+    @property
     def timestamp_thumbs(self):
         thumbs_list = self.thumbs_list()
         return zip(thumbs_list,
@@ -161,11 +165,11 @@ class VideoMeta(models.Model):
             nth = 1
         else:
             nth = math.ceil(length_thumbs / limit)
-            thumbs_list = thumbs_list[::nth]
+            thumbs_list = thumbs_list[::int(nth)]
 
         limit = math.ceil(len(thumbs_list) / limit)
         if limit > 0:
-            thumbs_list = thumbs_list[::limit]
+            thumbs_list = thumbs_list[::int(limit)]
 
         return mark_safe('["%s"]' % '","'.join(thumbs_list))
 

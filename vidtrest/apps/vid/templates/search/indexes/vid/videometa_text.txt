@@ -1,4 +1,4 @@
-{{ object.name }}
+{{ object.vid.name }}
 {{ object.mime_type }}
 {{ object.duration }}
 {{ object.file_size }}

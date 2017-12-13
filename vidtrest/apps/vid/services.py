@@ -59,7 +59,8 @@ class VideoThumbnailService(object):
     thumbs_timestamp = {}
 
     #cmd = 'ffmpeg -ss 3 -i {video_path} -vf "select=gt(scene\,0.3)" -s 320x200 -vsync vfr {output_path}/thumbs-%02d.jpg'
-    cmd = "ffmpeg -i {video_path} -s 320x200 -vsync passthrough -an -vf select='gt(scene\,0.4)',showinfo {output_path}/thumbs-%02d.jpg -f null - 2>&1 | grep 'pts_time' | awk -F'pts_time:' '{{print $2}}' | awk -F'pos:' '{{print $1}}' > {output_path}/thumbs_timestamp.txt"
+    cmd = "ffmpeg --opengl-early-flush=no -i {video_path} -r 25 -s 320x200 -vsync passthrough -pix_fmt yuvj422p -deinterlace -an -vf select='gt(scene\,0.4)',showinfo {output_path}/thumbs-%02d.jpg -f null - 2>&1 | grep 'pts_time' | awk -F'pts_time:' '{{print $2}}' | awk -F'pos:' '{{print $1}}' > {output_path}/thumbs_timestamp.txt"
+    #cmd = "ffmpeg --opengl-early-flush=no -i {video_path} -vprofile baseline -vcodec libx264 -r 40 -bt 5K -s 960x540 -ac 2 -ar 48000 -ab 192k -strict -2 -y -vf select='gt(scene\,0.4)',showinfo {output_path}/thumbs-%02d.jpg -f null - 2>&1 | grep 'pts_time' | awk -F'pts_time:' '{{print $2}}' | awk -F'pos:' '{{print $1}}' > {output_path}/thumbs_timestamp.txt"
 
     def __init__(self, pk, video):
         self.pk = pk

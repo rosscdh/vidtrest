@@ -58,7 +58,7 @@
         </div>
       </div>
       <div class="video-container">
-        <video id="player" poster="{{ vid.thumb }}" width="100%">
+        <video id="player" poster="{{ vid.thumb|default:"" }}" width="100%">
           <source src="{{ vid.get_video.url }}" type="{{ vid.videometa.mime_type }}">
         </video>
       </div>

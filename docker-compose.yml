@@ -65,6 +65,8 @@ services:
 
   db:
     image: library/postgres:9.6.5-alpine
+    ports:
+      - "5432:5432"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -74,9 +76,14 @@ services:
 
   redis:
     image: library/redis:4.0-alpine
+    ports:
+      - "6379:6379"
 
   elasticsearch:
     image: library/elasticsearch:2-alpine  # must be 2 not 5 as haystack is building upgradepath
+    ports:
+      - "9200:9200"
+      - "9300:9300"
     volumes:
       - ./search-data:/usr/share/elasticsearch/data:rw
 
