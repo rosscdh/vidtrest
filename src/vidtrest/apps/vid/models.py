@@ -147,7 +147,7 @@ class VideoMeta(models.Model):
         thumb = 'https://placeholdit.imgix.net/~text?txtsize=18&txt=Generating...&w=128&h=96'
         thumbs = self.thumbs_list()
         if thumbs:
-            thumb = thumbs[1]
+            thumb = thumbs[0]
         return thumb
 
     @property
