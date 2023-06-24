@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+{% load vid_metadata static %}
+
+{% block title %}{{ vid.name }}{% endblock %}
+
+{% block head %}
+  {{ block.super }}
+  <link rel="stylesheet" type="text/css" href="{% static "slick-carousel/slick.min.css" %}" />
+  <link rel="stylesheet" type="text/css" href="{% static "slick-carousel/slick-theme.min.css" %}" />
+  <link rel="stylesheet" type="text/css" href="{% static "plyr/plyr.css" %}" />
+{% endblock %}
+
+{% block navigation %}
+<!-- Collect the nav links, forms, and other content for toggling -->
+<div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+  <ul class="nav navbar-nav">
+    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+    <li class="page-scroll">
+      <a href="#">{{ vid.name }}</a>
+    </li>
+    <li class="page-scroll">
+      <a href="#about">Details</a>
+    </li>
+    <li class="page-scroll">
+      <a href="#intro">Video</a>
+    </li>
+  </ul>
+</div>
+<!-- /.navbar-collapse -->
+{% endblock %}
+
+{% block content %}
+  <!-- Intro Section -->
+  <section id="intro">
+    <div class="row">
+      <div class="col-lg-12">
+        <div id="">
+          <video id="plyr" poster="{{ vid.thumb }}" controls>
+              <!-- Video files -->
+              <source src="{{ vid.get_video.url }}" type="{{ vid.videometa.mime_type }}">
+              <!-- Text track file -->
+              <!-- <track kind="captions" label="English captions" src="/path/to/captions.vtt" srclang="en" default> -->
+              <!-- Fallback for browsers that don't support the <video> element -->
+              <a href="{{ vid.get_video.url }}">Download</a>
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12" id="thumbs">
+        {% vid_thumbs vid %}
+      </div>
+    </div>
+    <div class="row">
+      <div class="intro-info-wrapper">
+        <h1 class="text-center">{{ vid.name }}</h1>
+      </div>
+    </div>
+  </section><!-- /#intro -->
+
+  <!-- About Section -->
+  <section id="about">
+    <div class="more page-scroll" id="more">
+      <a href="#about"><i class="fa fa-angle-down"></i></a>
+    </div>
+
+    <div class="container wp2">
+
+      <h1 class="section-title" style="margin-bottom:10px;">{{ vid.name }}</h1>
+
+      <div class="col-lg-12">
+        <div class="input-group input-group-lg">
+          <input id="video_url" class="form-control" type="text" value="{{ vid.get_video.url }}">
+          <span class="input-group-btn">
+            <button id="copytoclipboard" class="btn btn-info" type="button" data-clipboard-target="#video_url" data-toggle="tooltip" title="Kopiert!">
+              <i class="fa fa-clipboard" aria-hidden="true"></i>
+            </button>
+          </span>
+        </div>
+      </div>
+
+      <hr/>
+
+      <div class="row">
+
+        <div class="col-sm-6">
+          <div class="col-sm-6">
+            <h4 class="sub-text">Categories</h4>
+            {% for cat in vid.categories.all %}
+            <small>{{ cat }}</small>,&nbsp;
+            {% empty %}
+              <small>No categories assigned</small>
+            {% endfor %}
+          </div>
+
+          <div class="col-sm-6">
+            <h4 class="sub-text">Tags</h4>
+            {% for tag in vid.tags.all %}
+              <small>{{ tag }}</small>,&nbsp;
+            {% empty %}
+              <small>No tags assigned</small>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+
+          <h4 class="sub-text">
+            Meta Data
+          </h4>
+
+          {% vid_metadata vid %}
+
+          <br>
+
+          {% if vid.description %}<p class="description">{{ vid.description }}</p>{% endif %}
+          <br>
+
+        </div>
+      </div>
+    </div>
+
+  </section><!-- /#about -->
+
+{% endblock %}
+
+{% block javascript_footer %}
+  {{ block.super }}
+  <!-- JavaScript -->
+  <script src="{% static "plyr/plyr.min.js" %}"></script>
+  <script src="{% static "slick-carousel/slick.min.js" %}"></script>
+  <script>
+  $( document ).ready(function() {
+
+    window.player = new Plyr('#plyr', {
+      enabled: true,
+      debug: false,
+      // controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen']
+    });
+
+    $("a.jump-to-timestamp").on('click', function() {
+      var self = $(this);
+      var poster = self.data().poster;
+      var timestamp = self.data().timestamp;
+      window.player.poster = poster;
+      window.player.currentTime = timestamp;
+      window.player.pause;
+      console.log(timestamp);
+    });
+    $('#thumbnail-carousel').slick({
+      dots: true,
+      infinite: false,
+      speed: 300,
+      slidesToShow: 10,
+      slidesToScroll: 5,
+    });
+  });
+  </script>
+{% endblock %}

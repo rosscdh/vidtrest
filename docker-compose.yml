@@ -1,0 +1,97 @@
+version: '2'
+
+services:
+  web:
+    build: .
+    env_file:
+    - .env
+    volumes:
+      - ./src:/src
+      # - ./config:/config
+    ports:
+      - "8001:8000"
+    links:
+      - db
+      - redis
+      - elasticsearch
+    depends_on:
+      - db
+      - redis
+      - elasticsearch
+    stdin_open: true
+    tty: true
+
+  worker:
+    image: vidtrest-web
+    entrypoint: ["/venv/bin/python"]
+    command: ["manage.py", "rqworker", "high", "default", "low"]
+    env_file:
+    - .env
+      # mc alias set vt localhost:9000 wTlNFM8vI7SL3CznsVkl oDl06NttzLC9P1LDGrdiW4bx3mjeiUfsZPJmRMZF
+    volumes_from:
+      - web
+    links:
+      - db
+      - redis
+      - elasticsearch
+    depends_on:
+      - db
+      - redis
+    stdin_open: true
+    tty: true
+
+  db:
+    image: library/postgres:9.6.5-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=vidtrest
+    volumes:
+      - db:/var/lib/postgresql/data:z
+
+  redis:
+    image: library/redis:4.0-alpine
+    ports:
+      - "6379:6379"
+
+  elasticsearch:
+    image: library/elasticsearch:2-alpine  # must be 2 not 5 as haystack is building upgradepath
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+    - discovery.type=single-node
+    volumes:
+      - elastic:/usr/share/elasticsearch/data:z
+
+  minio:
+    image: quay.io/minio/minio
+    command: server /data --console-address ":9090"
+    ports:
+    - 9000:9000
+    - 9090:9090
+    environment:
+    - MINIO_ROOT_USER=ROOTUSER
+    - MINIO_ROOT_PASSWORD=CHANGEME123
+    volumes:
+    - minio:/data:z
+
+  nginx:
+    image: library/nginx:stable-alpine
+    ports:
+      - "8002:80"
+    volumes_from:
+      - web
+    volumes:
+      - ./config/production/nginx:/etc/nginx/conf.d:ro
+      - ./src/static:/static
+      - ./src/media:/media
+    links:
+      - web
+
+volumes:
+  db: {}
+  elastic: {}
+  minio: {}

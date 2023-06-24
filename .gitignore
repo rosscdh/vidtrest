@@ -1,0 +1,46 @@
+search-data
+venv
+postgres-data
+data/*
+.vagrant
+.sonar/
+*.pem
+*.db
+*.py[cod]
+.env
+whoosh_index
+src/static/*
+src/media/*
+*.pyc
+*.sqlite3
+.env
+db.sqlite3
+
+bower_components/
+# C extensions
+*.so
+# Packages
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+lib
+lib64
+__pycache__
+# Installer logs
+pip-log.txt
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+# Translations
+*.mo
+# OSX
+.DS_Store

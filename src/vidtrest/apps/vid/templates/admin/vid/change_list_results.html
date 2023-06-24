@@ -1,0 +1,37 @@
+{% load i18n static %}
+{% if result_hidden_fields %}
+<div class="hiddenfields">{# DIV for HTML validation #}
+{% for item in result_hidden_fields %}{{ item }}{% endfor %}
+</div>
+{% endif %}
+{% if results %}
+<div id="result_list">
+
+  {% for item in results %}
+  <div class="item {% cycle '' 'solid' %}">
+    <a href="{% url 'admin:vid_vid_change' item.pk %}">
+      <img src="{{ item.thumb }}"
+           class="slider-thumb"
+           border="0"
+           style="width:199px;height:120px;"
+           data-images='{{ item.preview_thumbs }}' />
+    </a>
+    <br/>
+    <div style="margin:10px;">
+      <a href="{% url 'admin:vid_vid_change' item.pk %}" style="text-transform: capitalize;font-size:1.1em;">{{ item.name }}</a>
+    </div>
+    <div style="margin:10px;">
+      <ul class="actions" style="list-style: none;padding:0; margin:0;" class="{% cycle 'solid' '' %}">
+          <li>
+            <a class="addlink" target="_DOWNLOAD" href="{{ item.get_video.url }}">{% trans 'Download' %}</a>
+          </li>
+          <li>
+            <a class="changelink view-video" href="{% url 'admin:view_video' item.pk %}" data-pk="{{ item.pk }}">{% trans 'Preview' %}</a>
+          </li>
+      </ul>
+    </div>
+  </div>
+  {% endfor %}
+
+</div>
+{% endif %}

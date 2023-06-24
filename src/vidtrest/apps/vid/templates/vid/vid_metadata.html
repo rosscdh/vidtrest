@@ -1,0 +1,82 @@
+<table class="text-dark col-md-12" style="float: none;">
+  <tr>
+    <td>Mimetype</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.mime_type|default:"---" }}</td>
+  </tr>
+  <tr>
+    <td>Dauer</td>
+    <td style="min-width:15px;"></td>
+    <td><span class="detailed-text">{{ vid.videometa.duration|default:"---" }}</span></td>
+  </tr>
+  <tr>
+    <td>Dateigröße</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.file_size|default:"---" }}</td>
+  </tr>
+  <tr>
+    <td>Durchschn. Bitrate</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.avg_bitrate|default:"---" }}</td>
+  </tr>
+  <tr>
+    <td>Audio-Abtastrate</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.audio_sample_rate|default:"---" }}</td>
+  </tr>
+  <tr>
+    <td>Audiobits pro Sample</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.audio_bits_per_sample|default:"---" }}</td>
+  </tr>
+  <tr>
+    <td>Audioformat</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.audio_format|default:"---" }}</td>
+  </tr>
+  <tr>
+    <td>O-Frame Rate</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.video_frame_rate|default:"---" }}</td>
+  </tr>
+  <tr>
+    <td>Tdack Dauer</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.track_duration|default:"---" }}</td>
+  </tr>
+  <tr>
+    <td>X-Auflösung</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.x_resolution|default:"---" }}</td>
+  </tr>
+  <tr>
+    <td>Y-Auflösung</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.y_resolution|default:"---" }}</td>
+  </tr>
+  <tr>
+    <td>Bildgröße</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.image_size|default:"---" }}</td>
+  </tr>
+  <tr>
+    <td>Bildhöhe</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.image_height|default:"---" }}</td>
+  </tr>
+  <tr>
+    <td>Bildbreite</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.image_witdh|default:"---" }}</td>
+  </tr>
+  <tr>
+    <td>Dateityp</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.file_type|default:"---" }}</td>
+  </tr>
+  <tr>
+    <td>Kompressor</td>
+    <td style="min-width:15px;"></td>
+    <td>{{ vid.videometa.compressor_id|default:"---" }}</td>
+  </tr>
+</table>

@@ -1,0 +1,23 @@
+{{ object.vid.name }}
+{{ object.mime_type }}
+{{ object.duration }}
+{{ object.file_size }}
+{{ object.avg_bitrate }}
+{{ object.audio_sample_rate }}
+{{ object.video_frame_rate }}
+{{ object.audio_bits_per_sample }}
+{{ object.track_duration }}
+{{ object.x_resolution }}
+{{ object.y_resolution }}
+{{ object.file_type }}
+{{ object.audio_format }}
+{{ object.compressor_id }}
+{{ object.image_size }}
+{{ object.image_height }}
+{{ object.image_width }}
+{% for tag in object.vid.tags.all %}
+{{ tag.name }}
+{% endfor %}
+{% for cat in object.vid.categories.all %}
+{{ cat.name }}
+{% endfor %}

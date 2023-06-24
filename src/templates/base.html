@@ -1,0 +1,89 @@
+{% load static %}
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Vidtrest{% endblock %}</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+
+  {% block head %}
+  <!-- inject:css -->
+  
+  <!-- endinject -->
+  {% endblock %}
+
+  <!-- Bootstrap Core CSS -->
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+
+  <!-- Custom Theme CSS -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+  <!-- Advanced CSS -->
+  <link href="{% static 'css/animate.css' %}" rel="stylesheet">
+  <link href="{% static 'magnific-popup/magnific-popup.css' %}" rel="stylesheet">
+
+</head>
+
+<body id="page-top" class="color:#333;" data-spy="scroll" data-target=".navbar-custom">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-custom navbar-fixed-top wp1" role="navigation">
+    <div class="container">
+      <div class="navbar-header page-scroll">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+          <i class="fa fa-bars"></i>
+        </button>
+        <a class="navbar-brand" href="/">
+          <i class="fa fa-video-camera"></i> Vid<span class="font-light">trest</span>
+        </a>
+      </div>
+
+      {% block navigation %}
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+        <ul class="nav navbar-nav">
+          <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+          <li class="">
+            <a href="{% url 'public:about' %}">About</a>
+          </li>
+          <li class="">
+            <a href="">Login</a>
+          </li>
+          <li class="">
+            <a href="">Signup</a>
+          </li>
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+      {% endblock %}
+
+    </div><!-- /.container -->
+  </nav>
+
+  <div class="container-wrapper">
+  {% block content %}{% endblock %}
+  </div>
+
+  
+  <!-- JavaScript -->
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/jquery.easing.min.js' %}"></script>
+  <script src="{% static 'js/jquery.appear.min.js' %}"></script>
+
+  <script src="{% static 'magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+  <script src="{% static 'js/waypoints.min.js' %}"></script>
+  <script src="{% static 'js/video-generic.js' %}"></script>
+
+  <script src="{% static 'js/vid-helpers.js' %}"></script>
+
+
+  <script>
+    window.overlay_img_path = "{% static 'img/overlay-pat.png' %}";
+  </script>
+
+  {% block javascript_footer %}{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+{% extends 'admin/base.html' %}
+{% load static vid_metadata %}
+
+{% block content %}
+  <link rel="stylesheet" type="text/css" href="{% static "plyr/plyr.css" %}" />
+  <style>
+  .meta-data {
+    width:100%;
+  }
+  </style>
+
+  {% if original.get_video %}
+  <hr/>
+
+  <div class="plyr">
+      <video poster="{{ original.thumb }}" controls>
+          <!-- Video files -->
+          <source src="{{ original.get_video.url }}" type="{{ original.videometa.mime_type }}">
+          <!-- Text track file -->
+          <!-- <track kind="captions" label="English captions" src="/path/to/captions.vtt" srclang="en" default> -->
+          <!-- Fallback for browsers that don't support the <video> element -->
+          <a href="{{ original.get_video.url }}">Download</a>
+      </video>
+  </div>
+
+  {% vid_metadata original %}
+
+  <hr/>
+  <p>&nbsp;</p>
+  {% endif %}
+
+  <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> -->
+  <script src="{% static "jquery/dist/jquery.min.js" %}"></script>
+  <script src="{% static "plyr/plyr.js" %}"></script>
+  <script>
+  (function($){
+    var player = plyr.setup('.plyr')[0];
+
+    (function(d, p){
+        var a = new XMLHttpRequest(),
+            b = d.body;
+        a.open('GET', p, true);
+        a.send();
+        a.onload = function() {
+            var c = d.createElement('div');
+            c.setAttribute('hidden', '');
+            c.innerHTML = a.responseText;
+            b.insertBefore(c, b.childNodes[0]);
+        };
+
+    })(document, '{% static "plyr/sprite.svg" %}');
+
+  })(jQuery);
+  </script>
+{% endblock %}
