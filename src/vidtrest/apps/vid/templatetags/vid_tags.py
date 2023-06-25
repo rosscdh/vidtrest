@@ -4,6 +4,7 @@ from django.template import Library
 from django.contrib.admin.templatetags.admin_list import (results,
                                                           result_headers,
                                                           result_hidden_fields,)
+from vidtrest.apps.vid.models import Vid
 
 register = Library()
 
@@ -23,3 +24,11 @@ def vid_result_list(cl):
             'result_headers': headers,
             'num_sorted_fields': num_sorted_fields,
             'results': cl.result_list}
+
+
+@register.inclusion_tag("vid/recent_vids.html")
+def recent_vids(limit=5):
+    """
+    Displays the headers and data list together
+    """
+    return {"results": Vid.objects.filter().order_by('-created')[0:limit]}

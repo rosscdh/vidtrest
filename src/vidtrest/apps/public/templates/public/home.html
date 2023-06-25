@@ -1,4 +1,4 @@
-{% extends 'base.html' %}{% load crispy_forms_tags %}
+{% extends 'base.html' %}{% load crispy_forms_tags vid_tags %}
 
 {% block head %}
 {{ block.super }}
@@ -11,14 +11,22 @@
 
 {% block content %}
 <section id="intro">
-
-
   <div id="search-form" class="col-sm-8 col-sm-offset-2">
   {% crispy form %}
   </div>
-
 </section>
 
+<section id="intro">
+  <div class="row">
+  <div class="col-sm-8">
+    Some content here
+  </div>
+  <div class="col-sm-4">
+    <h3>Recent Videos</h3>
+    {% recent_vids limit=5 %}
+  </div>
+  </div>
+</section>
 {% endblock %}
 
 

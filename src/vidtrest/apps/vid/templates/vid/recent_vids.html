@@ -1,0 +1,9 @@
+<div class="row">
+    <div class="list-group">
+        {% for vid in results %}
+        <a href="{{ vid.get_absolute_url }}" class="list-group-item list-group-item-action">
+            <img src="{{ vid.thumb }}" border="0" alt="" title="{{ vid.name }}" style="width:60px;" /> {{ vid.name }}
+        </a>
+        {% endfor %}
+    </div>
+</div>
